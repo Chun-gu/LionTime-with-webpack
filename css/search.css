@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.statusBar {
+    width: 390px;
+    height: 24px;
+    background-color: #dbdbdb;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    padding: 0 8px 0;
+}
+.statusBarLeft {
+    justify-content: space-around;
+}
+
+.statusBarLeft img {
+    margin-left: 6px;
+}
+.container {
+    height: 100vh;
+    width: 390px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    outline: #767676 solid 1px;
+}
+
+.page {
+    /* height: 100vh; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.headerNav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: stretch;
+    padding: 8px 19px;
+    box-sizing: border-box;
+    border-bottom: 0.5px solid #dbdbdb;
+}
+
+.arrowLeft {
+    height: 22px;
+    width: 22px;
+}
+.headerNav form {
+    height: 32px;
+    width: 90%;
+    background-color: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 32px;
+}
+
+.searchBar {
+    display: flex;
+    justify-content: flex-start;
+    border: none;
+    background-color: #f2f2f2;
+    align-items: center;
+    width: 90%;
+}
+
+.searchBar::placeholder {
+    color: #dbdbdb;
+}
+
+.searchBar:focus {
+    outline: none;
+}
+
+footer {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 0.5px solid #dbdbdb;
+}
+
+footer ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+}
+
+footer li {
+    list-style: none;
+}
+
+footer a {
+    list-style: none;
+    line-height: 14px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+a {
+    text-decoration: none;
+}
+
+footer a img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+}
+
+footer a span {
+    color: #767676;
+    font-size: 10px;
+    font-weight: 400;
+}

@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>chatRoom</title>
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/chatRoom.css">
+    <link rel="stylesheet" href="../css/modal.css">
     <link rel="stylesheet" href="../font/font.css">
 </head>
 <body>
@@ -14,7 +15,7 @@
 
     <header>
         <div class="status-bar">
-            <time class="text-current-time">9:41 AM</time>
+            <time class="text-current-time"></time>
             <ul class="status-menu">
                 <li class="mobile-signal"></li>
                 <li class="wifi"></li>
@@ -56,10 +57,22 @@
         <div class="wrap-input-chat">
             <div class="wrap-input-zone">
                 <button type="button" class="btn-img-attach"></button>
-                <input type="text" placeholder="댓글 입력하기..." class="inp-chat">
+                <input type="text" placeholder="댓글 입력하기..." id="inp-chat" class="inp-chat">
             </div>
             <button type="button" class="btn-message-send">전송</button>
         </div>
+        <!-- 모달창 -->
+        <div class="modal">
+            <div class="modal-bar"></div>
+            <ul class="list-modal-container">
+                
+            </ul>
+        </div>
+        <div class="dimd"></div>
+        <!-- 모달창 끝 -->
     </footer>
+    
+    <script src="../js/modal.js"></script>
+    <script src="../js/chatRoom.js"></script>
 </body>
 </html>

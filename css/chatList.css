@@ -89,10 +89,20 @@ main{
     padding: 0 16px 0;
 }
 
-.list-chat-box{
+.link-chat-box{
     display: flex;
+    width: 100%;
     align-items: center;
     gap: 12px;
+}
+
+.list-chat-box.new::before{
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
+    background-color: #F26E22;
 }
 .wrap-chat-box-text{
     display: flex;
@@ -158,14 +168,33 @@ footer{
     display: inline-block;
     width: 24px;
     height: 24px;
-    background-image: url(../images/icon-home.png);
     background-size: cover;
     background-repeat: no-repeat;
     margin:0 auto;
 }
 
+
+.link-img.home{
+    background-image: url(../images/icon-home.png);
+}
+.link-img.home.this-page{
+    background-image: url(../images/icon-home-fill.png);
+    color: #F26E22;
+}
+.link-img.home.this-page+em{
+    color: #F26E22;
+}
+
+
 .link-img.chat{
     background-image: url(../images/icon-message.png);
+}
+.link-img.chat.this-page{
+    background-image: url(../images/icon-message-fill.png);
+    color: #F26E22;
+}
+.link-img.chat.this-page+em{
+    color: #F26E22;
 }
 
 .link-img.write{
@@ -174,4 +203,11 @@ footer{
 
 .link-img.profile{
     background-image: url(../images/icon-profile.png);
+}
+.link-img.profile.this-page{
+    background-image: url(../images/icon-profile-fill.png);
+    color: #F26E22;
+}
+.link-img.profile.this-page+em{
+    color: #F26E22;
 }

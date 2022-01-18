@@ -1,5 +1,11 @@
-const API_URL = 'http://146.56.183.55:5050';
-const isLogin = sessionStorage.getItem('user_token');
+const API_URL = 'http://146.56.183.55:5050/';
+const isLogin = !!sessionStorage.getItem('my-token');
+console.log(isLogin);
+const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
+const TOKEN = sessionStorage.getItem('my-token');
+
+let email = '';
+let password = '';
 
 // 로그인 상태 파악
 if (isLogin) {
@@ -7,7 +13,12 @@ if (isLogin) {
     joinHeader.remove();
     const joinBtn = document.querySelector('.btn-join');
     joinBtn.remove();
+    printProfile();
 } else {
+    email = localStorage.getItem('email');
+    localStorage.removeItem('email');
+    password = localStorage.getItem('password');
+    localStorage.removeItem('password');
     const modHeader = document.querySelector('.mod-header');
     modHeader.remove();
     const modTitle = document.querySelector('.mod-title');
@@ -15,19 +26,52 @@ if (isLogin) {
     const saveBtn = document.querySelector('.btn-save');
     saveBtn.remove();
 }
+const previewImg = document.querySelector('.userImg-preview');
+const inputName = document.querySelector('#input-username');
+const inputId = document.querySelector('#input-userId');
+const inputIntro = document.querySelector('#input-intro');
+
+// 본인 프로필 내역 출력
+async function printProfile() {
+    const endpoint = `profile/${MY_ACCOUNTNAME}`;
+    const data = await fetchData(endpoint);
+    const profileData = data.profile;
+    const { username, accountname, intro, image } = profileData;
+
+    previewImg.src = API_URL + image;
+    inputName.value = username;
+    inputId.value = accountname;
+    inputIntro.value = intro;
+}
+
+async function fetchData(endpoint) {
+    try {
+        const res = await fetch(API_URL + endpoint, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${TOKEN}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        const resJson = await res.json();
+        console.log(resJson);
+        return resJson;
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 // 프로필 이미지 미리보기
 const inputImg = document.querySelector('#input-userImg');
-inputImg.addEventListener('change', (e) => {
+inputImg.addEventListener('change', async (e) => {
     preview(e.target);
-    const bgImg = document.querySelector('.mod-userImg');
+    const bgImg = document.querySelector('.userImg');
     bgImg.classList.add('hasImg');
 });
 function preview(input) {
     if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = (e) => {
-            const previewImg = document.querySelector('.userImg-preview');
             previewImg.src = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
@@ -35,12 +79,10 @@ function preview(input) {
 }
 
 // 사용자 이름 검증
-const inputName = document.querySelector('#input-username');
 const invalidName = document.querySelector('.invalid-username');
 let isValidName = false;
 inputName.addEventListener('blur', (e) => {
     isValidName = validateName(e.target.value);
-    console.log(isValidName);
     isSubmittable();
 });
 
@@ -62,16 +104,14 @@ function validateName(name) {
 }
 
 // 계정 ID 검증 (중복 불가)
-const inputId = document.querySelector('#input-userId');
 const invalidId = document.querySelector('.invalid-userId');
 let isValidId = false;
-inputId.addEventListener('blur', (e) => {
-    isValidId = validateId(e.target.value);
-    console.log(isValidId);
+inputId.addEventListener('blur', async (e) => {
+    isValidId = await validateId(e.target.value);
     isSubmittable();
 });
 
-function validateId(id) {
+async function validateId(id) {
     if (inputId.value.length === 0 || id.match(/[^a-z0-9\.\_]/, 'gi')) {
         invalidId.textContent =
             '*영문, 숫자, 밑줄 및 마침표만 사용할 수 있습니다.';
@@ -79,9 +119,8 @@ function validateId(id) {
         return false;
     } else {
         let isExist = false;
-        // api 통해서 중복검사
-        // const idArr = getEveryId();
-        // isExist = idArr.some(id);
+        const idArr = await getEveryId();
+        isExist = idArr.includes(id);
         if (isExist) {
             invalidId.textContent = '이미 사용 중인 ID입니다.';
             inputId.classList.add('invalid');
@@ -95,14 +134,14 @@ function validateId(id) {
 }
 
 // 존재하는 모든 사용자 정보 fetch
-// async function getEveryId() {
-//     const res = await fetch(API_URL + '/user');
-//     const resJson = res.json();
-//     const idArr = resJson.map((elem) => {
-//         elem.id;
-//     });
-//     return idArr;
-// }
+async function getEveryId() {
+    const res = await fetch(API_URL + 'user');
+    const resJson = await res.json();
+    const idArr = resJson.map((data) => {
+        return data.accountname;
+    });
+    return idArr;
+}
 
 // submit 버튼 활성화
 const submitBtn = document.querySelectorAll('.btn-submit');
@@ -118,16 +157,39 @@ function isSubmittable() {
     }
 }
 
+// 업로드하려는 이미지 filename 받아오기
+async function getFileName(files) {
+    const formData = new FormData();
+    formData.append('image', files[0]); //formData.append("키이름","값")
+    const res = await fetch(API_URL + 'image/uploadfile', {
+        method: 'POST',
+        body: formData,
+    });
+    const data = await res.json();
+    const fileName = data['filename'];
+    return fileName;
+}
+
 if (isLogin) {
     //  프로필 수정 버튼 클릭
     const saveBtn = document.querySelector('.btn-save');
     saveBtn.addEventListener('click', async (e) => {
         e.preventDefault();
-        const url = 'http://146.56.183.55:5050';
+        const username = inputName.value;
+        const accountname = inputId.value;
+        const intro = inputIntro.value;
+        let image = '';
+        if (inputImg.files.length !== 0) {
+            const fileName = await getFileName(inputImg.files);
+            image = fileName;
+        } else {
+            image = previewImg.src.split('/')[3];
+        }
         try {
-            const res = await fetch(url + '/user', {
-                method: 'POST',
+            const res = await fetch(API_URL + 'user', {
+                method: 'PUT',
                 headers: {
+                    Authorization: `Bearer ${TOKEN}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
@@ -140,17 +202,29 @@ if (isLogin) {
                 }),
             });
             const resJson = await res.json();
-            console.log(resJson);
-        } catch (err) {}
+            const { accountname: modifiedAccountname } = resJson.user;
+            sessionStorage.setItem('my-accountname', modifiedAccountname);
+            location.href = `../pages/profile.html?${modifiedAccountname}`;
+        } catch (err) {
+            console.log(err);
+        }
     });
 } else {
     // 시작하기 버튼 클릭
     const joinBtn = document.querySelector('.btn-join');
     joinBtn.addEventListener('click', async (e) => {
         e.preventDefault();
-        const url = 'http://146.56.183.55:5050';
+        const username = inputName.value;
+        const accountname = inputId.value;
+        const intro = inputIntro.value;
+        let image = '';
+        console.log(email, password);
+        if (inputImg.files.length !== 0) {
+            const fileName = await getFileName(inputImg.files);
+            image = fileName;
+        }
         try {
-            const res = await fetch(url + '/user', {
+            const res = await fetch(API_URL + 'user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -168,7 +242,11 @@ if (isLogin) {
             });
             const resJson = await res.json();
             console.log(resJson);
-        } catch (err) {}
-        location.href = '../pages/home.html';
+            if (resJson.message === '회원가입 성공') {
+                location.href = '../pages/login.html';
+            }
+        } catch (err) {
+            console.log(err);
+        }
     });
 }

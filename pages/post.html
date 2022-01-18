@@ -5,92 +5,91 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/modal.css">
     <link rel="stylesheet" href="../css/post.css">
     <title>게시글</title>
 </head>
 <body>
     <div id="app">
         <h1 class="sr-only">게시물</h1>
+        <div class="status-bar">
+          <time class="text-current-time">9:41 AM</time>
+          <ul class="status-menu">
+              <li class="mobile-signal"></li>
+              <li class="wifi"></li>
+              <li class="battery"></li>
+          </ul>
+        </div>
         <nav>
             <button class="btn-back"></button>
-            <button class="btn-more"></button>
+            <!-- <button class="btn-more-mini owner"></button> -->
         </nav>
         <main>
             <section class="cont-post">
                 <h2 class="sr-only">작성자</h2>
                 <div class="img-user">
-                    <img src="../images/default-profile-img-small.png" alt="작성자 프로필 사진">
+                    <a href="profile.html"><img alt="작성자 프로필 사진" class="img-user-profile"></a>
                 </div>
                 <div class="box-post">
                     <button class="btn-more-mini"></button>
-                    <p class="name-user">애월읍 위니브 감귤농장</p>
-                    <p class="id-user">@ weniv_Mandarin</p>
-                    <p class="txt-desc">옷을 인생을 그러므로 없으면 것은 이상은 것은 우리의 위하여, 뿐이다. 
-                        이상의 청춘의 뼈 따뜻한 그들의 그와 약동하다. 대고, 못할 넣는 풍부하게 뛰노는 인생의 힘있다.
+                
+                    <p class="name-user"></p>
+                    <p class="id-user"></p>
+                    <p class="txt-desc">
                     </p>
-                    <!-- 슬라이드 구현 -->
-                    <ul>
-                        <li><a href="#"><img src="../images/logo-main.png" alt="첫번째 이미지"></a></li>
-                        <li><a href="#"><img src="../images/logo-main.png" alt="첫번째 이미지"></a></li>
-                    </ul>
+                    <div class="post-list-wrapper">
+                        <div class="btn-slide">
+                            <button class="prev"></button>
+                            <button class="next"></button>
+                        </div>
+                        <ul class="post-list"></ul>
+                        <ul class="img-check"></ul>
+                    </div>
                     <div class="icon-reaction">
                         <img src="../images/icon-heart.png" alt="좋아요 개수" class="img-like">
-                        <p class="count-like">58</p>
-                        <img src="../images/icon-message-small.png" alt="댓글 개수" class="img-like">
-                        <p class="count-comment">12</p>
+                        <p class="count-like"></p>
+                        <img src="../images/icon-message-small.png" alt="댓글 개수" class="img-comment">
+                        <p class="count-comment"></p>
                     </div>
-                    <p class="date-upload">2020년 10월 21일</p>
+                    <p class="date-upload"></p>
                 </div>
             </section>
             <section class="cont-comments">
                 <h2 class="sr-only">댓글</h2>
-                <ul>
-                    <li>
-                        <button class="btn-more-mini"></button>
-                        <img src="../images/default-profile-img-small.png" alt="작성자 프로필 사진" class="img-user-comment">
-                        <div class="box-comment">
-                            <p class="txt-comment-name-user">서귀포시 무슨 농장<small>· 5분 전</small></p>
-                            
-                            <p class="txt-comment-desc">안녕하세요 사진이 참 멋지네요.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <button class="btn-more-mini"></button>
-                        <img src="../images/default-profile-img-small.png" alt="작성자 프로필 사진" class="img-user-comment">
-                        <div class="box-comment">
-                            <p class="txt-comment-name-user">감귤러버<small>· 15분 전</small></p>
-                            
-                            <p class="txt-comment-desc">안녕하세요. 사진이 너무 멋있어요. 한라봉 언제 먹을 수 있나요? 기다리기 지쳤어요 땡뻘땡뻘...</p>
-                        </div>
-                    </li>
+                <ul class="li-comments">
                 </ul>
             </section>
         </main>
         <footer>
-            <img src="../images/default-profile-img-small.png" alt="내 프로필 사진">
-            <form action="/post/:post_id/comments" method="post">
+            <img src="../images/default-profile-img-small.png" alt="내 프로필 사진" class="img-profile">
+            <form>
                 <label for="txt-comment" class="sr-only">댓글 입력칸</label>
                 <input type="text" placeholder="댓글 입력하기..." id="txt-comment">
-                <button>게시</button>
+                <button type="button" class="btn-comment" disabled="disabled">게시</button>
             </form>
+            <!-- 모달창 추가 -->
+            <div class="modal">
+                <div class="modal-bar"></div>
+                <ul class="list-modal-container">
+                    
+                </ul>
+            </div>
+            <div class="dimd"></div>
+            
+            <div class="alert">
+                <p class="txt-alert-message"></p>
+                <div class="wrap-alert-btn">
+                  <button type="button" class="btn-alert btn-closed">취소</button>
+                  <button type="button" class="btn-alert"></button>
+                </div>
+            </div>
+            <div class="alert-dimd"></div>
+        
         </footer>
         
-        <div class="modal-user hide">
-            <div class="modal_overlay"></div> 
-            <div class="modal_content">
-                <button class="btn-close"></button>
-                <div class="btn-report">신고하기</div>
-            </div>
-        </div>
-        <div class="modal-owner hide">
-            <div class="modal_overlay"></div> 
-            <div class="modal_content">
-                <button class="btn-close"></button>
-                <div class="btn-delete">삭제</div>
-                <div class="btn-update">수정</div>
-            </div>
-        </div>
-    </div>
+        <script src="../js/modal.js"></script>
+        <script src="../js/post.js"></script>
+        <script src="../js/alert.js"></script>
 </body>
 </html>
 

@@ -4,18 +4,24 @@ body {
 
 #app {
     width: 390px;
+    padding-bottom: 62px;
     margin: 0 auto;
     background-color: #f2f2f2;
 }
 
 /* header */
 .header {
+    width: 390px;
     height: 48px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 12px 0 16px;
     background-color: #fff;
+    padding: 0 12px 0 16px;
+    border-bottom: 0.5px solid #dbdbdb;
+    position: fixed;
+    top: 0;
+    z-index: 100;
 }
 .link-back img {
     width: 22px;
@@ -29,6 +35,7 @@ body {
 /* main */
 .main {
     min-height: 735px;
+    padding-top: 48px;
 }
 /* profile */
 .profile {
@@ -36,6 +43,7 @@ body {
     padding: 30px 55px 26px;
     margin-bottom: 6px;
     border: 0.5px solid #dbdbdb;
+    border-top: none;
     background-color: #fff;
 }
 .profile-top {
@@ -48,6 +56,8 @@ body {
 .profile-img {
     width: 110px;
     height: 110px;
+    border: 1px solid #dbdbdb;
+    border-radius: 50%;
 }
 
 .followers {
@@ -90,12 +100,22 @@ body {
     line-height: 17.53px;
     color: #767676;
 }
-.btn-chat,
-.btn-share {
+.btn-small {
+    display: inline-block;
     width: 34px;
     height: 34px;
-    border-radius: 50%;
+    background-size: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
     border: 1px solid #dbdbdb;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+.btn-chat {
+    background-image: url(../images/icon-message-small.png);
+}
+.btn-share {
+    background-image: url(../images/icon-share.png);
 }
 .btn-chat img,
 .btn-share img {
@@ -110,18 +130,24 @@ body {
 }
 .btn-follow {
     color: #fff;
-    margin: 0 10px;
     background-color: #f26e22;
-}
-.btn-unfollow {
-    border: 1px solid #dbdbdb;
     margin: 0 10px;
+    transition: background-color 0.2s;
+}
+.btn-follow.following {
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
 }
 .btn-modify {
+    display: inline-block;
+    line-height: 32px;
     border: 1px solid #dbdbdb;
     margin-right: 12px;
 }
 .btn-add-product {
+    display: inline-block;
+    line-height: 32px;
     width: 100px;
     border: 1px solid #dbdbdb;
 }
@@ -130,7 +156,8 @@ body {
 .product {
     background-color: #fff;
     padding: 20px 0 20px 20px;
-    border: 0.5px solid #dbdbdb;
+    border-top: 0.5px solid #dbdbdb;
+    border-bottom: 0.5px solid #dbdbdb;
     margin-bottom: 6px;
 }
 .product-title {
@@ -141,11 +168,25 @@ body {
 }
 .product-list {
     display: flex;
-    overflow: hidden;
+    overflow-x: scroll;
+    padding-bottom: 5px;
+}
+.product-list::-webkit-scrollbar {
+    height: 5px;
+}
+.product-list::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.product-list::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+.product-list li {
+    margin-right: 10px;
 }
 .product-item {
+    display: block;
     width: 140px;
-    margin-right: 10px;
 }
 .product-img {
     width: 140px;
@@ -153,6 +194,7 @@ body {
     border: 0.5px solid #dbdbdb;
     border-radius: 8px;
     margin-bottom: 6px;
+    object-fit: cover;
 }
 .product-name {
     line-height: 17.53px;
@@ -175,61 +217,95 @@ body {
 .post-view {
     text-align: end;
     padding: 9px 16px;
-    border-bottom: .5px solid #dbdbdb;
+    border-bottom: 0.5px solid #dbdbdb;
 }
-.btn-list img,
-.btn-album img {
+.btn-view {
     width: 26px;
     height: 26px;
+    background-size: 100%;
+    vertical-align: middle;
+}
+.btn-view.btn-list {
+    background-image: url(../images/icon-post-list-off.png);
+}
+.btn-list.selected {
+    background-image: url(../images/icon-post-list-on.png);
+}
+.btn-album {
+    background-image: url(../images/icon-post-album-off.png);
+}
+.btn-album.selected {
+    background-image: url(../images/icon-post-album-on.png);
 }
 
 /* post-list*/
 .post-list {
     padding: 16px;
-    /* border: 0.5px solid #dbdbdb; */
 }
 .post-list-item {
     display: flex;
-    margin-bottom: 16px;
     position: relative;
 }
-.post-profile-img {
+.post-list .post-list-item:not(:last-child) {
+    margin-bottom: 16px;
+}
+.post-author-img {
     width: 42px;
     height: 42px;
+    border: 0.5px solid #dbdbdb;
+    border-radius: 50%;
     margin-right: 10px;
 }
-.post-profile-text {
+.post-author-info {
+    width: fit-content;
     padding: 4px 0 4px 0;
     margin-bottom: 12px;
 }
-.post-writer {
+.post-author {
     display: block;
     font-weight: 500;
     line-height: 17.53px;
 }
-.post-writer-id {
+.post-author-id {
     font-size: 12px;
     line-height: 14px;
     color: #767676;
 }
 .post-text {
+    width: 304px;
     line-height: 17.53px;
+    word-wrap: break-word;
     margin-bottom: 16px;
+    cursor: pointer;
 }
 .post-img {
     width: 304px;
     height: 228px;
     border: 0.5px solid #dbdbdb;
     border-radius: 10px;
+    object-fit: cover;
     margin-bottom: 12px;
+    cursor: pointer;
 }
 .post-utils {
     margin-bottom: 16px;
 }
-.btn-like img,
-.btn-comment img {
+.btn-like,
+.btn-comment {
     width: 20px;
     height: 20px;
+    vertical-align: middle;
+    background-size: 20px;
+    margin-right: 5px;
+}
+.btn-like[data-hearted='false'] {
+    background-image: url(../images/icon-heart.png);
+}
+.btn-like[data-hearted='true'] {
+    background-image: url(../images/icon-heart-fill.png);
+}
+.btn-comment {
+    background-image: url(../images/icon-message-small.png);
 }
 .count-like,
 .count-comment {
@@ -244,13 +320,13 @@ body {
     color: #767676;
 }
 .btn-post-menu {
+    width: 18px;
+    height: 18px;
+    background-image: url(../images/icon-more-vertical-small.png);
+    background-size: 18px;
     position: absolute;
     top: 4px;
     right: 0;
-}
-.btn-post-menu img {
-    width: 18px;
-    height: 18px;
 }
 
 /* post-album */
@@ -259,25 +335,34 @@ body {
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     padding: 16px;
-    /* border: 0.5px solid #dbdbdb; */
 }
 .post-album-item {
+    display: block;
     position: relative;
+    cursor: pointer;
 }
 .post-album-img {
     width: 114px;
     height: 114px;
+    object-fit: cover;
 }
 .icon-multi-image {
     width: 20px;
     height: 20px;
+    background-image: url(../images/icon-img-layers.png);
+    background-size: 20px;
     position: absolute;
     top: 6px;
     right: 6px;
 }
 
+.hidden {
+    display: none;
+}
+
+/* 푸터와 모달 */
 /* footer */
-.footer {
+/* .footer {
     width: 390px;
     font-size: 10px;
     line-height: 14px;
@@ -309,6 +394,34 @@ body {
     color: #f26e22;
 }
 
-.hidden {
-    display: none;
+.profile-menu-list {
+    width: 390px;
+    background-color: #fff;
+    font-size: 14px;
+    padding-bottom: 12px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0px -1px 5px 0px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    left: 0;
+    transform: translateY(100%);
+    z-index: 100;
+    transition: transform 0.5s;
 }
+.profile-menu-list::before {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    background-color: #dbdbdb;
+    border-radius: 5px;
+    margin: 16px auto;
+}
+.profile-menu-list.on {
+    transform: translateY(-100%);
+}
+.profile-menu-item {
+    text-align: left;
+    padding: 14px 26px;
+}
+.profile-menu-item button */

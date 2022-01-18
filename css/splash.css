@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    width: 390px;
+    margin: 0 auto;
+}
+.statusBar {
+    position: relative;
+    width: 390px;
+    height: 24px;
+    background-color: #dbdbdb;
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    padding: 0 8px 0;
+}
+.statusBarLeft {
+    justify-content: space-around;
+}
+.statusBarLeft img {
+    margin-left: 6px;
+}
+
+.container {
+    width: 390px;
+    outline: 1px solid #767676;
+    height: 100vh;
+}
+
+h1 {
+    display: flex;
+}
+
+.logo {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 95px;
+    margin-top: 40vh;
+}
