@@ -6,29 +6,29 @@ const TARGET_ACCOUNTNAME = location.href.split('?')[1];
 const isMyProfile = MY_ACCOUNTNAME === TARGET_ACCOUNTNAME;
 
 // 로그인
-(async function login() {
-    try {
-        const res = await fetch(API_URL + 'user/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                user: {
-                    email: 'testEmail@test.com',
-                    password: 'testpassword',
-                },
-            }),
-        });
-        const resJson = await res.json();
-        const { _id, accountname, token } = resJson.user;
-        sessionStorage.setItem('my-id', _id);
-        sessionStorage.setItem('my-token', token);
-        sessionStorage.setItem('my-accountname', accountname);
-    } catch (err) {
-        console.log(err);
-    }
-})();
+// (async function login() {
+//     try {
+//         const res = await fetch(API_URL + 'user/login', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({
+//                 user: {
+//                     email: 'testEmail@test.com',
+//                     password: 'testpassword',
+//                 },
+//             }),
+//         });
+//         const resJson = await res.json();
+//         const { _id, accountname, token } = resJson.user;
+//         sessionStorage.setItem('my-id', _id);
+//         sessionStorage.setItem('my-token', token);
+//         sessionStorage.setItem('my-accountname', accountname);
+//     } catch (err) {
+//         console.log(err);
+//     }
+// })();
 
 // API 데이터 가져오기
 async function fetchData(endpoint) {
@@ -77,12 +77,11 @@ if (isMyProfile) {
     const userIntro = document.querySelector('.user-intro');
     const followBtn = document.querySelector('.btn-follow');
 
-    if (image.match(/^http\:\/\/146\.56\.183\.55\:5050\//, 'i')) {
+    if (image.match(/^http\:\/\/146\.56\.183\.55/, 'i')) {
         profileImg.setAttribute('src', image);
     } else {
         profileImg.setAttribute('src', API_URL + image);
     }
-    console.log(image);
     followersNum.textContent = `${followerCount}`;
     followingNum.textContent = `${followingCount}`;
     userName.textContent = username;
@@ -186,7 +185,12 @@ function observeLastItem(productIo, items) {
         return;
     }
     printProductList(productData);
-    observeLastItem(productIo, document.querySelectorAll('.product-item-wrap'));
+    if (productData.length > productLimit) {
+        observeLastItem(
+            productIo,
+            document.querySelectorAll('.product-item-wrap')
+        );
+    }
 })();
 
 // 게시글 출력
@@ -219,7 +223,7 @@ function makePostListItem(post) {
     listItem.classList.add('post-list-item');
     const authorImage = document.createElement('img');
     authorImage.classList.add('post-author-img');
-    if (authorImg.match(/^http\:\/\/146\.56\.183\.55\:5050\//, 'i')) {
+    if (authorImg.match(/^http\:\/\/146\.56\.183\.55/, 'i')) {
         authorImage.setAttribute('src', authorImg);
     } else {
         authorImage.setAttribute('src', API_URL + authorImg);
@@ -384,14 +388,16 @@ function observeLastPostAlbumItem(postIo, items) {
         return;
     }
     printPost(postData);
-    observeLastPostListItem(
-        postIo,
-        document.querySelectorAll('.post-list-item')
-    );
-    observeLastPostAlbumItem(
-        postIo,
-        document.querySelectorAll('.post-album-item-wrap')
-    );
+    if (postData.length > postLimit) {
+        observeLastPostListItem(
+            postIo,
+            document.querySelectorAll('.post-list-item')
+        );
+        observeLastPostAlbumItem(
+            postIo,
+            document.querySelectorAll('.post-album-item-wrap')
+        );
+    }
 })();
 
 // 팔로워, 팔로잉 목록 이동

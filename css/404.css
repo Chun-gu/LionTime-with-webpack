@@ -1,0 +1,45 @@
+body {
+    width: 390px;
+    margin: 0 auto;
+}
+
+.container {
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.errorImg {
+    display: flex;
+    width: 158px;
+    height: 158px;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 30vh;
+}
+
+.errorMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 32px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    color: #767676;
+}
+.backBtn {
+    display: flex;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 13px 33px;
+    background-color: #f26e22;
+    border-radius: 44px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+}

@@ -1,4 +1,4 @@
-const TOKEN = sessionStorage.getItem('Token');
+const TOKEN = sessionStorage.getItem('my-token');
 
 console.log(TOKEN);
 
@@ -41,38 +41,35 @@ async function printFeed() {
         } = feed;
         postContainer.innerHTML += `
         <article class="postCont">
-                    <a href="#" class="">
-                        <img src=${authorImage} alt="user profile image" class="usrImg" />
+            <a href="#" class="">
+                <img src=${authorImage} alt="user profile image" class="usrImg" />
+            </a>
+            <div class="postOne">
+                <h3>
+                    <a href="../pages/profile.html?${accountname}" class="usrName">${username}</a>
+                </h3>
+                <a class="usrSubName">@ ${accountname}</a>
+                <p class="postTxt" data-post-id=${id}>
+                    ${content}
+                </p>
+                <img src=${image} alt="" onerror="this.src='../images/default-post-product-image.png'" class="postImg" data-post-id=${id}/>
+                <div class="reaction">
+                    <button type="button" class="like" data-hearted=${hearted}></button>
+                    <span class="count heart-count">${heartCount}</span>
+                    <a href= "../pages/post.html?${id}">
+                        <button class="commentBtn" type="button" data-post-id=${id}>
+                            <img src="../images/icon-message-small.png" alt="" class="commentIcon" />
+                        </button>
+                        <span class="count comment-count">${commentCount}</span>
                     </a>
-                    <div class="postOne">
-                        <h3>
-                            <a href="../pages/profile.html?${accountname}" class="usrName">${username}</a>
-                        </h3>
-                        <a class="usrSubName">@ ${accountname}</a>
-                        <p class="postTxt" data-post-id=${id}>
-                            ${content}
-                        </p>
-                        <img src=${image} alt="" onerror="this.src='../images/default-post-product-image.png'" class="postImg" data-post-id=${id}/>
-                        <div class="reaction">
-                            <button type="button" class="like" data-hearted=${hearted}>
-                            </button>
-                            <span class="count heart-count">${heartCount}</span>
-                            <a href= "../pages/post.html?${id}">
-                            <button class="commentBtn" type="button" data-post-id=${id}>
-                                <img src="../images/icon-message-small.png" alt="" class="commentIcon" />
-                            </button>
-                            <span class="count comment-count">${commentCount}</span>
-                            </a>
-                        </div>
-                        <small class="postDate">${createdAt.slice(
-                            0,
-                            4
-                        )}년 ${createdAt.slice(5, 7)}월 ${createdAt.slice(
-            8,
-            10
-        )}일 </small>   
-                    </div> 
-                </article>
+                </div>
+                <small class="postDate">
+                    ${createdAt.slice(0, 4)}년 
+                    ${createdAt.slice(5, 7)}월 
+                    ${createdAt.slice(8, 10)}일 
+                </small>
+            </div> 
+        </article>
         `;
     }
 }
@@ -80,7 +77,7 @@ async function printFeed() {
 const goPostPage = document.querySelectorAll('.commentBtn');
 for (const [idx, comment] of goPostPage.entries()) {
     comment.addEventListener('click', () => {
-        window.location.href = `post.html?id=${posts[idx].id}`;
+        window.location.href = `post.html?${posts[idx].id}`;
     });
 }
 console.log('goPostPage: ', goPostPage);

@@ -1,5 +1,7 @@
-const profileLink = document.querySelector('.link-profile');
-profileLink.addEventListener('click', () => {
-    const userId = '데이터';
-    location.href = `../pages/profileFollowers.html?${userId}`;
+const FOOTER_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
+
+const profileLink = document.querySelector('.link-other-page.profile');
+profileLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    location.href = `profile.html?${FOOTER_ACCOUNTNAME}`;
 });

@@ -3,6 +3,7 @@ const container = document.querySelector('.img-container');
 const row = document.querySelector('.row');
 let dataImg = [];
 const TOKEN = sessionStorage.getItem('my-token');
+const POST_ID = location.href.split('?')[1];
 
 // POST
 const inpText = document.querySelector('.inp-post');
@@ -30,8 +31,7 @@ async function postData() {
     console.log(data);
     if (data) {
         alert('업로드 성공');
-        sessionStorage.setItem('post-id', data.post.id); // post id
-        location.href = '/pages/post.html';
+        location.href = `/pages/post.html?${data.post.id}`;
     } else {
         alert('업로드 실패');
     }
@@ -69,13 +69,19 @@ async function imgData() {
 }
 
 // PUT
-const putItem = JSON.parse(sessionStorage.getItem('putItem'));
-console.log(putItem);
+async function getPostData() {
+    const res = await fetch(`http://146.56.183.55:5050/post/${POST_ID}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`,
+        },
+    });
+    const data = await res.json();
+    console.log(data);
 
-// put 원래 값
-if (putItem) {
-    document.querySelector('.inp-post').value = putItem.desc;
-    dataImg = putItem.image.split(',');
+    document.querySelector('.inp-post').value = data.post.content;
+    dataImg = data.post.image.split(',');
     for (const imgName of dataImg) {
         row.innerHTML += `
                 <div>
@@ -89,11 +95,15 @@ if (putItem) {
     imgSlider();
 }
 
+if (POST_ID) {
+    getPostData();
+}
+
 async function putData() {
     const imgName = await imgData();
     const content = inpText.value;
 
-    const res = await fetch(`http://146.56.183.55:5050/post/${putItem.id}`, {
+    const res = await fetch(`http://146.56.183.55:5050/post/${POST_ID}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -110,8 +120,7 @@ async function putData() {
     console.log(data);
     if (data) {
         alert('업로드 성공');
-        sessionStorage.setItem('post-id', data.post.id); // post id
-        location.href = '/pages/post.html';
+        location.href = `/pages/post.html?${data.post.id}`;
     } else {
         alert('업로드 실패');
     }
@@ -119,7 +128,7 @@ async function putData() {
 
 btnUpload.addEventListener('click', (e) => {
     e.preventDefault();
-    putItem ? putData() : postData();
+    POST_ID ? putData() : postData();
 });
 
 // 업로드 이미지 미리보기 (image upload preview)
@@ -199,7 +208,9 @@ function imgSlider() {
 
 // 이미지 개수별 img-container 크기
 function imgLen(len) {
-    if (len === 1) {
+    if (len === 0) {
+        inputImage.value = '';
+    } else if (len === 1) {
         container.style.height = '228px';
         row.style.width = '304px';
         row.style.height = '228px';
@@ -262,7 +273,7 @@ function formCheck() {
 
 // status bar 시간
 const timeStatus = document.querySelector('.text-current-time');
-function timeNow() {
+(function timeNow() {
     const date = new Date();
     const hour = date.getHours();
     const min = date.getMinutes();
@@ -271,5 +282,4 @@ function timeNow() {
     } else {
         timeStatus.textContent = `${hour}:${min} AM`;
     }
-}
-timeNow();
+})();

@@ -1,6 +1,5 @@
 const API_URL = 'http://146.56.183.55:5050/';
 const isLogin = !!sessionStorage.getItem('my-token');
-console.log(isLogin);
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
 
@@ -37,8 +36,12 @@ async function printProfile() {
     const data = await fetchData(endpoint);
     const profileData = data.profile;
     const { username, accountname, intro, image } = profileData;
-
-    previewImg.src = API_URL + image;
+    const isImage = !!image.match(/^http\:\/\/146\.56\.183\.55/, 'i');
+    if (!!image.match(/^http\:\/\/146\.56\.183\.55/, 'i')) {
+        previewImg.src = image;
+    } else {
+        previewImg.src = API_URL + image;
+    }
     inputName.value = username;
     inputId.value = accountname;
     inputIntro.value = intro;
@@ -54,7 +57,6 @@ async function fetchData(endpoint) {
             },
         });
         const resJson = await res.json();
-        console.log(resJson);
         return resJson;
     } catch (err) {
         console.log(err);
@@ -118,9 +120,8 @@ async function validateId(id) {
         inputId.classList.add('invalid');
         return false;
     } else {
-        let isExist = false;
-        const idArr = await getEveryId();
-        isExist = idArr.includes(id);
+        const isExist = await checkDuplicateId(id);
+        console.log(isExist);
         if (isExist) {
             invalidId.textContent = '이미 사용 중인 ID입니다.';
             inputId.classList.add('invalid');
@@ -133,14 +134,25 @@ async function validateId(id) {
     }
 }
 
-// 존재하는 모든 사용자 정보 fetch
-async function getEveryId() {
-    const res = await fetch(API_URL + 'user');
-    const resJson = await res.json();
-    const idArr = resJson.map((data) => {
-        return data.accountname;
-    });
-    return idArr;
+async function checkDuplicateId(accountname) {
+    try {
+        const res = await fetch(API_URL + 'user/accountnamevalid', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user: {
+                    accountname,
+                },
+            }),
+        });
+        const resJson = await res.json();
+        console.log(resJson.message);
+        return resJson.message === '사용 가능한 계정ID 입니다.' ? false : true;
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 // submit 버튼 활성화
@@ -218,7 +230,6 @@ if (isLogin) {
         const accountname = inputId.value;
         const intro = inputIntro.value;
         let image = '';
-        console.log(email, password);
         if (inputImg.files.length !== 0) {
             const fileName = await getFileName(inputImg.files);
             image = fileName;
@@ -241,7 +252,6 @@ if (isLogin) {
                 }),
             });
             const resJson = await res.json();
-            console.log(resJson);
             if (resJson.message === '회원가입 성공') {
                 location.href = '../pages/login.html';
             }

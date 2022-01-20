@@ -14,6 +14,7 @@ footer{
     padding: 16px 0 10px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, .2);
     transition: 0.3s;
     z-index: 120;
 }

@@ -1,3 +1,6 @@
+const TOKEN = sessionStorage.getItem('my-token');
+const PRODUCT_ID = location.href.split('?')[1];
+
 // 0. 뒤로가기
 const btnBack = document.querySelector('.btn-back');
 btnBack.addEventListener('click', () => {
@@ -6,9 +9,10 @@ btnBack.addEventListener('click', () => {
 
 // 1. input file - image upload preview
 const inpImage = document.querySelector('#img-product');
+const previewImage = document.querySelector('.img-preview');
+let checkImg = false;
 
 function readImage(input) {
-    const previewImage = document.querySelector('.img-preview');
     if (input.files && input.files[0]) {
         const reader = new FileReader();
         // 이미지가 로드가 된 경우
@@ -22,6 +26,7 @@ function readImage(input) {
 }
 
 inpImage.addEventListener('input', (e) => {
+    checkImg = true;
     readImage(e.target);
     formCheck();
 });
@@ -33,7 +38,13 @@ const inpLink = document.querySelector('.inp-link');
 const btnSave = document.querySelector('.btn-save');
 
 function formCheck() {
-    if (inpName.value && inpPrice.value && inpLink.value && inpImage.value) {
+    if (
+        inpName.value &&
+        inpPrice.value &&
+        inpLink.value &&
+        (inpImage.value || previewImage.src.split('-')[1] !== 'preview.png')
+    ) {
+        console.log('버튼 활성화');
         btnSave.disabled = false;
     } else {
         btnSave.disabled = true;
@@ -68,14 +79,13 @@ async function postData() {
     const itemName = inpName.value;
     const price = parseInt(uncomma(inpPrice.value));
     const link = inpLink.value;
-    const token = sessionStorage.getItem('my-token');
     const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 
     const res = await fetch('http://146.56.183.55:5050/product', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${TOKEN}`,
         },
         body: JSON.stringify({
             product: {
@@ -99,11 +109,10 @@ async function postData() {
 async function imgData() {
     let formData = new FormData();
     formData.append('image', inpImage.files[0]);
-    const token = sessionStorage.getItem('Token');
     const res = await fetch('http://146.56.183.55:5050/image/uploadfile', {
         method: 'POST',
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${TOKEN}`,
         },
         body: formData,
     });
@@ -112,12 +121,16 @@ async function imgData() {
 }
 
 btnSave.addEventListener('click', (e) => {
-    postData();
+    if (PRODUCT_ID) {
+        putData();
+    } else {
+        postData();
+    }
 });
 
 // 7. status bar 시간
 const timeStatus = document.querySelector('.text-current-time');
-function timeNow() {
+(function timeNow() {
     const date = new Date();
     const hour = date.getHours();
     const min = date.getMinutes();
@@ -126,9 +139,64 @@ function timeNow() {
     } else {
         timeStatus.textContent = `${hour}:${min} AM`;
     }
-}
-timeNow();
+})();
 
 // 8. 상품 수정
-const productData = JSON.parse(sessionStorage.getItem('product'));
-console.log(productData);
+if (PRODUCT_ID) {
+    getProductData();
+}
+
+async function getProductData() {
+    const res = await fetch(
+        `http://146.56.183.55:5050/product/detail/${PRODUCT_ID}`,
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${TOKEN}`,
+            },
+        }
+    );
+    const data = await res.json();
+    previewImage.src = data.product.itemImage;
+    inpName.value = data.product.itemName;
+    inpPrice.value = data.product.price;
+    inpLink.value = data.product.link;
+}
+
+async function putData() {
+    let imgLink;
+    if (checkImg) {
+        const imgName = await imgData();
+        imgLink = `http://146.56.183.55:5050/${imgName.filename}`;
+    } else {
+        imgLink = previewImage.src;
+    }
+    const itemName = inpName.value;
+    const price = parseInt(uncomma(inpPrice.value));
+    const link = inpLink.value;
+    const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
+
+    const res = await fetch(`http://146.56.183.55:5050/product/${PRODUCT_ID}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`,
+        },
+        body: JSON.stringify({
+            product: {
+                itemName: itemName,
+                price: price,
+                link: link,
+                itemImage: imgLink,
+            },
+        }),
+    });
+    const data = await res.json();
+    if (data.product) {
+        alert('업로드 성공');
+        location.href = `/pages/profile.html?${MY_ACCOUNTNAME}`;
+    } else {
+        alert('업로드 실패');
+    }
+}

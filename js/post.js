@@ -1,7 +1,10 @@
-const TOKEN = sessionStorage.getItem('Token');
-const MY_ID = sessionStorage.getItem('_id');
-let putData;
+const TOKEN = sessionStorage.getItem('my-token');
+const MY_ID = sessionStorage.getItem('my-id');
+const accountName = sessionStorage.getItem('my-accountname');
+
+let dataId;
 let heartCheck;
+const POST_ID = location.href.split('?')[1]; // 로컬의 게시글 아이디값
 
 // 1. 뒤로가기 버튼
 const btnBack = document.querySelector('.btn-back');
@@ -22,7 +25,6 @@ const postDate = document.querySelector('.date-upload');
 const commentUser = document.querySelector('.img-profile');
 
 (async function getPostData() {
-    const POST_ID = sessionStorage.getItem('post-id'); // 로컬의 게시글 아이디값
     const res = await fetch(`http://146.56.183.55:5050/post/${POST_ID}`, {
         method: 'GET',
         headers: {
@@ -49,6 +51,10 @@ const commentUser = document.querySelector('.img-profile');
         commentCount,
         createdAt,
     } = data.post;
+
+    document.querySelector(
+        '.img-user a'
+    ).href = `../pages/profile.html?${author.accountname}`;
     nameUser.textContent = author.username;
     idUser.textContent = author.accountname;
     txtDesc.textContent = content;
@@ -56,17 +62,16 @@ const commentUser = document.querySelector('.img-profile');
     countComment.textContent = commentCount;
     const createDate = createdAt.split('T')[0].split('-');
     postDate.textContent = `${createDate[0]}년 ${createDate[1]}월 ${createDate[2]}일`;
-    postUserProfile.src = author.image;
-
+    if (author.image.split(':')[0] === 'http') {
+        postUserProfile.src = author.image;
+    } else {
+        postUserProfile.src = 'http://146.56.183.55:5050/' + author.image;
+    }
     postUserProfile.addEventListener('click', () => {
         targetAccountName(author.accountname);
     });
 
-    putData = {
-        id: id,
-        desc: content,
-        image: image,
-    };
+    dataId = id;
     heartCheck = hearted;
 
     if (heartCheck === true) {
@@ -93,8 +98,7 @@ postBtn.addEventListener('click', () => {
         const btnUpdate = document.querySelector('.update');
         if (btnUpdate) {
             btnUpdate.addEventListener('click', () => {
-                sessionStorage.setItem('putItem', JSON.stringify(putData));
-                location.href = '/pages/postUpload.html';
+                location.href = `../pages/postUpload.html?${POST_ID}`;
             });
         }
     }, 20);
@@ -102,7 +106,7 @@ postBtn.addEventListener('click', () => {
 
 // 3-2. 게시글 삭제
 async function postDel() {
-    const res = await fetch(`http://146.56.183.55:5050/post/${putData.id}`, {
+    const res = await fetch(`http://146.56.183.55:5050/post/${dataId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -113,8 +117,7 @@ async function postDel() {
     console.log(data);
 
     if (data) {
-        alert('삭제 성공');
-        location.href = '/pages/profile.html';
+        location.href = `/pages/profile.html?${accountName}`;
     } else {
         alert('삭제 실패');
     }
@@ -122,21 +125,17 @@ async function postDel() {
 
 // 3-3. 게시글 신고
 async function postReport() {
-    const res = await fetch(
-        `http://146.56.183.55:5050/post/${putData.id}/report`,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${TOKEN}`,
-            },
-        }
-    );
+    const res = await fetch(`http://146.56.183.55:5050/post/${dataId}/report`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`,
+        },
+    });
     const data = await res.json();
     console.log(data);
 
     if (data) {
-        alert('신고가 접수되었습니다.');
         location.reload();
     } else {
         alert('신고 실패');
@@ -227,7 +226,7 @@ btnLike.addEventListener('click', () => {
 
 // 좋아요
 async function heart() {
-    await fetch(`http://146.56.183.55:5050/post/${putData.id}/heart`, {
+    await fetch(`http://146.56.183.55:5050/post/${dataId}/heart`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -237,7 +236,7 @@ async function heart() {
 }
 // 좋아요 취소
 async function unHeart() {
-    await fetch(`http://146.56.183.55:5050/post/${putData.id}/unheart`, {
+    await fetch(`http://146.56.183.55:5050/post/${dataId}/unheart`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -251,8 +250,12 @@ const btnComment = document.querySelector('.btn-comment');
 const inpComment = document.querySelector('#txt-comment');
 
 // 7-1. 게시 버튼 활성화
+if (inpComment.value) {
+    btnComment.disabled = false;
+} else {
+    btnComment.disabled = true;
+}
 inpComment.addEventListener('input', () => {
-    console.log(inpComment.value);
     if (inpComment.value) {
         btnComment.disabled = false;
     } else {
@@ -268,7 +271,7 @@ btnComment.addEventListener('click', (e) => {
 async function postComment() {
     console.log(inpComment.value);
 
-    await fetch(`http://146.56.183.55:5050/post/${putData.id}/comments`, {
+    await fetch(`http://146.56.183.55:5050/post/${dataId}/comments`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -289,7 +292,7 @@ let commentsId = [];
 let delId;
 async function getComment() {
     const res = await fetch(
-        `http://146.56.183.55:5050/post/${putData.id}/comments`,
+        `http://146.56.183.55:5050/post/${dataId}/comments`,
         {
             method: 'GET',
             headers: {
@@ -303,20 +306,31 @@ async function getComment() {
     let liComment = document.querySelector('.cont-comments ul');
     for (const [index, comment] of data.comments.entries()) {
         commentsId.push(comment.id);
+        console.log(comment.author.image);
+
+        let commentAuthorImage = '';
+        if (comment.author.image.split(':')[0] === 'http') {
+            commentAuthorImage = comment.author.image;
+        } else {
+            commentAuthorImage =
+                'http://146.56.183.55:5050/' + comment.author.image;
+        }
+
         liComment.innerHTML += `
-      <li>
-        <button></button>    
-        <a href="profile.html"><img src=${
-            comment.author.image
-        } alt="작성자 프로필 사진" class="img-user-comment"></a>
-        <div class="box-comment">
-            <p class="txt-comment-name-user">${
-                comment.author.username
-            }<small>· ${dateBefore(comment.createdAt)}</small></p>
-            <p class="txt-comment-desc">${comment.content}</p>
-        </div>
-      </li>
-    `;
+        <li>
+            <button></button>    
+            <a href="profile.html?${comment.author.accountname}">
+                <img src=${commentAuthorImage} alt="작성자 프로필 사진" class="img-user-comment">
+            </a>
+            <div class="box-comment">
+                <p class="txt-comment-name-user">${comment.author.username}
+                    <small>· ${dateBefore(comment.createdAt)}</small>
+                </p>
+                <p class="txt-comment-desc">${comment.content}</p>
+            </div>
+        </li>
+        `;
+
         if (comment.author._id === MY_ID) {
             document
                 .querySelectorAll('.li-comments li button')
@@ -359,7 +373,7 @@ async function getComment() {
 // 7-4. 댓글 삭제
 async function commentDel() {
     const res = await fetch(
-        `http://146.56.183.55:5050/post/${putData.id}/comments/${delId}`,
+        `http://146.56.183.55:5050/post/${dataId}/comments/${delId}`,
         {
             method: 'DELETE',
             headers: {
@@ -372,7 +386,6 @@ async function commentDel() {
     console.log(data);
 
     if (data) {
-        alert('삭제 성공');
         location.reload();
     } else {
         alert('삭제 실패');
@@ -382,7 +395,7 @@ async function commentDel() {
 // 7-5. 댓글 신고
 async function commentReport() {
     const res = await fetch(
-        `http://146.56.183.55:5050/post/${putData.id}/comments/${delId}`,
+        `http://146.56.183.55:5050/post/${dataId}/comments/${delId}`,
         {
             method: 'GET',
             headers: {
@@ -395,7 +408,6 @@ async function commentReport() {
     console.log(data);
 
     if (data) {
-        alert('신고가 접수되었습니다.');
         location.reload();
     } else {
         alert('신고 실패');
@@ -436,7 +448,6 @@ function timeNow() {
 
 // 10. my profile image
 async function myProfile() {
-    const accountName = sessionStorage.getItem('accountname');
     const res = await fetch(
         `http://146.56.183.55:5050/profile/${accountName}`,
         {
@@ -448,10 +459,14 @@ async function myProfile() {
         }
     );
     const data = await res.json();
-    commentUser.src = data.profile.image;
+    if(data.profile.image.split(':')[0] === 'http'){
+      commentUser.src = data.profile.image;
+    } else {
+      commentUser.src = 'http://146.56.183.55:5050/' + data.profile.image;
+    }
 }
 
 // 11. store Target User AccountName
 function targetAccountName(id) {
-    sessionStorage.setItem('target-account', id);
+    location.href = `../pages/profile.html?${id}`;
 }
