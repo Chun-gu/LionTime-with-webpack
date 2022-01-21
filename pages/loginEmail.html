@@ -1,47 +1,54 @@
 <!DOCTYPE html>
 <html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+        />
+        <link rel="stylesheet" href="../css/reset.css" />
+        <link rel="stylesheet" href="../css/loginEmail.css" />
+        <link rel="stylesheet" href="../font/font.css" />
+        <title></title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/loginEmail.css">
-    <link rel="stylesheet" href="../font/font.css">
-    <title></title>
-</head>
-
-<body>
-    <div class="container">
-        <div class="statusBar">
-            <div class="statusBarLeft">
-                <img src="../images/Mobile_Signal.png" alt="statusBarMobile">
-                <img src="../images/Wifi.png" alt="statusBarWifi">
-                <img src="../images/battery.png" alt="statusBarBattery">
+    <body>
+        <div class="container">
+            <div class="statusBar">
+                <div class="statusBarLeft">
+                    <img
+                        src="../images/Mobile_Signal.png"
+                        alt="statusBarMobile"
+                    />
+                    <img src="../images/Wifi.png" alt="statusBarWifi" />
+                    <img src="../images/battery.png" alt="statusBarBattery" />
+                </div>
             </div>
+            <h1>로그인</h1>
+            <form class="loginForm">
+                <div class="idEmail">
+                    <label for="loginIdEmail">이메일</label><br />
+                    <input type="text" id="idEmailInput" />
+                </div>
+                <div class="pw">
+                    <label for="loginPw">비밀번호</label><br />
+                    <input type="password" id="loginPWInput" />
+                </div>
+                <p class="loginError"></p>
+                <div class="submit">
+                    <label for="submitBtn"></label>
+                    <button type="button" id="submitBtn" disabled>
+                        로그인
+                    </button>
+                </div>
+                <div class="signupEmail">
+                    <a href="/pages/join.html">이메일로 회원가입</a>
+                </div>
+            </form>
         </div>
-        <h1>로그인</h1>
-        <form class="loginForm">
-            <div class="idEmail">
-                <label for="loginIdEmail">이메일</label><br>
-                <input type="text" id="idEmailInput">
-            </div>
-            <div class="pw">
-                <label for="loginPw">비밀번호</label><br>
-                <input type="password" id="loginPWInput">
-            </div>
-            <p class="loginError"></p>
-            <div class="submit">
-                <label for="submitBtn"></label>
-                <button type="button" id="submitBtn" disabled>로그인</button>
-            </div>
-            <div class="signupEmail">
-                <a href="/pages/join.html">이메일로 회원가입</a>
-            </div>
-        </form>
-    </div>
-    <script src="../js/loginEmail.js"></script>
-    <!-- script 태그는 꼭 body 태그 밑에 하기..  -->
-</body>
-
+        <script src="../js/loginEmail.js"></script>
+        <!-- script 태그는 꼭 body 태그 밑에 하기..  -->
+    </body>
 </html>

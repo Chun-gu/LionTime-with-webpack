@@ -1,98 +1,128 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>chat-list</title>
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/chatList.css">
-    <link rel="stylesheet" href="../font/font.css">
-    <script src="../js/footer.js" defer></script>
-</head>
-<body>
-    <h1 class="sr-only">채팅리스트 화면</h1>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+        />
+        <title>chat-list</title>
+        <link rel="stylesheet" href="../css/reset.css" />
+        <link rel="stylesheet" href="../css/chatList.css" />
+        <link rel="stylesheet" href="../font/font.css" />
+        <script src="../js/footer.js" defer></script>
+    </head>
+    <body>
+        <h1 class="sr-only">채팅리스트 화면</h1>
 
-    <header>
-        <div class="status-bar">
-            <time class="text-current-time"></time>
-            <ul class="status-menu">
-                <li class="mobile-signal"></li>
-                <li class="wifi"></li>
-                <li class="battery"></li>
+        <header>
+            <div class="status-bar">
+                <time class="text-current-time"></time>
+                <ul class="status-menu">
+                    <li class="mobile-signal"></li>
+                    <li class="wifi"></li>
+                    <li class="battery"></li>
+                </ul>
+            </div>
+            <div class="top-nav">
+                <button type="button" class="btn-back-key">뒤로가기</button>
+                <button type="button" class="btn-menu">메뉴</button>
+            </div>
+        </header>
+
+        <main>
+            <ul class="list-chat">
+                <li class="list-chat-box new">
+                    <a href="chatRoom.html" class="link-chat-box">
+                        <div class="wrap-chat-box-img">
+                            <img
+                                src="../images/default-profile-img.png"
+                                alt="프로필이미지"
+                                class="img-profile"
+                            />
+                        </div>
+                        <div class="wrap-chat-box-text">
+                            <em class="text-user-name"
+                                >애월읍 위니브 감귤농장</em
+                            >
+                            <p class="text-chat-cont">
+                                이번에 정정 언제하맨마씸?
+                            </p>
+                            <small class="time-date">2020.10.25</small>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="list-chat-box new">
+                    <a href="chatRoom.html" class="link-chat-box">
+                        <div class="wrap-chat-box-img">
+                            <img
+                                src="../images/default-profile-img.png"
+                                alt="프로필이미지"
+                                class="img-profile"
+                            />
+                        </div>
+                        <div class="wrap-chat-box-text">
+                            <em class="text-user-name">제주감귤마을</em>
+                            <p class="text-chat-cont">
+                                깊은 어둠의 존재감, 롤스로이스 뉴 블랙 배지
+                                어쩌고저쩌고 블라블라 이건 긴 문장이 들어가도
+                                짤려야 하며 한줄을 넘어서면 안되고
+                            </p>
+                            <small class="time-date">2020.10.25</small>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="list-chat-box">
+                    <a href="chatRoom.html" class="link-chat-box">
+                        <div class="wrap-chat-box-img">
+                            <img
+                                src="../images/default-profile-img.png"
+                                alt="프로필이미지"
+                                class="img-profile"
+                            />
+                        </div>
+                        <div class="wrap-chat-box-text">
+                            <em class="text-user-name"
+                                >누구네 농장 친환경 한라봉</em
+                            >
+                            <p class="text-chat-cont">
+                                내 차는 내가 평가한다. 오픈 이벤트에
+                                참여하든말든 이건 긴 문장이 들어가도 짤려야
+                                한다. 나중에는 노드로 가져와야 하나 그냥 js로도
+                                가능한가
+                            </p>
+                            <small class="time-date">2020.10.25</small>
+                        </div>
+                    </a>
+                </li>
             </ul>
-        </div>
-        <div class="top-nav">
-            <button type="button" class="btn-back-key">뒤로가기</button>
-            <button type="button" class="btn-menu">메뉴</button>
-        </div>
-    </header>
+        </main>
 
-    <main>
-        <ul class="list-chat">
-            <li class="list-chat-box new">
-                <a href="chatRoom.html" class="link-chat-box">
-                    <div class="wrap-chat-box-img">
-                        <img src="../images/default-profile-img.png" alt="프로필이미지" class="img-profile">
-                    </div>
-                    <div class="wrap-chat-box-text">
-                        <em class="text-user-name">애월읍 위니브 감귤농장</em>
-                        <p class="text-chat-cont">이번에 정정 언제하맨마씸?</p>
-                        <small class="time-date">2020.10.25</small>
-                    </div>
+        <footer>
+            <nav class="nav-wrap-link">
+                <a href="home.html" class="link-other-page home">
+                    <span class="link-img home"></span>
+                    <em>홈</em>
                 </a>
-            </li>
-
-            <li class="list-chat-box new">
-                <a href="chatRoom.html" class="link-chat-box">
-                    <div class="wrap-chat-box-img">
-                        <img src="../images/default-profile-img.png" alt="프로필이미지" class="img-profile">
-                    </div>
-                    <div class="wrap-chat-box-text">
-                        <em class="text-user-name">제주감귤마을</em>
-                        <p class="text-chat-cont">깊은 어둠의 존재감, 롤스로이스 뉴 블랙 배지 어쩌고저쩌고 블라블라 이건 긴 문장이 들어가도 짤려야 하며 한줄을 넘어서면 안되고</p>
-                        <small class="time-date">2020.10.25</small>
-                    </div>
+                <a href="chatList.html" class="link-other-page chat this-page">
+                    <span class="link-img chat this-page"></span>
+                    <em>채팅</em>
                 </a>
-            </li>
-
-            <li class="list-chat-box">
-                <a href="chatRoom.html" class="link-chat-box">
-                    <div class="wrap-chat-box-img">
-                        <img src="../images/default-profile-img.png" alt="프로필이미지" class="img-profile">
-                    </div>
-                    <div class="wrap-chat-box-text">
-                        <em class="text-user-name">누구네 농장 친환경 한라봉</em>
-                        <p class="text-chat-cont">내 차는 내가 평가한다. 오픈 이벤트에 참여하든말든 이건 긴 문장이 들어가도 짤려야 한다. 나중에는 노드로 가져와야 하나 그냥 js로도 가능한가</p>
-                        <small class="time-date">2020.10.25</small>
-                    </div>
+                <a href="postUpload.html" class="link-other-page write">
+                    <span class="link-img write"></span>
+                    <em>게시물 작성</em>
                 </a>
-            </li>
-        </ul>
-    </main>
+                <a href="profile.html" class="link-other-page profile">
+                    <span class="link-img profile"></span>
+                    <em>프로필</em>
+                </a>
+            </nav>
+        </footer>
 
-    <footer>
-        <nav class="nav-wrap-link">
-            <a href="home.html" class="link-other-page home">
-                <span class="link-img home"></span>
-                <em>홈</em>
-            </a>
-            <a href="chatList.html" class="link-other-page chat this-page">
-                <span class="link-img chat this-page"></span>
-                <em>채팅</em>
-            </a>
-            <a href="postUpload.html" class="link-other-page write">
-                <span class="link-img write"></span>
-                <em>게시물 작성</em>
-            </a>
-            <a href="profile.html" class="link-other-page profile">
-                <span class="link-img profile"></span>
-                <em>프로필</em>
-            </a>
-        </nav>
-    </footer>
-
-    <script src="../js/chatList.js"></script>
-    
-</body>
+        <script src="../js/chatList.js"></script>
+    </body>
 </html>

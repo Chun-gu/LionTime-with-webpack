@@ -1,46 +1,57 @@
 <!DOCTYPE html>
 <html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+        />
+        <link rel="stylesheet" href="../css/reset.css" />
+        <link rel="stylesheet" href="../css/join.css" />
+        <link rel="stylesheet" href="../font/font.css" />
+        <title>이메일로 회원가입</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/join.css">
-    <link rel="stylesheet" href="../font/font.css">
-    <title>이메일로 회원가입</title>
-</head>
-
-<body>
-    <div class="container">
-        <div class="statusBar">
-            <div class="statusBarLeft">
-                <img src="../images/Mobile_Signal.png" alt="statusBarMobile">
-                <img src="../images/Wifi.png" alt="statusBarWifi">
-                <img src="../images/battery.png" alt="statusBarBattery">
+    <body>
+        <div class="container">
+            <div class="statusBar">
+                <div class="statusBarLeft">
+                    <img
+                        src="../images/Mobile_Signal.png"
+                        alt="statusBarMobile"
+                    />
+                    <img src="../images/Wifi.png" alt="statusBarWifi" />
+                    <img src="../images/battery.png" alt="statusBarBattery" />
+                </div>
             </div>
+            <h1>이메일로 회원가입</h1>
+            <form class="input">
+                <div class="emailSignup">
+                    <label for="emailInput">이메일</label><br />
+                    <input
+                        type="email"
+                        placeholder="이메일 주소를 입력해주세요"
+                        id="emailInput"
+                    />
+                    <p class="emailMessage"></p>
+                </div>
+                <div class="pw">
+                    <label for="pwInput">비밀번호</label><br />
+                    <input
+                        type="text"
+                        placeholder="비밀번호를 입력하세요"
+                        id="pwInput"
+                    />
+                    <p class="passwordMessage"></p>
+                </div>
+                <div class="next">
+                    <label for="nextBtn"></label>
+                    <button id="nextBtn" disabled>다음</button>
+                </div>
+            </form>
         </div>
-        <h1>이메일로 회원가입</h1>
-        <form class="input">
-            <div class="emailSignup">
-                <label for="emailInput">이메일</label><br>
-                <input type="email" placeholder="이메일 주소를 입력해주세요" id="emailInput">
-                <p class="emailMessage"></p>
-            </div>
-            <div class="pw">
-                <label for="pwInput">비밀번호</label><br>
-                <input type="text" placeholder="비밀번호를 입력하세요" id="pwInput">
-                <p class="passwordMessage"></p>
-            </div>
-            <div class="next">
-                <label for="nextBtn"></label>
-                <button id="nextBtn" disabled>
-                    다음
-                </button>
-            </div>
-        </form>
-    </div>
-    <script src="../js/joinEmail.js"></script>
-</body>
-
+        <script src="../js/joinEmail.js"></script>
+    </body>
 </html>

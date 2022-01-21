@@ -1,51 +1,86 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/productAdd.css">
-    <title>물건 등록</title>
-</head>
-<body>
-    <div id="app">
-        <h1 class="sr-only">상품 등록</h1>
-        <div class="status-bar">
-          <time class="text-current-time"></time>
-          <ul class="status-menu">
-              <li class="mobile-signal"></li>
-              <li class="wifi"></li>
-              <li class="battery"></li>
-          </ul>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+        />
+        <link rel="stylesheet" href="../css/reset.css" />
+        <link rel="stylesheet" href="../css/productAdd.css" />
+        <title>물건 등록</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1 class="sr-only">상품 등록</h1>
+            <div class="status-bar">
+                <time class="text-current-time"></time>
+                <ul class="status-menu">
+                    <li class="mobile-signal"></li>
+                    <li class="wifi"></li>
+                    <li class="battery"></li>
+                </ul>
+            </div>
+            <nav>
+                <button class="btn-back"></button>
+                <input
+                    type="button"
+                    form="add-product"
+                    disabled="disabled"
+                    value="저장"
+                    class="btn-save"
+                />
+            </nav>
+            <section>
+                <h2 class="sr-only">등록할 상품 기입</h2>
+                <form id="add-product">
+                    <label for="img-product" class="txt-label">
+                        이미지 등록
+                        <div class="box-upload">
+                            <img
+                                src="../images/img-preview.png"
+                                alt="업로드 이미지 미리보기"
+                                class="img-preview"
+                            />
+                            <img
+                                src="../images/icon-img-button.png"
+                                alt="이미지 업로드"
+                                class="upload-logo"
+                            />
+                        </div>
+                    </label>
+                    <input type="file" accept="image/*" id="img-product" />
+
+                    <label for="name-product" class="txt-label">상품명</label>
+                    <input
+                        type="text"
+                        placeholder="2~15자 이내여야 합니다."
+                        minlength="2"
+                        maxlength="15"
+                        id="name-product"
+                        class="inp-product inp-name"
+                    />
+
+                    <label for="price-product" class="txt-label">가격</label>
+                    <input
+                        type="text"
+                        placeholder="숫자만 입력 가능합니다."
+                        id="price-product"
+                        class="inp-product inp-price"
+                    />
+
+                    <label for="link-sale" class="txt-label">판매 링크</label>
+                    <input
+                        type="text"
+                        placeholder="URL을 입력해주세요."
+                        id="link-product"
+                        class="inp-product inp-link"
+                    />
+                </form>
+            </section>
         </div>
-        <nav>
-            <button class="btn-back"></button>
-            <input type="button" form="add-product" disabled="disabled" value="저장" class="btn-save">
-        </nav>
-        <section>
-            <h2 class="sr-only">등록할 상품 기입</h2>
-            <form id="add-product">
-                <label for="img-product" class="txt-label">
-                    이미지 등록
-                    <div class="box-upload">
-                        <img src="../images/img-preview.png" alt="업로드 이미지 미리보기" class="img-preview">
-                        <img src="../images/icon-img-button.png" alt="이미지 업로드" class="upload-logo">
-                    </div>
-                </label>
-                <input type="file" accept="image/*" id="img-product">
-    
-                <label for="name-product" class="txt-label">상품명</label>
-                <input type="text" placeholder="2~15자 이내여야 합니다." minlength="2" maxlength="15" id="name-product" class="inp-product inp-name">
-    
-                <label for="price-product" class="txt-label">가격</label>
-                <input type="text" placeholder="숫자만 입력 가능합니다." id="price-product" class="inp-product inp-price">
-    
-                <label for="link-sale" class="txt-label">판매 링크</label>
-                <input type="text" placeholder="URL을 입력해주세요." id="link-product" class="inp-product inp-link">
-            </form>
-        </section>
-    </div>
-    <script src="../js/productAdd.js"></script>
-</body>
+        <script src="../js/productAdd.js"></script>
+    </body>
 </html>

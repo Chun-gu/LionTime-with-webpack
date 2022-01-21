@@ -1,46 +1,75 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/postUpload.css">
-    <title>게시글 업로드</title>
-</head>
-<body>
-    <div id="app">
-        <h1 class="sr-only">게시글 업로드 페이지</h1>
-        <div class="status-bar">
-          <time class="text-current-time"></time>
-          <ul class="status-menu">
-              <li class="mobile-signal"></li>
-              <li class="wifi"></li>
-              <li class="battery"></li>
-          </ul>
-        </div>
-        <nav>
-            <button class="btn-back"></button>
-            <button type="submit" form="upload-post" disabled="disabled" class="btn-upload">업로드</button>
-        </nav>
-        <section>
-            <h2 class="sr-only">게시글 업로드 폼</h2>
-            <img src="../images/default-profile-img-small.png" alt="작성자 프로필 사진" class="img-user">
-            <form id="upload-post">
-                <label for="txt-post" class="sr-only">게시글 입력칸</label>
-                <textarea placeholder="게시글 입력하기..." onkeydown="resize(this)" onkeyup="resize(this)" id="txt-post" class="inp-post"></textarea>
-                <div class="box-slider">
-                    <div class="img-container">
-                      <div class="row"></div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+        />
+        <link rel="stylesheet" href="../css/reset.css" />
+        <link rel="stylesheet" href="../css/postUpload.css" />
+        <title>게시글 업로드</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1 class="sr-only">게시글 업로드 페이지</h1>
+            <div class="status-bar">
+                <time class="text-current-time"></time>
+                <ul class="status-menu">
+                    <li class="mobile-signal"></li>
+                    <li class="wifi"></li>
+                    <li class="battery"></li>
+                </ul>
+            </div>
+            <nav>
+                <button class="btn-back"></button>
+                <button
+                    type="submit"
+                    form="upload-post"
+                    disabled="disabled"
+                    class="btn-upload"
+                >
+                    업로드
+                </button>
+            </nav>
+            <section>
+                <h2 class="sr-only">게시글 업로드 폼</h2>
+                <img
+                    src="../images/default-profile-img-small.png"
+                    alt="작성자 프로필 사진"
+                    class="img-user"
+                />
+                <form id="upload-post">
+                    <label for="txt-post" class="sr-only">게시글 입력칸</label>
+                    <textarea
+                        placeholder="게시글 입력하기..."
+                        onkeydown="resize(this)"
+                        onkeyup="resize(this)"
+                        id="txt-post"
+                        class="inp-post"
+                    ></textarea>
+                    <div class="box-slider">
+                        <div class="img-container">
+                            <div class="row"></div>
+                        </div>
                     </div>
-                </div>
-                <label for="img-upload" class="img-upload">
-                    <img src="../images/icon-img-button-fill.png" alt="업로드 이미지">
-                </label>
-                <input type="file" multiple accept="image/*" id="img-upload">
-            </form>
-        </section>
-    </div> 
-    <script src="../js/postUpload.js"></script>
-</body>
+                    <label for="img-upload" class="img-upload">
+                        <img
+                            src="../images/icon-img-button-fill.png"
+                            alt="업로드 이미지"
+                        />
+                    </label>
+                    <input
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        id="img-upload"
+                    />
+                </form>
+            </section>
+        </div>
+        <script src="../js/postUpload.js"></script>
+    </body>
 </html>

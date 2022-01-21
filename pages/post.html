@@ -1,95 +1,121 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/modal.css">
-    <link rel="stylesheet" href="../css/post.css">
-    <title>게시글</title>
-</head>
-<body>
-    <div id="app">
-        <h1 class="sr-only">게시물</h1>
-        <div class="status-bar">
-          <time class="text-current-time">9:41 AM</time>
-          <ul class="status-menu">
-              <li class="mobile-signal"></li>
-              <li class="wifi"></li>
-              <li class="battery"></li>
-          </ul>
-        </div>
-        <nav>
-            <button class="btn-back"></button>
-            <!-- <button class="btn-more-mini owner"></button> -->
-        </nav>
-        <main>
-            <section class="cont-post">
-                <h2 class="sr-only">작성자</h2>
-                <div class="img-user">
-                    <a href="profile.html"><img alt="작성자 프로필 사진" class="img-user-profile"></a>
-                </div>
-                <div class="box-post">
-                    <button class="btn-more-mini"></button>
-                
-                    <p class="name-user"></p>
-                    <p class="id-user"></p>
-                    <p class="txt-desc">
-                    </p>
-                    <div class="post-list-wrapper">
-                        <div class="btn-slide">
-                            <button class="prev"></button>
-                            <button class="next"></button>
-                        </div>
-                        <ul class="post-list"></ul>
-                        <ul class="img-check"></ul>
-                    </div>
-                    <div class="icon-reaction">
-                        <img src="../images/icon-heart.png" alt="좋아요 개수" class="img-like">
-                        <p class="count-like"></p>
-                        <img src="../images/icon-message-small.png" alt="댓글 개수" class="img-comment">
-                        <p class="count-comment"></p>
-                    </div>
-                    <p class="date-upload"></p>
-                </div>
-            </section>
-            <section class="cont-comments">
-                <h2 class="sr-only">댓글</h2>
-                <ul class="li-comments">
-                </ul>
-            </section>
-        </main>
-        <footer>
-            <img src="../images/default-profile-img-small.png" alt="내 프로필 사진" class="img-profile">
-            <form>
-                <label for="txt-comment" class="sr-only">댓글 입력칸</label>
-                <input type="text" placeholder="댓글 입력하기..." id="txt-comment">
-                <button type="button" class="btn-comment" disabled="disabled">게시</button>
-            </form>
-            <!-- 모달창 추가 -->
-            <div class="modal">
-                <div class="modal-bar"></div>
-                <ul class="list-modal-container">
-                    
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="upgrade-insecure-requests"
+        />
+        <link rel="stylesheet" href="../css/reset.css" />
+        <link rel="stylesheet" href="../css/modal.css" />
+        <link rel="stylesheet" href="../css/post.css" />
+        <title>게시글</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1 class="sr-only">게시물</h1>
+            <div class="status-bar">
+                <time class="text-current-time">9:41 AM</time>
+                <ul class="status-menu">
+                    <li class="mobile-signal"></li>
+                    <li class="wifi"></li>
+                    <li class="battery"></li>
                 </ul>
             </div>
-            <div class="dimd"></div>
-            
-            <div class="alert">
-                <p class="txt-alert-message"></p>
-                <div class="wrap-alert-btn">
-                  <button type="button" class="btn-alert btn-closed">취소</button>
-                  <button type="button" class="btn-alert"></button>
-                </div>
-            </div>
-            <div class="alert-dimd"></div>
-        
-        </footer>
-        
-        <script src="../js/modal.js"></script>
-        <script src="../js/post.js"></script>
-        <script src="../js/alert.js"></script>
-</body>
-</html>
+            <nav>
+                <button class="btn-back"></button>
+                <!-- <button class="btn-more-mini owner"></button> -->
+            </nav>
+            <main>
+                <section class="cont-post">
+                    <h2 class="sr-only">작성자</h2>
+                    <div class="img-user">
+                        <a href="profile.html"
+                            ><img
+                                alt="작성자 프로필 사진"
+                                class="img-user-profile"
+                        /></a>
+                    </div>
+                    <div class="box-post">
+                        <button class="btn-more-mini"></button>
 
+                        <p class="name-user"></p>
+                        <p class="id-user"></p>
+                        <p class="txt-desc"></p>
+                        <div class="post-list-wrapper">
+                            <div class="btn-slide">
+                                <button class="prev"></button>
+                                <button class="next"></button>
+                            </div>
+                            <ul class="post-list"></ul>
+                            <ul class="img-check"></ul>
+                        </div>
+                        <div class="icon-reaction">
+                            <img
+                                src="../images/icon-heart.png"
+                                alt="좋아요 개수"
+                                class="img-like"
+                            />
+                            <p class="count-like"></p>
+                            <img
+                                src="../images/icon-message-small.png"
+                                alt="댓글 개수"
+                                class="img-comment"
+                            />
+                            <p class="count-comment"></p>
+                        </div>
+                        <p class="date-upload"></p>
+                    </div>
+                </section>
+                <section class="cont-comments">
+                    <h2 class="sr-only">댓글</h2>
+                    <ul class="li-comments"></ul>
+                </section>
+            </main>
+            <footer>
+                <img
+                    src="../images/default-profile-img-small.png"
+                    alt="내 프로필 사진"
+                    class="img-profile"
+                />
+                <form>
+                    <label for="txt-comment" class="sr-only">댓글 입력칸</label>
+                    <input
+                        type="text"
+                        placeholder="댓글 입력하기..."
+                        id="txt-comment"
+                    />
+                    <button
+                        type="button"
+                        class="btn-comment"
+                        disabled="disabled"
+                    >
+                        게시
+                    </button>
+                </form>
+                <!-- 모달창 추가 -->
+                <div class="modal">
+                    <div class="modal-bar"></div>
+                    <ul class="list-modal-container"></ul>
+                </div>
+                <div class="dimd"></div>
+                <div class="alert">
+                    <p class="txt-alert-message"></p>
+                    <div class="wrap-alert-btn">
+                        <button type="button" class="btn-alert btn-closed">
+                            취소
+                        </button>
+                        <button type="button" class="btn-alert"></button>
+                    </div>
+                </div>
+                <div class="alert-dimd"></div>
+            </footer>
+
+            <script src="../js/modal.js"></script>
+            <script src="../js/post.js"></script>
+            <script src="../js/alert.js"></script>
+        </div>
+    </body>
+</html>
