@@ -25,7 +25,7 @@ const postDate = document.querySelector('.date-upload');
 const commentUser = document.querySelector('.img-profile');
 
 (async function getPostData() {
-    const res = await fetch(`http://146.56.183.55:5050/post/${POST_ID}`, {
+    const res = await fetch(`https://api.mandarin.cf/post/${POST_ID}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const commentUser = document.querySelector('.img-profile');
     if (author.image.split(':')[0] === 'http') {
         postUserProfile.src = author.image;
     } else {
-        postUserProfile.src = 'http://146.56.183.55:5050/' + author.image;
+        postUserProfile.src = 'https://api.mandarin.cf/' + author.image;
     }
     postUserProfile.addEventListener('click', () => {
         targetAccountName(author.accountname);
@@ -106,7 +106,7 @@ postBtn.addEventListener('click', () => {
 
 // 3-2. 게시글 삭제
 async function postDel() {
-    const res = await fetch(`http://146.56.183.55:5050/post/${dataId}`, {
+    const res = await fetch(`https://api.mandarin.cf/post/${dataId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -114,7 +114,6 @@ async function postDel() {
         },
     });
     const data = await res.json();
-    console.log(data);
 
     if (data) {
         location.href = `/pages/profile.html?${accountName}`;
@@ -125,7 +124,7 @@ async function postDel() {
 
 // 3-3. 게시글 신고
 async function postReport() {
-    const res = await fetch(`http://146.56.183.55:5050/post/${dataId}/report`, {
+    const res = await fetch(`https://api.mandarin.cf/post/${dataId}/report`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -133,7 +132,6 @@ async function postReport() {
         },
     });
     const data = await res.json();
-    console.log(data);
 
     if (data) {
         location.reload();
@@ -169,7 +167,6 @@ document.addEventListener('click', (e) => {
         const alertOn = document.querySelector('.alert.on');
         if (alertOn) {
             document.querySelector('.btn-slide').style.zIndex = 0;
-            console.log(alertOn.children[1].children[1].className);
             // 게시글 삭제
             if (
                 alertOn.children[1].children[1].className ==
@@ -226,7 +223,7 @@ btnLike.addEventListener('click', () => {
 
 // 좋아요
 async function heart() {
-    await fetch(`http://146.56.183.55:5050/post/${dataId}/heart`, {
+    await fetch(`https://api.mandarin.cf/post/${dataId}/heart`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -236,7 +233,7 @@ async function heart() {
 }
 // 좋아요 취소
 async function unHeart() {
-    await fetch(`http://146.56.183.55:5050/post/${dataId}/unheart`, {
+    await fetch(`https://api.mandarin.cf/post/${dataId}/unheart`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -269,9 +266,7 @@ btnComment.addEventListener('click', (e) => {
 
 // 7-2. 댓글 작성
 async function postComment() {
-    console.log(inpComment.value);
-
-    await fetch(`http://146.56.183.55:5050/post/${dataId}/comments`, {
+    await fetch(`https://api.mandarin.cf/post/${dataId}/comments`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -291,29 +286,25 @@ async function postComment() {
 let commentsId = [];
 let delId;
 async function getComment() {
-    const res = await fetch(
-        `http://146.56.183.55:5050/post/${dataId}/comments`,
-        {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${TOKEN}`,
-            },
-        }
-    );
+    const res = await fetch(`https://api.mandarin.cf/post/${dataId}/comments`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`,
+        },
+    });
     const data = await res.json();
 
     let liComment = document.querySelector('.cont-comments ul');
     for (const [index, comment] of data.comments.entries()) {
         commentsId.push(comment.id);
-        console.log(comment.author.image);
 
         let commentAuthorImage = '';
         if (comment.author.image.split(':')[0] === 'http') {
             commentAuthorImage = comment.author.image;
         } else {
             commentAuthorImage =
-                'http://146.56.183.55:5050/' + comment.author.image;
+                'https://api.mandarin.cf/' + comment.author.image;
         }
 
         liComment.innerHTML += `
@@ -357,7 +348,6 @@ async function getComment() {
         button.addEventListener('click', () => {
             btnCheck = 'comment';
             delId = commentsId[index];
-            console.log(delId);
             setTimeout(function () {
                 const putBtn = document.querySelectorAll(
                     '.list-modal-container li'
@@ -373,7 +363,7 @@ async function getComment() {
 // 7-4. 댓글 삭제
 async function commentDel() {
     const res = await fetch(
-        `http://146.56.183.55:5050/post/${dataId}/comments/${delId}`,
+        `https://api.mandarin.cf/post/${dataId}/comments/${delId}`,
         {
             method: 'DELETE',
             headers: {
@@ -383,7 +373,6 @@ async function commentDel() {
         }
     );
     const data = await res.json();
-    console.log(data);
 
     if (data) {
         location.reload();
@@ -395,7 +384,7 @@ async function commentDel() {
 // 7-5. 댓글 신고
 async function commentReport() {
     const res = await fetch(
-        `http://146.56.183.55:5050/post/${dataId}/comments/${delId}`,
+        `https://api.mandarin.cf/post/${dataId}/comments/${delId}`,
         {
             method: 'GET',
             headers: {
@@ -405,7 +394,6 @@ async function commentReport() {
         }
     );
     const data = await res.json();
-    console.log(data);
 
     if (data) {
         location.reload();
@@ -448,21 +436,18 @@ function timeNow() {
 
 // 10. my profile image
 async function myProfile() {
-    const res = await fetch(
-        `http://146.56.183.55:5050/profile/${accountName}`,
-        {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${TOKEN}`,
-            },
-        }
-    );
+    const res = await fetch(`https://api.mandarin.cf/profile/${accountName}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`,
+        },
+    });
     const data = await res.json();
-    if(data.profile.image.split(':')[0] === 'http'){
-      commentUser.src = data.profile.image;
+    if (data.profile.image.split(':')[0] === 'http') {
+        commentUser.src = data.profile.image;
     } else {
-      commentUser.src = 'http://146.56.183.55:5050/' + data.profile.image;
+        commentUser.src = 'https://api.mandarin.cf/' + data.profile.image;
     }
 }
 

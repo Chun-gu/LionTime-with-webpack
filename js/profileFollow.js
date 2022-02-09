@@ -1,4 +1,4 @@
-const API_URL = 'http://146.56.183.55:5050/';
+const API_URL = 'https://api.mandarin.cf/';
 const MY_ID = sessionStorage.getItem('my-id');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
@@ -88,7 +88,7 @@ function makeFollowsItem(follows) {
     }
     img.setAttribute(
         'onError',
-        "this.src='http://146.56.183.55:5050/Ellipse.png'"
+        "this.src='https://api.mandarin.cf/Ellipse.png'"
     );
     img.dataset.accountname = accountname;
     const div = document.createElement('div');

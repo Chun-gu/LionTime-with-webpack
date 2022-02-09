@@ -9,7 +9,6 @@ inputText.addEventListener('input', () => {
     } else {
         messageSendBtn.classList.remove('change-color');
     }
-    console.log(inputText.value);
 });
 
 backKeyBtn.addEventListener('click', () => {
@@ -21,6 +20,5 @@ function currentTimer() {
     currentTime.innerText = `${date.getHours()} : ${
         date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
     } ${date.getHours() >= 12 ? `PM` : `AM`}`;
-    console.log('시간체크중');
 }
 setInterval(currentTimer, 1000);

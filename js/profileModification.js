@@ -1,4 +1,4 @@
-const API_URL = 'http://146.56.183.55:5050/';
+const API_URL = 'https://api.mandarin.cf/';
 const isLogin = !!sessionStorage.getItem('my-token');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
@@ -121,7 +121,6 @@ async function validateId(id) {
         return false;
     } else {
         const isExist = await checkDuplicateId(id);
-        console.log(isExist);
         if (isExist) {
             invalidId.textContent = '이미 사용 중인 ID입니다.';
             inputId.classList.add('invalid');
@@ -148,7 +147,6 @@ async function checkDuplicateId(accountname) {
             }),
         });
         const resJson = await res.json();
-        console.log(resJson.message);
         return resJson.message === '사용 가능한 계정ID 입니다.' ? false : true;
     } catch (err) {
         console.log(err);
