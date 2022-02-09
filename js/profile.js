@@ -1,4 +1,4 @@
-const API_URL = 'http://146.56.183.55:5050/';
+const API_URL = 'https://api.mandarin.cf/';
 const MY_ID = sessionStorage.getItem('my-id');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
@@ -29,6 +29,29 @@ const isMyProfile = MY_ACCOUNTNAME === TARGET_ACCOUNTNAME;
 //         console.log(err);
 //     }
 // })();
+
+async function register() {
+    try {
+        const response = await fetch(API_URL + '/user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user: {
+                    username: 'cnsrncnsrn',
+                    email: 'cnsrncnsrn@naver.com',
+                    password: 'cnsrncnsrn',
+                    accountname: 'cnsrncnsrn',
+                    intro: 'cnsrncnsrn',
+                },
+            }),
+        });
+        const res = await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 // API 데이터 가져오기
 async function fetchData(endpoint) {
