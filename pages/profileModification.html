@@ -11,11 +11,21 @@
         <title>프로필 수정</title>
         <link rel="stylesheet" href="../css/reset.css" />
         <link rel="stylesheet" href="../font/font.css" />
+        <link rel="stylesheet" href="../css/statusBar.css" />
         <link rel="stylesheet" href="../css/profileModification.css" />
+        <script src="../js/statusBar.js" defer></script>
         <script src="../js/profileModification.js" defer></script>
     </head>
     <body>
         <div id="app">
+            <div class="status-bar">
+                <time class="current-time"></time>
+                <ul class="status-menu">
+                    <li class="signal"></li>
+                    <li class="wifi"></li>
+                    <li class="battery"></li>
+                </ul>
+            </div>
             <header class="mod mod-header">
                 <a href="javascript:history.back();" class="link-back">
                     <img src="../images/icon-arrow-left.png" alt="뒤로 가기" />
