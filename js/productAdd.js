@@ -44,7 +44,6 @@ function formCheck() {
         inpLink.value &&
         (inpImage.value || previewImage.src.split('-')[1] !== 'preview.png')
     ) {
-        console.log('버튼 활성화');
         btnSave.disabled = false;
     } else {
         btnSave.disabled = true;
@@ -81,7 +80,7 @@ async function postData() {
     const link = inpLink.value;
     const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 
-    const res = await fetch('http://146.56.183.55:5050/product', {
+    const res = await fetch('https://api.mandarin.cf/product', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -92,7 +91,7 @@ async function postData() {
                 itemName: itemName,
                 price: price,
                 link: link,
-                itemImage: `http://146.56.183.55:5050/${imgName.filename}`,
+                itemImage: `https://api.mandarin.cf/${imgName.filename}`,
             },
         }),
     });
@@ -109,7 +108,7 @@ async function postData() {
 async function imgData() {
     let formData = new FormData();
     formData.append('image', inpImage.files[0]);
-    const res = await fetch('http://146.56.183.55:5050/image/uploadfile', {
+    const res = await fetch('https://api.mandarin.cf/image/uploadfile', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${TOKEN}`,
@@ -148,7 +147,7 @@ if (PRODUCT_ID) {
 
 async function getProductData() {
     const res = await fetch(
-        `http://146.56.183.55:5050/product/detail/${PRODUCT_ID}`,
+        `https://api.mandarin.cf/product/detail/${PRODUCT_ID}`,
         {
             method: 'GET',
             headers: {
@@ -168,7 +167,7 @@ async function putData() {
     let imgLink;
     if (checkImg) {
         const imgName = await imgData();
-        imgLink = `http://146.56.183.55:5050/${imgName.filename}`;
+        imgLink = `https://api.mandarin.cf/${imgName.filename}`;
     } else {
         imgLink = previewImage.src;
     }
@@ -177,7 +176,7 @@ async function putData() {
     const link = inpLink.value;
     const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 
-    const res = await fetch(`http://146.56.183.55:5050/product/${PRODUCT_ID}`, {
+    const res = await fetch(`https://api.mandarin.cf/product/${PRODUCT_ID}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

@@ -1,9 +1,7 @@
 const TOKEN = sessionStorage.getItem('my-token');
 
-console.log(TOKEN);
-
 async function getFeed() {
-    const url = 'http://146.56.183.55:5050';
+    const url = 'https://api.mandarin.cf';
 
     const res = await fetch(url + '/post/feed', {
         //메소드 구분
@@ -15,7 +13,6 @@ async function getFeed() {
         },
     });
     const json = await res.json(); //외않됌? 포인트 res.json()도 비동기. await을 해줘야한다.
-    console.log(json);
     return json;
 }
 
@@ -25,10 +22,8 @@ async function printFeed() {
         const noFeed = document.querySelector('.noFeed');
         noFeed.remove();
     }
-    console.log(typeof feedData.posts);
     const postContainer = document.querySelector('.post');
     for (const feed of feedData.posts) {
-        console.log(feed);
         const {
             id,
             author: { image: authorImage, username, accountname },
@@ -80,14 +75,12 @@ for (const [idx, comment] of goPostPage.entries()) {
         window.location.href = `post.html?${posts[idx].id}`;
     });
 }
-console.log('goPostPage: ', goPostPage);
 
 getFeed();
 
 printFeed();
 const postContainer = document.querySelector('.post');
 postContainer.addEventListener('click', (e) => {
-    console.log(e.target);
     if (e.target.classList.contains('like')) {
         likePost(e.target);
         return;
@@ -104,10 +97,3 @@ function likePost(target) {
         likeCount.textContent = +likeCount.textContent + 1;
     }
 }
-
-// postContainer.addEventListener('click', (e) => {
-//     console.log(e.target);
-//     if (e.target.classList.contains('commentIcon')) {
-//         location.href = `../pages/post.html?${id}`;
-//     }
-// });

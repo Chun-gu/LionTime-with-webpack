@@ -1,4 +1,4 @@
-const API_URL = 'http://146.56.183.55:5050/';
+const API_URL = 'https://api.mandarin.cf/';
 const MY_ID = sessionStorage.getItem('my-id');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
@@ -30,6 +30,29 @@ const isMyProfile = MY_ACCOUNTNAME === TARGET_ACCOUNTNAME;
 //     }
 // })();
 
+async function register() {
+    try {
+        const response = await fetch(API_URL + '/user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user: {
+                    username: 'cnsrncnsrn',
+                    email: 'cnsrncnsrn@naver.com',
+                    password: 'cnsrncnsrn',
+                    accountname: 'cnsrncnsrn',
+                    intro: 'cnsrncnsrn',
+                },
+            }),
+        });
+        const res = await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // API 데이터 가져오기
 async function fetchData(endpoint) {
     try {
@@ -43,6 +66,18 @@ async function fetchData(endpoint) {
         const resJson = await res.json();
         return resJson;
     } catch (err) {}
+}
+
+const timeStatus = document.querySelector('.text-current-time');
+function timeNow() {
+    const date = new Date();
+    const hour = date.getHours();
+    const min = date.getMinutes();
+    if (hour > 12) {
+        timeStatus.textContent = `${hour - 12}:${min} PM`;
+    } else {
+        timeStatus.textContent = `${hour}:${min} AM`;
+    }
 }
 
 //  본인 프로필인지 남의 프로필인지 확인해서 분기

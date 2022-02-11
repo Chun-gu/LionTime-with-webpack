@@ -75,7 +75,7 @@ li a {
     display: block;
     text-decoration: none;
     position: relative;
-    border: 1px solid #f2c94c;
+    /* border: 1px solid #f2c94c; */
     text-align: center;
     padding: 13px 0;
     color: #767676;
@@ -86,6 +86,19 @@ li a {
     border-radius: 44px;
     margin-bottom: 10px;
 }
+
+.kakaoLogin {
+    border: 1px solid #f2c94c;
+}
+
+.googleLogin {
+    border: 1px solid #767676;
+}
+
+.facebookLogin {
+    border: 1px solid #2d9cdb;
+}
+
 .kakaoLogin::before {
     position: absolute;
     content: '';

@@ -11,10 +11,9 @@ const btnUpload = document.querySelector('.btn-upload');
 
 async function postData() {
     const imgName = await imgData();
-    console.log(imgName);
     const content = inpText.value;
 
-    const res = await fetch('http://146.56.183.55:5050/post', {
+    const res = await fetch('https://api.mandarin.cf/post', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -28,7 +27,6 @@ async function postData() {
         }),
     });
     const data = await res.json();
-    console.log(data);
     if (data) {
         alert('업로드 성공');
         location.href = `/pages/post.html?${data.post.id}`;
@@ -49,7 +47,7 @@ async function imgData() {
     for (const file of inpFile) {
         formData.append('image', file);
     }
-    const res = await fetch('http://146.56.183.55:5050/image/uploadfiles', {
+    const res = await fetch('https://api.mandarin.cf/image/uploadfiles', {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${TOKEN}`,
@@ -59,7 +57,7 @@ async function imgData() {
     const data = await res.json();
 
     for (const i of data) {
-        dataImg.push(`http://146.56.183.55:5050/${i['filename']}`);
+        dataImg.push(`https://api.mandarin.cf/${i['filename']}`);
     }
     if (dataImg.length > 1) {
         return dataImg.join(',');
@@ -70,7 +68,7 @@ async function imgData() {
 
 // PUT
 async function getPostData() {
-    const res = await fetch(`http://146.56.183.55:5050/post/${POST_ID}`, {
+    const res = await fetch(`https://api.mandarin.cf/post/${POST_ID}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -78,7 +76,6 @@ async function getPostData() {
         },
     });
     const data = await res.json();
-    console.log(data);
 
     document.querySelector('.inp-post').value = data.post.content;
     dataImg = data.post.image.split(',');
@@ -103,7 +100,7 @@ async function putData() {
     const imgName = await imgData();
     const content = inpText.value;
 
-    const res = await fetch(`http://146.56.183.55:5050/post/${POST_ID}`, {
+    const res = await fetch(`https://api.mandarin.cf/post/${POST_ID}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -117,7 +114,6 @@ async function putData() {
         }),
     });
     const data = await res.json();
-    console.log(data);
     if (data) {
         alert('업로드 성공');
         location.href = `/pages/post.html?${data.post.id}`;
