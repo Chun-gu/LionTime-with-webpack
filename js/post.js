@@ -62,7 +62,7 @@ const commentUser = document.querySelector('.img-profile');
     countComment.textContent = commentCount;
     const createDate = createdAt.split('T')[0].split('-');
     postDate.textContent = `${createDate[0]}년 ${createDate[1]}월 ${createDate[2]}일`;
-    if (author.image.split(':')[0] === 'http') {
+    if (author.image.split(':')[0] === 'https') {
         postUserProfile.src = author.image;
     } else {
         postUserProfile.src = 'https://api.mandarin.cf/' + author.image;
@@ -300,7 +300,7 @@ async function getComment() {
         commentsId.push(comment.id);
 
         let commentAuthorImage = '';
-        if (comment.author.image.split(':')[0] === 'http') {
+        if (comment.author.image.split(':')[0] === 'https') {
             commentAuthorImage = comment.author.image;
         } else {
             commentAuthorImage =
@@ -444,7 +444,7 @@ async function myProfile() {
         },
     });
     const data = await res.json();
-    if (data.profile.image.split(':')[0] === 'http') {
+    if (data.profile.image.split(':')[0] === 'https') {
         commentUser.src = data.profile.image;
     } else {
         commentUser.src = 'https://api.mandarin.cf/' + data.profile.image;

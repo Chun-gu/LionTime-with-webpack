@@ -112,7 +112,7 @@ if (isMyProfile) {
     const userIntro = document.querySelector('.user-intro');
     const followBtn = document.querySelector('.btn-follow');
 
-    if (image.match(/^http\:\/\/146\.56\.183\.55/, 'i')) {
+    if (image.match(/^https\:\/\/api\.mandarin\.cf\//, 'i')) {
         profileImg.setAttribute('src', image);
     } else {
         profileImg.setAttribute('src', API_URL + image);
@@ -258,7 +258,7 @@ function makePostListItem(post) {
     listItem.classList.add('post-list-item');
     const authorImage = document.createElement('img');
     authorImage.classList.add('post-author-img');
-    if (authorImg.match(/^http\:\/\/146\.56\.183\.55/, 'i')) {
+    if (authorImg.match(/^https\:\/\/api\.mandarin\.cf\//, 'i')) {
         authorImage.setAttribute('src', authorImg);
     } else {
         authorImage.setAttribute('src', API_URL + authorImg);
