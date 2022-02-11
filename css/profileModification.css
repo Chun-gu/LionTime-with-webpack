@@ -10,10 +10,14 @@ body {
 
 /* header */
 .mod-header {
+    width: 390px;
     height: 48px;
     padding: 13px 0 0 16px;
     background-color: #fff;
-    border-bottom: .5px solid #dbdbdb;
+    border-bottom: 0.5px solid #dbdbdb;
+    position: fixed;
+    top: 24px;
+    z-index: 100;
 }
 .link-back img {
     width: 22px;
@@ -41,7 +45,7 @@ body {
     height: 772px;
     position: relative;
     background-color: #fff;
-    padding: 30px 34px;
+    padding: 102px 34px 30px;
 }
 .userImg {
     width: 110px;

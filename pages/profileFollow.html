@@ -11,13 +11,23 @@
         <title>팔로워</title>
         <link rel="stylesheet" href="../css/reset.css" />
         <link rel="stylesheet" href="../font/font.css" />
-        <link rel="stylesheet" href="../css/footerNav.css" />
+        <link rel="stylesheet" href="../css/statusBar.css" />
         <link rel="stylesheet" href="../css/profileFollow.css" />
+        <link rel="stylesheet" href="../css/footerNav.css" />
+        <script src="../js/statusBar.js" defer></script>
         <script src="../js/profileFollow.js" defer></script>
         <script src="../js/footer.js" defer></script>
     </head>
     <body>
         <div id="app">
+            <div class="status-bar">
+                <time class="current-time"></time>
+                <ul class="status-menu">
+                    <li class="signal"></li>
+                    <li class="wifi"></li>
+                    <li class="battery"></li>
+                </ul>
+            </div>
             <header class="header">
                 <a href="javascript:history.back();" class="link-back">
                     <img src="../images/icon-arrow-left.png" alt="뒤로 가기" />

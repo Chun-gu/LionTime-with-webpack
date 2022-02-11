@@ -68,18 +68,6 @@ async function fetchData(endpoint) {
     } catch (err) {}
 }
 
-const timeStatus = document.querySelector('.text-current-time');
-function timeNow() {
-    const date = new Date();
-    const hour = date.getHours();
-    const min = date.getMinutes();
-    if (hour > 12) {
-        timeStatus.textContent = `${hour - 12}:${min} PM`;
-    } else {
-        timeStatus.textContent = `${hour}:${min} AM`;
-    }
-}
-
 //  본인 프로필인지 남의 프로필인지 확인해서 분기
 if (isMyProfile) {
     const othersUtil = document.querySelector('.profile-utils-others');

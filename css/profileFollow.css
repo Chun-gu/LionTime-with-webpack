@@ -10,12 +10,16 @@ body {
 
 /* header */
 .header {
+    width: 390px;
     height: 48px;
     display: flex;
     align-items: center;
     background-color: #fff;
     padding: 0 12px 0 16px;
     border-bottom: 0.5px solid #dbdbdb;
+    position: fixed;
+    top: 24px;
+    z-index: 100;
 }
 .link-back img {
     width: 22px;
@@ -27,6 +31,7 @@ body {
 .main {
     min-height: 735px;
     background-color: #fff;
+    padding-top: 86px;
     padding-bottom: 62px;
 }
 .users-list {
