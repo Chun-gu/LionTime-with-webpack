@@ -29,7 +29,8 @@ body {
 
 /* main */
 .main {
-    min-height: 735px;
+    /* min-height: 735px; */
+    min-height: 100vh;
     background-color: #fff;
     padding-top: 72px;
     padding-bottom: 62px;

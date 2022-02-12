@@ -111,7 +111,8 @@ if (isMyProfile) {
     userId.textContent = `@ ${accountname}`;
     userIntro.textContent = intro;
     if (followBtn) {
-        if (follower.includes(MY_ACCOUNTNAME)) {
+        followBtn.dataset.accountname = accountname;
+        if (follower.includes(MY_ID)) {
             followBtn.classList.add('following');
             followBtn.textContent = '언팔로우';
         } else {
@@ -446,16 +447,36 @@ if (!isMyProfile) {
     });
 }
 
+async function toggleFollow(accountname, endpoint, method) {
+    try {
+        const res = await fetch(
+            API_URL + `profile/${accountname}/${endpoint}`,
+            {
+                method: method,
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`,
+                    'Content-type': 'application/json',
+                },
+            }
+        );
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // 팔로우 버튼 토글
 const followBtn = document.querySelector('.btn-follow');
 if (followBtn) {
-    followBtn.addEventListener('click', () => {
+    followBtn.addEventListener('click', (e) => {
+        const target_accountname = e.target.dataset.accountname;
         if (followBtn.classList.contains('following')) {
             followBtn.classList.remove('following');
             followBtn.textContent = '팔로우';
+            toggleFollow(target_accountname, 'unfollow', 'DELETE');
         } else {
             followBtn.classList.add('following');
             followBtn.textContent = '언팔로우';
+            toggleFollow(target_accountname, 'follow', 'POST');
         }
     });
 }
