@@ -36,8 +36,8 @@ async function printFeed() {
         } = feed;
         postContainer.innerHTML += `
         <article class="postCont">
-            <a href="#" class="">
-                <img src=${authorImage} alt="user profile image" class="usrImg" />
+            <a href="#">
+                <img src=${authorImage} alt="user profile image" onerror="this.src='../images/default-profile-img.png'" class="usrImg" />
             </a>
             <div class="postOne">
                 <h3>
@@ -47,13 +47,13 @@ async function printFeed() {
                 <p class="postTxt" data-post-id=${id}>
                     ${content}
                 </p>
-                <img src=${image} alt="" onerror="this.src='../images/default-post-product-image.png'" class="postImg" data-post-id=${id}/>
+                <img src=${image} alt="post image" onerror="this.src='../images/default-post-product-image.png'" class="postImg" data-post-id=${id}/>
                 <div class="reaction">
                     <button type="button" class="like" data-hearted=${hearted}></button>
                     <span class="count heart-count">${heartCount}</span>
                     <a href= "../pages/post.html?${id}">
                         <button class="commentBtn" type="button" data-post-id=${id}>
-                            <img src="../images/icon-message-small.png" alt="" class="commentIcon" />
+                            <img src="../images/icon-message-small.png" class="commentIcon" />
                         </button>
                         <span class="count comment-count">${commentCount}</span>
                     </a>
