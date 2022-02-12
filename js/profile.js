@@ -477,7 +477,6 @@ if (isMyProfile) {
 }
 
 // 판매 중인 상품
-// const productList = document.querySelector('.product-list');
 // 가로 스크롤
 productList.addEventListener('wheel', (e) => {
     const { scrollLeft, clientWidth, scrollWidth } = productList;
@@ -524,7 +523,6 @@ albumBtn.addEventListener('click', () => {
 });
 
 // 목록형 게시글의 각종 기능들 분기
-// const postList = document.querySelector('.post-list');
 postList.addEventListener('click', (e) => {
     if (
         e.target.classList.contains('post-text') ||
@@ -538,15 +536,9 @@ postList.addEventListener('click', (e) => {
         likePost(e.target);
         return;
     }
-    if (e.target.classList.contains('btn-post-menu')) {
-        // 모달 띄우기
-        // const modal = document.querySelector(".modal");
-        // modal.style.backgroundColor="red";
-    }
 });
 
 // 앨범형 게시글 상세 페이지 이동
-// const postAlbum = document.querySelector('.post-album');
 postAlbum.addEventListener('click', (e) => {
     if (e.target.parentNode.classList.contains('post-album-item')) {
         postDetail(e.target.parentNode);
