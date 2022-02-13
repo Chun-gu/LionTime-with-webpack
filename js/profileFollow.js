@@ -2,9 +2,7 @@ const API_URL = 'https://api.mandarin.cf/';
 const MY_ID = sessionStorage.getItem('my-id');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
-const TARGET_ID = '61ca638ab5c6cd18084e447d';
 const TARGET_ACCOUNTNAME = location.href.split('?')[1];
-// const TARGET_ACCOUNTNAME = 'hey_binky';
 const isMyProfile = MY_ACCOUNTNAME === TARGET_ACCOUNTNAME;
 
 const isFollowersPage = localStorage.getItem('is-followers-page') === 'true';
