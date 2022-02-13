@@ -34,7 +34,7 @@ body {
 
 /* main */
 .main {
-    min-height: 735px;
+    min-height: calc(100vh - 72px);
     padding-top: 72px;
 }
 /* profile */
