@@ -5,4 +5,4 @@ setTimeout(function () {
     } else {
         window.location.href = 'pages/login.html';
     }
-}, 3000);
+}, 1500);
