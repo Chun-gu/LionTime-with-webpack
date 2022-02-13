@@ -131,6 +131,7 @@ HTML, CSS, JavaScript, Git, GitHub [브랜치 전략](https://acute-repair-803.n
     <img src="./readme-assets/home-not-logged-in.gif" width="400">
 
 -   로그인이 되어 있는 경우 : LionTime 피드
+    
     <img src="./readme-assets/home-logged-in.gif" width="400">
 
 </details>
