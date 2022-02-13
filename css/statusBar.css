@@ -9,19 +9,16 @@
   position: fixed;
   z-index: 100;
 }
-
 .current-time {
   font-size: 12px;
   line-height: 14px;
   color: #fff;
 }
-
 .status-menu {
   display: flex;
   align-items: center;
   gap: 6px;
 }
-
 .status-menu .signal,
 .status-menu .wifi,
 .status-menu .battery {
@@ -31,12 +28,10 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
-
 .status-menu .wifi {
   width: 13px;
   background-image: url(../images/Wifi.png);
 }
-
 .status-menu .battery {
   width: 24px;
   height: 10px;
