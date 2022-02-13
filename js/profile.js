@@ -209,7 +209,7 @@ function observeLastItem(productIo, items) {
         return;
     }
     printProductList(productData);
-    if (productData.length > productLimit) {
+    if (productData.length >= productLimit) {
         observeLastItem(
             productIo,
             document.querySelectorAll('.product-item-wrap')
@@ -412,7 +412,7 @@ function observeLastPostAlbumItem(postIo, items) {
         return;
     }
     printPost(postData);
-    if (postData.length > postLimit) {
+    if (postData.length >= postLimit) {
         observeLastPostListItem(
             postIo,
             document.querySelectorAll('.post-list-item')
