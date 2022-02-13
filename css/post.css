@@ -1,8 +1,14 @@
 @import url('../font/font.css');
 
+body {
+    background-color: #e5e5e5;
+}
+
 #app {
     width: 390px;
+    min-height: 100vh;
     margin: 0 auto;
+    background-color: #fff;
 }
 
 .status-bar {
