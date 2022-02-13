@@ -139,6 +139,7 @@ input[type='text'].invalid {
     height: 32px;
     border-radius: 32px;
     position: absolute;
-    top: -40.5px;
+    top: 30.5px;
     right: 16px;
+    z-index: 200;
 }
