@@ -31,7 +31,7 @@ body {
 .main {
     min-height: calc(100vh - 62px);
     background-color: #fff;
-    padding-top: 86px;
+    padding-top: 72px;
     padding-bottom: 62px;
 }
 .users-list {

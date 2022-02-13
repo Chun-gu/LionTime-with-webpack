@@ -72,8 +72,7 @@ async function getFollowsData() {
 }
 
 function makeFollowsItem(follows) {
-    const { accountname, image, username, intro, follower, following } =
-        follows;
+    const { accountname, image, username, intro, follower } = follows;
     const followsItem = document.createElement('li');
     followsItem.classList.add('users-list-item');
     followsItem.dataset.accountname = accountname;
@@ -88,31 +87,22 @@ function makeFollowsItem(follows) {
         'onError',
         "this.src='https://api.mandarin.cf/Ellipse.png'"
     );
-    img.dataset.accountname = accountname;
     const div = document.createElement('div');
     div.classList.add('user-profile');
     const span = document.createElement('span');
     span.classList.add('user-name');
     span.textContent = username;
-    span.dataset.accountname = accountname;
     div.append(span);
     if (!!intro) {
         const p = document.createElement('p');
         p.classList.add('user-intro');
         p.textContent = intro;
-        p.dataset.accountname = accountname;
         div.append(p);
     }
     const button = document.createElement('button');
     button.classList.add('btn-follow');
-    if (!isFollowersPage) {
-        if (following.includes(MY_ID)) {
-            button.classList.add('cancel');
-        }
-    } else {
-        if (follower.includes(MY_ID)) {
-            button.classList.add('cancel');
-        }
+    if (follower.includes(MY_ID)) {
+        button.classList.add('cancel');
     }
     followsItem.append(img);
     followsItem.append(div);
@@ -155,25 +145,49 @@ function observeLastItem(followsIo, items) {
 (async function initFollows() {
     const followsData = await getFollowsData();
     if (followsData.length === 0) {
-        usersList.textContent = '그리고 아무도 없었다...';
+        usersList.textContent = '아무도 없네요...';
         return;
     }
     printFollowsList(followsData);
     observeLastItem(followsIo, document.querySelectorAll('.users-list-item'));
 })();
 
+async function toggleFollow(accountname, endpoint, method) {
+    try {
+        const res = await fetch(
+            API_URL + `profile/${accountname}/${endpoint}`,
+            {
+                method: method,
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`,
+                    'Content-type': 'application/json',
+                },
+            }
+        );
+        console.log(await res.json());
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // 기능 분기
-usersList.addEventListener('click', (e) => {
-    if (e.target.classList.contains('btn-follow')) {
-        e.target.classList.toggle('cancel');
+usersList.addEventListener('click', ({ target }) => {
+    const target_accountname = target.closest('li').dataset.accountname;
+    if (target.classList.contains('cancel')) {
+        target.classList.toggle('cancel');
+        toggleFollow(target_accountname, 'unfollow', 'DELETE');
+        return;
+    }
+    if (target.classList.contains('btn-follow')) {
+        target.classList.toggle('cancel');
+        toggleFollow(target_accountname, 'follow', 'POST');
         return;
     }
     if (
-        e.target.classList.contains('user-img') ||
-        e.target.classList.contains('user-name') ||
-        e.target.classList.contains('user-intro')
+        target.classList.contains('user-img') ||
+        target.classList.contains('user-name') ||
+        target.classList.contains('user-intro')
     ) {
-        const target_accountname = e.target.dataset.accountname;
         location.href = `../pages/profile.html?${target_accountname}`;
         return;
     }
