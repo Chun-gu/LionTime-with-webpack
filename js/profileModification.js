@@ -14,6 +14,7 @@ if (isLogin) {
     joinBtn.remove();
     printProfile();
 } else {
+    document.title = '프로필 설정';
     email = localStorage.getItem('email');
     localStorage.removeItem('email');
     password = localStorage.getItem('password');
