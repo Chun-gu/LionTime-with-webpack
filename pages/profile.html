@@ -4,16 +4,14 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-            http-equiv="Content-Security-Policy"
-            content="upgrade-insecure-requests"
-        />
-        <title>내 프로필</title>
+        <title>프로필</title>
         <link rel="stylesheet" href="../css/reset.css" />
         <link rel="stylesheet" href="../font/font.css" />
+        <link rel="stylesheet" href="../css/statusBar.css" />
         <link rel="stylesheet" href="../css/profile.css" />
         <link rel="stylesheet" href="../css/footerNav.css" />
         <link rel="stylesheet" href="../css/modal.css" />
+        <script src="../js/statusBar.js" defer></script>
         <script src="../js/profile.js" defer></script>
         <script src="../js/modal.js" defer></script>
         <script src="../js/alert.js" defer></script>
@@ -22,9 +20,9 @@
     <body>
         <div id="app">
             <div class="status-bar">
-                <time class="text-current-time">9:41 AM</time>
+                <time class="current-time"></time>
                 <ul class="status-menu">
-                    <li class="mobile-signal"></li>
+                    <li class="signal"></li>
                     <li class="wifi"></li>
                     <li class="battery"></li>
                 </ul>

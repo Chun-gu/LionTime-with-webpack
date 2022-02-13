@@ -14,6 +14,7 @@ if (isLogin) {
     joinBtn.remove();
     printProfile();
 } else {
+    document.title = '프로필 설정';
     email = localStorage.getItem('email');
     localStorage.removeItem('email');
     password = localStorage.getItem('password');
@@ -36,8 +37,8 @@ async function printProfile() {
     const data = await fetchData(endpoint);
     const profileData = data.profile;
     const { username, accountname, intro, image } = profileData;
-    const isImage = !!image.match(/^http\:\/\/146\.56\.183\.55/, 'i');
-    if (!!image.match(/^http\:\/\/146\.56\.183\.55/, 'i')) {
+    const isImage = !!image.match(/^https\:\/\/api\.mandarin\.cf\//, 'i');
+    if (isImage) {
         previewImg.src = image;
     } else {
         previewImg.src = API_URL + image;

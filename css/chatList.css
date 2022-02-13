@@ -1,37 +1,40 @@
-body{
+body {
     width: 390px;
     margin: 0 auto;
+    background-color: #e5e5e5;
 }
 
-header{
+header {
     display: flex;
     flex-direction: column;
-    position:fixed;
+    position: fixed;
 }
 
-.status-bar{
+.status-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 390px;
     height: 24px;
-    background-color: #DBDBDB;
+    background-color: #dbdbdb;
     padding: 0 8px 0;
 }
 
-.text-current-time{
+.text-current-time {
     font-size: 12px;
     line-height: 14px;
-    color:#fff;
+    color: #fff;
 }
 
-.status-menu{
+.status-menu {
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
-.status-menu .mobile-signal, .status-menu .wifi, .status-menu .battery{
+.status-menu .mobile-signal,
+.status-menu .wifi,
+.status-menu .battery {
     width: 14px;
     height: 9px;
     background-image: url(../images/Mobile_Signal.png);
@@ -39,30 +42,31 @@ header{
     background-repeat: no-repeat;
 }
 
-.status-menu .wifi{
+.status-menu .wifi {
     width: 13px;
     background-image: url(../images/Wifi.png);
 }
 
-.status-menu .battery{
+.status-menu .battery {
     width: 24px;
     height: 10px;
     background-image: url(../images/battery.png);
 }
 
-.img-profile{
+.img-profile {
     width: 42px;
     height: 42px;
 }
 
-.top-nav{
+.top-nav {
     display: flex;
     justify-content: space-between;
-    padding:12px;
-    border-bottom: 1px solid #DBDBDB;
+    padding: 12px;
+    border-bottom: 1px solid #dbdbdb;
 }
 
-.btn-back-key, .btn-menu{
+.btn-back-key,
+.btn-menu {
     font-size: 0;
     width: 22px;
     height: 22px;
@@ -71,17 +75,19 @@ header{
     background-repeat: no-repeat;
 }
 
-.btn-menu{
+.btn-menu {
     width: 24px;
     height: 24px;
     background-image: url(../images/icon-more-vertical.png);
 }
 
-main{
+main {
+    min-height: 100vh;
     padding-top: 72px;
+    background-color: #fff;
 }
 
-.list-chat{
+.list-chat {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -89,38 +95,39 @@ main{
     padding: 0 16px 0;
 }
 
-.link-chat-box{
+.link-chat-box {
     display: flex;
     width: 100%;
     align-items: center;
     gap: 12px;
 }
 
-.list-chat-box.new::before{
+.list-chat-box.new::before {
     content: '';
     position: absolute;
     width: 12px;
     height: 12px;
     border-radius: 12px;
-    background-color: #F26E22;
+    background-color: #f26e22;
 }
-.wrap-chat-box-text{
+.wrap-chat-box-text {
     display: flex;
     flex-direction: column;
     gap: 4px;
     position: relative;
     width: 100%;
 }
-.time-date{
+.time-date {
     position: absolute;
     right: 0;
     bottom: 0;
     font-size: 10px;
     line-height: 13px;
-    color: #DBDBDB;
+    color: #dbdbdb;
 }
 
-.wrap-chat-box-text em, .wrap-chat-box-text p{
+.wrap-chat-box-text em,
+.wrap-chat-box-text p {
     display: -webkit-box;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -128,86 +135,85 @@ main{
     -webkit-box-orient: vertical;
 }
 
-.text-user-name{
+.text-user-name {
     font-weight: bold;
 }
 
-.text-chat-cont{
+.text-chat-cont {
     width: 75%;
-    color:#767676;
+    color: #767676;
 }
 
 /* footer 하단 메뉴들 */
-footer{
-    position:fixed;
-    bottom:0;
+footer {
+    position: fixed;
+    bottom: 0;
+    background-color: #fff;
 }
 
-.nav-wrap-link{
+.nav-wrap-link {
     display: flex;
     gap: 14px;
     padding: 0 6px 0;
-    border-top: 1px solid #DBDBDB;
+    border-top: 1px solid #dbdbdb;
 }
 
-.link-other-page{
+.link-other-page {
     width: 84px;
     display: flex;
     flex-direction: column;
     gap: 6px;
-    padding:15px 0 6px;
+    padding: 15px 0 6px;
     box-sizing: border-box;
 }
 
-.link-other-page em{
+.link-other-page em {
     text-align: center;
     font-size: 10px;
 }
 
-.link-img{
+.link-img {
     display: inline-block;
     width: 24px;
     height: 24px;
     background-size: cover;
     background-repeat: no-repeat;
-    margin:0 auto;
+    margin: 0 auto;
 }
 
-
-.link-img.home{
+.link-img.home {
     background-image: url(../images/icon-home.png);
 }
-.link-img.home.this-page{
+.link-img.home.this-page {
     background-image: url(../images/icon-home-fill.png);
-    color: #F26E22;
+    color: #f26e22;
 }
-.link-img.home.this-page+em{
-    color: #F26E22;
+.link-img.home.this-page + em {
+    color: #f26e22;
 }
 
-
-.link-img.chat{
+.link-img.chat {
     background-image: url(../images/icon-message.png);
 }
-.link-img.chat.this-page{
+.link-img.chat.this-page {
     background-image: url(../images/icon-message-fill.png);
-    color: #F26E22;
+    color: #f26e22;
 }
-.link-img.chat.this-page+em{
-    color: #F26E22;
+.link-img.chat.this-page + em {
+    color: #f26e22;
 }
 
-.link-img.write{
+.link-img.write {
     background-image: url(../images/icon-post-add.png);
 }
 
-.link-img.profile{
+.link-img.profile {
     background-image: url(../images/icon-profile.png);
 }
-.link-img.profile.this-page{
+.link-img.profile.this-page {
     background-image: url(../images/icon-profile-fill.png);
-    color: #F26E22;
+    color: #f26e22;
 }
-.link-img.profile.this-page+em{
-    color: #F26E22;
+.link-img.profile.this-page + em {
+    color: #f26e22;
 }

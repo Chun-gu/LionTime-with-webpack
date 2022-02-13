@@ -68,18 +68,6 @@ async function fetchData(endpoint) {
     } catch (err) {}
 }
 
-const timeStatus = document.querySelector('.text-current-time');
-function timeNow() {
-    const date = new Date();
-    const hour = date.getHours();
-    const min = date.getMinutes();
-    if (hour > 12) {
-        timeStatus.textContent = `${hour - 12}:${min} PM`;
-    } else {
-        timeStatus.textContent = `${hour}:${min} AM`;
-    }
-}
-
 //  본인 프로필인지 남의 프로필인지 확인해서 분기
 if (isMyProfile) {
     const othersUtil = document.querySelector('.profile-utils-others');
@@ -112,7 +100,7 @@ if (isMyProfile) {
     const userIntro = document.querySelector('.user-intro');
     const followBtn = document.querySelector('.btn-follow');
 
-    if (image.match(/^http\:\/\/146\.56\.183\.55/, 'i')) {
+    if (image.match(/^https\:\/\/api\.mandarin\.cf\//, 'i')) {
         profileImg.setAttribute('src', image);
     } else {
         profileImg.setAttribute('src', API_URL + image);
@@ -123,7 +111,8 @@ if (isMyProfile) {
     userId.textContent = `@ ${accountname}`;
     userIntro.textContent = intro;
     if (followBtn) {
-        if (follower.includes(MY_ACCOUNTNAME)) {
+        followBtn.dataset.accountname = accountname;
+        if (follower.includes(MY_ID)) {
             followBtn.classList.add('following');
             followBtn.textContent = '언팔로우';
         } else {
@@ -258,7 +247,7 @@ function makePostListItem(post) {
     listItem.classList.add('post-list-item');
     const authorImage = document.createElement('img');
     authorImage.classList.add('post-author-img');
-    if (authorImg.match(/^http\:\/\/146\.56\.183\.55/, 'i')) {
+    if (authorImg.match(/^https\:\/\/api\.mandarin\.cf\//, 'i')) {
         authorImage.setAttribute('src', authorImg);
     } else {
         authorImage.setAttribute('src', API_URL + authorImg);
@@ -458,16 +447,36 @@ if (!isMyProfile) {
     });
 }
 
+async function toggleFollow(accountname, endpoint, method) {
+    try {
+        const res = await fetch(
+            API_URL + `profile/${accountname}/${endpoint}`,
+            {
+                method: method,
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`,
+                    'Content-type': 'application/json',
+                },
+            }
+        );
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // 팔로우 버튼 토글
 const followBtn = document.querySelector('.btn-follow');
 if (followBtn) {
-    followBtn.addEventListener('click', () => {
+    followBtn.addEventListener('click', (e) => {
+        const target_accountname = e.target.dataset.accountname;
         if (followBtn.classList.contains('following')) {
             followBtn.classList.remove('following');
             followBtn.textContent = '팔로우';
+            toggleFollow(target_accountname, 'unfollow', 'DELETE');
         } else {
             followBtn.classList.add('following');
             followBtn.textContent = '언팔로우';
+            toggleFollow(target_accountname, 'follow', 'POST');
         }
     });
 }
@@ -489,7 +498,6 @@ if (isMyProfile) {
 }
 
 // 판매 중인 상품
-// const productList = document.querySelector('.product-list');
 // 가로 스크롤
 productList.addEventListener('wheel', (e) => {
     const { scrollLeft, clientWidth, scrollWidth } = productList;
@@ -536,7 +544,6 @@ albumBtn.addEventListener('click', () => {
 });
 
 // 목록형 게시글의 각종 기능들 분기
-// const postList = document.querySelector('.post-list');
 postList.addEventListener('click', (e) => {
     if (
         e.target.classList.contains('post-text') ||
@@ -550,15 +557,9 @@ postList.addEventListener('click', (e) => {
         likePost(e.target);
         return;
     }
-    if (e.target.classList.contains('btn-post-menu')) {
-        // 모달 띄우기
-        // const modal = document.querySelector(".modal");
-        // modal.style.backgroundColor="red";
-    }
 });
 
 // 앨범형 게시글 상세 페이지 이동
-// const postAlbum = document.querySelector('.post-album');
 postAlbum.addEventListener('click', (e) => {
     if (e.target.parentNode.classList.contains('post-album-item')) {
         postDetail(e.target.parentNode);
