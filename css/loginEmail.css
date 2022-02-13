@@ -1,13 +1,8 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #e5e5e5;
 }
 
 .statusBar {
@@ -30,8 +25,8 @@ body {
 
 .container {
     width: 390px;
-    /* outline: 1px solid #767676; */
-    height: 100vh;
+    height: 820px;
+    background-color: #fff;
 }
 
 h1 {
