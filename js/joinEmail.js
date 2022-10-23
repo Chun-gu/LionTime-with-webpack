@@ -1,3 +1,4 @@
+import { API_URL } from './key';
 const inputEmail = document.querySelector('#emailInput');
 const errorEmail = document.querySelector('.emailMessage');
 let isEmailValid = false;
@@ -29,7 +30,7 @@ async function validateEmail(email) {
 
 //  이메일 중복 검사
 async function checkEmailExist(email) {
-    const res = await fetch('https://api.mandarin.cf/user/emailvalid', {
+    const res = await fetch(`${API_URL}/user/emailvalid`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

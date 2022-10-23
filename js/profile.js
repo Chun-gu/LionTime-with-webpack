@@ -1,4 +1,4 @@
-const API_URL = 'https://api.mandarin.cf/';
+import { API_URL } from './key';
 const MY_ID = sessionStorage.getItem('my-id');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
@@ -100,7 +100,7 @@ if (isMyProfile) {
     const userIntro = document.querySelector('.user-intro');
     const followBtn = document.querySelector('.btn-follow');
 
-    if (image.match(/^https\:\/\/api\.mandarin\.cf\//, 'i')) {
+    if (image.match(/^https\:\/\/mandarin\.api\.weniv\.co\.kr\//, 'i')) {
         profileImg.setAttribute('src', image);
     } else {
         profileImg.setAttribute('src', API_URL + image);
@@ -247,7 +247,7 @@ function makePostListItem(post) {
     listItem.classList.add('post-list-item');
     const authorImage = document.createElement('img');
     authorImage.classList.add('post-author-img');
-    if (authorImg.match(/^https\:\/\/api\.mandarin\.cf\//, 'i')) {
+    if (authorImg.match(/^https\:\/\/mandarin\.api\.weniv\.co\.kr\//, 'i')) {
         authorImage.setAttribute('src', authorImg);
     } else {
         authorImage.setAttribute('src', API_URL + authorImg);

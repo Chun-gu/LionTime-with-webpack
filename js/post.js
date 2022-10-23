@@ -1,3 +1,5 @@
+import { API_URL } from './key';
+
 const TOKEN = sessionStorage.getItem('my-token');
 const MY_ID = sessionStorage.getItem('my-id');
 const accountName = sessionStorage.getItem('my-accountname');
@@ -25,7 +27,7 @@ const postDate = document.querySelector('.date-upload');
 const commentUser = document.querySelector('.img-profile');
 
 (async function getPostData() {
-    const res = await fetch(`https://api.mandarin.cf/post/${POST_ID}`, {
+    const res = await fetch(`${API_URL}/post/${POST_ID}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -65,7 +67,7 @@ const commentUser = document.querySelector('.img-profile');
     if (author.image.split(':')[0] === 'https') {
         postUserProfile.src = author.image;
     } else {
-        postUserProfile.src = 'https://api.mandarin.cf/' + author.image;
+        postUserProfile.src = API_URL + author.image;
     }
     postUserProfile.addEventListener('click', () => {
         targetAccountName(author.accountname);
@@ -106,7 +108,7 @@ postBtn.addEventListener('click', () => {
 
 // 3-2. 게시글 삭제
 async function postDel() {
-    const res = await fetch(`https://api.mandarin.cf/post/${dataId}`, {
+    const res = await fetch(`${API_URL}/post/${dataId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -124,7 +126,7 @@ async function postDel() {
 
 // 3-3. 게시글 신고
 async function postReport() {
-    const res = await fetch(`https://api.mandarin.cf/post/${dataId}/report`, {
+    const res = await fetch(`${API_URL}/post/${dataId}/report`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -223,7 +225,7 @@ btnLike.addEventListener('click', () => {
 
 // 좋아요
 async function heart() {
-    await fetch(`https://api.mandarin.cf/post/${dataId}/heart`, {
+    await fetch(`${API_URL}/post/${dataId}/heart`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -233,7 +235,7 @@ async function heart() {
 }
 // 좋아요 취소
 async function unHeart() {
-    await fetch(`https://api.mandarin.cf/post/${dataId}/unheart`, {
+    await fetch(`${API_URL}/post/${dataId}/unheart`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -266,7 +268,7 @@ btnComment.addEventListener('click', (e) => {
 
 // 7-2. 댓글 작성
 async function postComment() {
-    await fetch(`https://api.mandarin.cf/post/${dataId}/comments`, {
+    await fetch(`${API_URL}/post/${dataId}/comments`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -286,7 +288,7 @@ async function postComment() {
 let commentsId = [];
 let delId;
 async function getComment() {
-    const res = await fetch(`https://api.mandarin.cf/post/${dataId}/comments`, {
+    const res = await fetch(`${API_URL}/post/${dataId}/comments`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -304,7 +306,7 @@ async function getComment() {
             commentAuthorImage = comment.author.image;
         } else {
             commentAuthorImage =
-                'https://api.mandarin.cf/' + comment.author.image;
+                `${API_URL}/` + comment.author.image;
         }
 
         liComment.innerHTML += `
@@ -363,7 +365,7 @@ async function getComment() {
 // 7-4. 댓글 삭제
 async function commentDel() {
     const res = await fetch(
-        `https://api.mandarin.cf/post/${dataId}/comments/${delId}`,
+        `${API_URL}/post/${dataId}/comments/${delId}`,
         {
             method: 'DELETE',
             headers: {
@@ -384,7 +386,7 @@ async function commentDel() {
 // 7-5. 댓글 신고
 async function commentReport() {
     const res = await fetch(
-        `https://api.mandarin.cf/post/${dataId}/comments/${delId}`,
+        `${API_URL}/post/${dataId}/comments/${delId}`,
         {
             method: 'GET',
             headers: {
@@ -436,7 +438,7 @@ function timeNow() {
 
 // 10. my profile image
 async function myProfile() {
-    const res = await fetch(`https://api.mandarin.cf/profile/${accountName}`, {
+    const res = await fetch(`${API_URL}/profile/${accountName}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -447,7 +449,7 @@ async function myProfile() {
     if (data.profile.image.split(':')[0] === 'https') {
         commentUser.src = data.profile.image;
     } else {
-        commentUser.src = 'https://api.mandarin.cf/' + data.profile.image;
+        commentUser.src = `${API_URL}/` + data.profile.image;
     }
 }
 

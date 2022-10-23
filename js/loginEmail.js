@@ -1,3 +1,4 @@
+import { API_URL } from './key';
 const email = document.querySelector('#idEmailInput');
 const pw = document.querySelector('#loginPWInput');
 const loginForm = document.querySelector('.loginForm');
@@ -31,7 +32,6 @@ pw.addEventListener('input', () => {
 async function login() {
     const email = document.querySelector('#idEmailInput').value;
     const pw = document.querySelector('#loginPWInput').value;
-    const url = 'https://api.mandarin.cf';
     const loginData = {
         user: {
             email: email,
@@ -39,7 +39,7 @@ async function login() {
         },
     };
 
-    const res = await fetch(url + '/user/login', {
+    const res = await fetch(API_URL + '/user/login', {
         //메소드 구분
         method: 'POST',
         //헤더

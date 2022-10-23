@@ -1,3 +1,4 @@
+import { API_URL } from './key';
 let inpFile;
 const container = document.querySelector('.img-container');
 const row = document.querySelector('.row');
@@ -13,7 +14,7 @@ async function postData() {
     const imgName = await imgData();
     const content = inpText.value;
 
-    const res = await fetch('https://api.mandarin.cf/post', {
+    const res = await fetch(`${API_URL}/post`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -47,7 +48,7 @@ async function imgData() {
     for (const file of inpFile) {
         formData.append('image', file);
     }
-    const res = await fetch('https://api.mandarin.cf/image/uploadfiles', {
+    const res = await fetch(`${API_URL}/image/uploadfiles`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${TOKEN}`,
@@ -57,7 +58,7 @@ async function imgData() {
     const data = await res.json();
 
     for (const i of data) {
-        dataImg.push(`https://api.mandarin.cf/${i['filename']}`);
+        dataImg.push(`${API_URL}/${i['filename']}`);
     }
     if (dataImg.length > 1) {
         return dataImg.join(',');
@@ -68,7 +69,7 @@ async function imgData() {
 
 // PUT
 async function getPostData() {
-    const res = await fetch(`https://api.mandarin.cf/post/${POST_ID}`, {
+    const res = await fetch(`${API_URL}/post/${POST_ID}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -100,7 +101,7 @@ async function putData() {
     const imgName = await imgData();
     const content = inpText.value;
 
-    const res = await fetch(`https://api.mandarin.cf/post/${POST_ID}`, {
+    const res = await fetch(`${API_URL}/post/${POST_ID}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
