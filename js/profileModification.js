@@ -1,4 +1,4 @@
-const API_URL = 'https://api.mandarin.cf/';
+import { API_URL } from './key';
 const isLogin = !!sessionStorage.getItem('my-token');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
@@ -37,7 +37,7 @@ async function printProfile() {
     const data = await fetchData(endpoint);
     const profileData = data.profile;
     const { username, accountname, intro, image } = profileData;
-    const isImage = !!image.match(/^https\:\/\/api\.mandarin\.cf\//, 'i');
+    const isImage = !!image.match(/^https\:\/\/mandarin\.api\.weniv\.co\.kr\//, 'i');
     if (isImage) {
         previewImg.src = image;
     } else {

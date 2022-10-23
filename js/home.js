@@ -1,9 +1,8 @@
+import { API_URL } from './key';
 const TOKEN = sessionStorage.getItem('my-token');
 
 async function getFeed() {
-    const url = 'https://api.mandarin.cf';
-
-    const res = await fetch(url + '/post/feed', {
+    const res = await fetch(API_URL + '/post/feed', {
         //메소드 구분
         method: 'GET',
         //헤더

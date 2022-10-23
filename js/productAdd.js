@@ -80,7 +80,7 @@ async function postData() {
     const link = inpLink.value;
     const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 
-    const res = await fetch('https://api.mandarin.cf/product', {
+    const res = await fetch(`${API_URL}/product`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ async function postData() {
                 itemName: itemName,
                 price: price,
                 link: link,
-                itemImage: `https://api.mandarin.cf/${imgName.filename}`,
+                itemImage: `${API_URL}/${imgName.filename}`,
             },
         }),
     });
@@ -108,7 +108,7 @@ async function postData() {
 async function imgData() {
     let formData = new FormData();
     formData.append('image', inpImage.files[0]);
-    const res = await fetch('https://api.mandarin.cf/image/uploadfile', {
+    const res = await fetch(`${API_URL}/image/uploadfile`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${TOKEN}`,
@@ -147,7 +147,7 @@ if (PRODUCT_ID) {
 
 async function getProductData() {
     const res = await fetch(
-        `https://api.mandarin.cf/product/detail/${PRODUCT_ID}`,
+        `${API_URL}/product/detail/${PRODUCT_ID}`,
         {
             method: 'GET',
             headers: {
@@ -167,7 +167,7 @@ async function putData() {
     let imgLink;
     if (checkImg) {
         const imgName = await imgData();
-        imgLink = `https://api.mandarin.cf/${imgName.filename}`;
+        imgLink = `${API_URL}/${imgName.filename}`;
     } else {
         imgLink = previewImage.src;
     }
@@ -176,7 +176,7 @@ async function putData() {
     const link = inpLink.value;
     const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 
-    const res = await fetch(`https://api.mandarin.cf/product/${PRODUCT_ID}`, {
+    const res = await fetch(`${API_URL}/product/${PRODUCT_ID}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

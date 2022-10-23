@@ -1,4 +1,4 @@
-const API_URL = 'https://api.mandarin.cf/';
+import { API_URL } from './key';
 const MY_ID = sessionStorage.getItem('my-id');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
@@ -85,7 +85,7 @@ function makeFollowsItem(follows) {
     }
     img.setAttribute(
         'onError',
-        "this.src='https://api.mandarin.cf/Ellipse.png'"
+        "this.src='https://mandarin.api.weniv.co.kr/Ellipse.png'"
     );
     const div = document.createElement('div');
     div.classList.add('user-profile');
