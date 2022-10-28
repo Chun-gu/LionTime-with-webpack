@@ -62,8 +62,7 @@ function createAlert(infoText, btnText, addClass) {
 }
 
 function updateProduct() {
-    const product = document.querySelector('.product-item');
-    const productId = product.getAttribute('data-product-id');
+    const productId = sessionStorage.getItem('targetProductId');
 
     location.href = `../pages/productAdd.html?productId=${productId}`;
 }
