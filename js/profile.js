@@ -1,57 +1,10 @@
-import { API_URL } from './key';
+import { API_URL } from './key.js';
 const MY_ID = sessionStorage.getItem('my-id');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
-const TARGET_ACCOUNTNAME = location.href.split('?')[1];
+const queryString = new URLSearchParams(location.search);
+const TARGET_ACCOUNTNAME = queryString.get('userId');
 const isMyProfile = MY_ACCOUNTNAME === TARGET_ACCOUNTNAME;
-
-// 로그인
-// (async function login() {
-//     try {
-//         const res = await fetch(API_URL + 'user/login', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({
-//                 user: {
-//                     email: 'testEmail@test.com',
-//                     password: 'testpassword',
-//                 },
-//             }),
-//         });
-//         const resJson = await res.json();
-//         const { _id, accountname, token } = resJson.user;
-//         sessionStorage.setItem('my-id', _id);
-//         sessionStorage.setItem('my-token', token);
-//         sessionStorage.setItem('my-accountname', accountname);
-//     } catch (err) {
-//         console.log(err);
-//     }
-// })();
-
-async function register() {
-    try {
-        const response = await fetch(API_URL + '/user', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                user: {
-                    username: 'cnsrncnsrn',
-                    email: 'cnsrncnsrn@naver.com',
-                    password: 'cnsrncnsrn',
-                    accountname: 'cnsrncnsrn',
-                    intro: 'cnsrncnsrn',
-                },
-            }),
-        });
-        const res = await response.json();
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 // API 데이터 가져오기
 async function fetchData(endpoint) {
@@ -79,9 +32,9 @@ if (isMyProfile) {
 
 // 프로필 정보 출력하기
 (async function printProfile() {
-    const endpoint = `profile/${TARGET_ACCOUNTNAME}`;
+    const endpoint = '/user/myinfo';
     const data = await fetchData(endpoint);
-    const profileData = data.profile;
+    const profileData = data.user;
     const {
         username,
         accountname,
@@ -100,11 +53,7 @@ if (isMyProfile) {
     const userIntro = document.querySelector('.user-intro');
     const followBtn = document.querySelector('.btn-follow');
 
-    if (image.match(/^https\:\/\/mandarin\.api\.weniv\.co\.kr\//, 'i')) {
-        profileImg.setAttribute('src', image);
-    } else {
-        profileImg.setAttribute('src', API_URL + image);
-    }
+    profileImg.setAttribute('src', API_URL + image);
     followersNum.textContent = `${followerCount}`;
     followingNum.textContent = `${followingCount}`;
     userName.textContent = username;
@@ -127,7 +76,7 @@ const productLimit = 5;
 let productSkip = 0;
 
 async function getProductData() {
-    const endpoint = `product/${TARGET_ACCOUNTNAME}/?limit=${productLimit}&skip=${productSkip}`;
+    const endpoint = `/product/${TARGET_ACCOUNTNAME}/?limit=${productLimit}&skip=${productSkip}`;
     const data = await fetchData(endpoint);
     const productData = data.product;
     productSkip += productLimit;
@@ -135,15 +84,13 @@ async function getProductData() {
 }
 
 function makeProductItem(product) {
-    const { id, itemImage, itemName, link, price } = product;
+    const { id: productId, itemImage, itemName, link, price } = product;
     const li = document.createElement('li');
-    li.classList.add('product-item-wrap');
-    const a = document.createElement('a');
-    a.classList.add('product-item');
-    a.setAttribute('href', link);
-    a.dataset.productId = id;
+    li.classList.add('product-item');
+    li.dataset.link = link;
+    li.dataset.productId = productId;
     const img = document.createElement('img');
-    img.setAttribute('src', itemImage);
+    img.setAttribute('src', API_URL + itemImage);
     img.setAttribute(
         'onError',
         "this.src='../images/default-post-product-image.png'"
@@ -155,10 +102,9 @@ function makeProductItem(product) {
     const span = document.createElement('span');
     span.classList.add('product-price');
     span.textContent = `${price.toLocaleString()}원`;
-    a.append(img);
-    a.append(p);
-    a.append(span);
-    li.append(a);
+    li.append(img);
+    li.append(p);
+    li.append(span);
     return li;
 }
 
@@ -181,7 +127,7 @@ function productIoCb(entries, productIo) {
                 printProductList(productData);
                 observeLastItem(
                     productIo,
-                    document.querySelectorAll('.product-item-wrap')
+                    document.querySelectorAll('.product-item')
                 );
             }
         }
@@ -212,7 +158,7 @@ function observeLastItem(productIo, items) {
     if (productData.length >= productLimit) {
         observeLastItem(
             productIo,
-            document.querySelectorAll('.product-item-wrap')
+            document.querySelectorAll('.product-item')
         );
     }
 })();
@@ -224,7 +170,7 @@ const postLimit = 9;
 let postSkip = 0;
 
 async function getPostData() {
-    const endpoint = `post/${TARGET_ACCOUNTNAME}/userpost/?limit=${postLimit}&skip=${postSkip}`;
+    const endpoint = `/post/${TARGET_ACCOUNTNAME}/userpost/?limit=${postLimit}&skip=${postSkip}`;
     const data = await fetchData(endpoint);
     const postData = data.post;
     postSkip += postLimit;
@@ -487,7 +433,7 @@ if (isMyProfile) {
     const modifyBtn = document.querySelector('.btn-modify');
     modifyBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        location.href = `../pages/profileModification.html?${TARGET_ACCOUNTNAME}`;
+        location.href = `../pages/profileModification.html?userId=${TARGET_ACCOUNTNAME}`;
     });
 
     // 상품 등록
@@ -582,5 +528,5 @@ function likePost(likeBtn) {
 // 게시글 상세 페이지 이동
 function postDetail(post) {
     const postId = post.dataset.postId;
-    location.href = `../pages/post.html?${postId}`;
+    location.href = `../pages/post.html?postId=${postId}`;
 }
