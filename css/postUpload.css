@@ -102,6 +102,7 @@ form {
     width: 304px;
 }
 form textarea {
+    max-height: 470px;
     border: none;
     resize: none;
     font-weight: normal;

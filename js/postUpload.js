@@ -1,4 +1,4 @@
-import { API_URL } from './key';
+import { API_URL } from './key.js';
 let inpFile;
 const container = document.querySelector('.img-container');
 const row = document.querySelector('.row');
@@ -241,9 +241,15 @@ function btnRemove(imgArr) {
 }
 
 // textarea 높이 자동 조절
-function resize(obj) {
-    obj.style.height = '1px';
-    obj.style.height = 18 + obj.scrollHeight + 'px';
+const textArea = document.querySelector('#txt-post');
+textArea.addEventListener('input', (e) => resize(e));
+
+function resize(e) {
+    textArea.style.height = 'auto';
+    const scrollHeight = e.target.scrollHeight;
+    textArea.style.height = `${scrollHeight}px`;
+    if (scrollHeight < 470) textArea.style.overflowY = 'hidden';
+    if (scrollHeight >= 470) textArea.style.overflowY = 'scroll';
 }
 
 // 뒤로가기
