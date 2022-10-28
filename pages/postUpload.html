@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="../css/reset.css" />
         <link rel="stylesheet" href="../css/postUpload.css" />
+        <script src="../js/postUpload.js" type="module" defer></script>
         <title>게시물 작성</title>
     </head>
     <body>
@@ -41,10 +42,9 @@
                     <label for="txt-post" class="sr-only">게시글 입력칸</label>
                     <textarea
                         placeholder="게시글 입력하기..."
-                        onkeydown="resize(this)"
-                        onkeyup="resize(this)"
                         id="txt-post"
                         class="inp-post"
+                        maxlength="500"
                     ></textarea>
                     <div class="box-slider">
                         <div class="img-container">
@@ -66,6 +66,5 @@
                 </form>
             </section>
         </div>
-        <script src="../js/postUpload.js"></script>
     </body>
 </html>
