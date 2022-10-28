@@ -1,3 +1,4 @@
+import { API_URL } from './key.js';
 const TOKEN = sessionStorage.getItem('my-token');
 const PRODUCT_ID = location.href.split('?')[1];
 
@@ -91,16 +92,16 @@ async function postData() {
                 itemName: itemName,
                 price: price,
                 link: link,
-                itemImage: `${API_URL}/${imgName.filename}`,
+                itemImage: imgName.filename,
             },
         }),
     });
     const json = await res.json();
     if (json.product) {
-        alert('업로드 성공');
+        alert('상품 등록이 완료되었습니다.');
         location.href = `/pages/profile.html?${MY_ACCOUNTNAME}`;
     } else {
-        alert('업로드 실패');
+        alert('상품 등록에 실패했습니다.');
     }
 }
 
@@ -146,18 +147,15 @@ if (PRODUCT_ID) {
 }
 
 async function getProductData() {
-    const res = await fetch(
-        `${API_URL}/product/detail/${PRODUCT_ID}`,
-        {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${TOKEN}`,
-            },
-        }
-    );
+    const res = await fetch(`${API_URL}/product/detail/${PRODUCT_ID}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN}`,
+        },
+    });
     const data = await res.json();
-    previewImage.src = data.product.itemImage;
+    previewImage.src = API_URL + data.product.itemImage;
     inpName.value = data.product.itemName;
     inpPrice.value = data.product.price;
     inpLink.value = data.product.link;
@@ -193,9 +191,9 @@ async function putData() {
     });
     const data = await res.json();
     if (data.product) {
-        alert('업로드 성공');
+        alert('상품 수정이 완료되었습니다.');
         location.href = `/pages/profile.html?${MY_ACCOUNTNAME}`;
     } else {
-        alert('업로드 실패');
+        alert('상품 수정에 실패했습니다.');
     }
 }
