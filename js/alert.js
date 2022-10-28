@@ -1,7 +1,8 @@
+import { API_URL } from './key.js';
 const closeBtn = document.querySelector('.btn-closed');
 const alertModal = document.querySelector('.alert');
 const alertDimd = document.querySelector('.alert-dimd');
-const POST_ID_ = location.href.split('?')[1];
+const TOKEN = sessionStorage.getItem('my-token');
 
 closeBtn.addEventListener('click', () => {
     alertModal.classList.remove('on');
@@ -9,43 +10,47 @@ closeBtn.addEventListener('click', () => {
 });
 
 document.addEventListener('click', (e) => {
-    if (e.target.classList.value === 'btn-list logOut') {
+    const classList = e.target.classList.value;
+    if (classList === 'btn-list logOut') {
         createAlert('로그아웃하시겠어요?', '로그아웃', 'btn-logout');
 
         alertModal.classList.add('on');
         alertDimd.classList.add('on');
-    } else if (e.target.classList.value === 'btn-list delete') {
+    } else if (classList === 'btn-list delete') {
         createAlert('게시글을 삭제할까요?', '삭제', 'btn-delete');
 
         alertModal.classList.add('on');
         alertDimd.classList.add('on');
-    } else if (e.target.classList.value === 'btn-list post-report') {
+    } else if (classList === 'btn-list post-report') {
         createAlert('신고하시겠어요?', '신고', 'btn-report');
 
         alertModal.classList.add('on');
         alertDimd.classList.add('on');
-    } else if (e.target.classList.value === 'btn-list productDelete') {
+    } else if (classList === 'btn-list productDelete') {
         createAlert('상품을 삭제할까요?', '삭제', 'btn-product-delete');
-
         alertModal.classList.add('on');
         alertDimd.classList.add('on');
-    } else if (e.target.classList.value === 'btn-list productUpdate') {
+    } else if (classList === 'btn-list productUpdate') {
         updateProduct();
-    } else if (e.target.classList.value === 'btn-list update') {
+    } else if (classList === 'btn-list update') {
         updatePost();
     }
+});
 
-    if (e.target.classList.value === 'btn-alert btn-logout') {
+alertModal.addEventListener('click', (e) => {
+    const classList = e.target.classList.value;
+    if (classList === 'btn-alert btn-logout') {
         sessionStorage.removeItem('my-id');
         sessionStorage.removeItem('my-token');
         sessionStorage.removeItem('my-accountname');
 
         location.href = 'login.html';
-    } else if (e.target.classList.value === 'btn-alert btn-delete') {
+    } else if (classList === 'btn-alert btn-delete') {
         deletePost();
-    } else if (e.target.classList.value === 'btn-alert btn-product-delete') {
-        deleteProduct();
-    } else if (e.target.classList.value === 'btn-alert btn-report') {
+    } else if (classList === 'btn-alert btn-product-delete') {
+        const productId = sessionStorage.getItem('targetProductId');
+        deleteProduct(productId);
+    } else if (classList === 'btn-alert btn-report') {
         reportPost();
     }
 });
@@ -60,14 +65,11 @@ function updateProduct() {
     const product = document.querySelector('.product-item');
     const productId = product.getAttribute('data-product-id');
 
-    location.href = `../pages/productAdd.html?${productId}`;
+    location.href = `../pages/productAdd.html?productId=${productId}`;
 }
 
-async function deleteProduct() {
-    const product = document.querySelector('.product-item');
-    const productId = product.getAttribute('data-product-id');
-
-    const res = await fetch(API_URL + `product/${productId}`, {
+async function deleteProduct(productId) {
+    const res = await fetch(API_URL + `/product/${productId}`, {
         method: 'DELETE',
         headers: {
             Authorization: `Bearer ${TOKEN}`,
@@ -77,7 +79,7 @@ async function deleteProduct() {
     const data = await res.json();
 
     if (data) {
-        location.href = `profile.html?${sessionStorage.getItem(
+        location.href = `profile.html?userId=${sessionStorage.getItem(
             'my-accountname'
         )}`;
     } else {
@@ -89,13 +91,13 @@ function updatePost() {
     const post = document.querySelector('.post-text');
     const postID = post.getAttribute('data-post-id');
 
-    location.href = `../pages/postUpload.html?${postID}`;
+    location.href = `../pages/postUpload.html?postId=${postID}`;
 }
 
 async function deletePost() {
     const post = document.querySelector('.post-text');
     const postID = post.getAttribute('data-post-id');
-    const res = await fetch(API_URL + `post/${postID}`, {
+    const res = await fetch(API_URL + `/post/${postID}`, {
         method: 'DELETE',
         headers: {
             Authorization: `Bearer ${TOKEN}`,
@@ -105,7 +107,7 @@ async function deletePost() {
     const data = await res.json();
 
     if (data) {
-        location.href = `profile.html?${sessionStorage.getItem(
+        location.href = `profile.html?userId=${sessionStorage.getItem(
             'my-accountname'
         )}`;
     } else {
@@ -116,7 +118,7 @@ async function deletePost() {
 async function reportPost() {
     const post = document.querySelector('.post-text');
     const postID = post.getAttribute('data-post-id');
-    const res = await fetch(API_URL + `post/${postID}/report`, {
+    const res = await fetch(API_URL + `/post/${postID}/report`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${TOKEN}`,
