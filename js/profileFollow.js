@@ -1,4 +1,4 @@
-import { API_URL } from './key';
+import { API_URL } from './key.js';
 const MY_ID = sessionStorage.getItem('my-id');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
@@ -47,7 +47,7 @@ async function fetchData(endpoint) {
     try {
         const res = await fetch(
             API_URL +
-                `profile/${TARGET_ACCOUNTNAME}/${endpoint}/?limit=${limit}&skip=${skip}`,
+                `/profile/${TARGET_ACCOUNTNAME}/${endpoint}?limit=${limit}&skip=${skip}`,
             {
                 method: 'GET',
                 headers: {
