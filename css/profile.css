@@ -182,12 +182,11 @@ body {
 .product-list::-webkit-scrollbar-track {
     background-color: transparent;
 }
-.product-list li {
-    margin-right: 10px;
-}
 .product-item {
     display: block;
     width: 140px;
+    margin-right: 10px;
+    cursor: pointer;
 }
 .product-img {
     width: 140px;
