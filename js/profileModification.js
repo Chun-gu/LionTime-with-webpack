@@ -1,4 +1,4 @@
-import { API_URL } from './key';
+import { API_URL } from './key.js';
 const isLogin = !!sessionStorage.getItem('my-token');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
@@ -32,19 +32,27 @@ const inputId = document.querySelector('#input-userId');
 const inputIntro = document.querySelector('#input-intro');
 
 // 본인 프로필 내역 출력
+let username;
+let accountname;
 async function printProfile() {
-    const endpoint = `profile/${MY_ACCOUNTNAME}`;
+    const endpoint = `/profile/${MY_ACCOUNTNAME}`;
     const data = await fetchData(endpoint);
     const profileData = data.profile;
-    const { username, accountname, intro, image } = profileData;
-    const isImage = !!image.match(/^https\:\/\/mandarin\.api\.weniv\.co\.kr\//, 'i');
-    if (isImage) {
-        previewImg.src = image;
-    } else {
-        previewImg.src = API_URL + image;
-    }
-    inputName.value = username;
-    inputId.value = accountname;
+    const {
+        username: currentUsername,
+        accountname: currentAccountname,
+        intro,
+        image,
+    } = profileData;
+    const isImage = !!image.match(
+        /^https\:\/\/mandarin\.api\.weniv\.co\.kr\//,
+        'i'
+    );
+    previewImg.src = image;
+    username = currentUsername;
+    accountname = currentAccountname;
+    inputName.value = currentUsername;
+    inputId.value = currentAccountname;
     inputIntro.value = intro;
 }
 
@@ -67,23 +75,45 @@ async function fetchData(endpoint) {
 // 프로필 이미지 미리보기
 const inputImg = document.querySelector('#input-userImg');
 inputImg.addEventListener('change', async (e) => {
-    preview(e.target);
+    const allowedImageType = [
+        'image/png',
+        'image/jpg',
+        'image/gif',
+        'image/jpeg',
+    ];
+    const imageFile = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', imageFile);
+
+    if (imageFile.size > 1024 * 1024 * 3) {
+        alert('이미지의 크기가 3MB를 초과했습니다.');
+        return;
+    }
+
+    if (!allowedImageType.includes(imageFile.type)) {
+        alert('jpg, gif, png, jpeg 형식의 이미지만 등록할 수 있습니다.');
+        return;
+    }
+
+    preview(imageFile);
+
     const bgImg = document.querySelector('.userImg');
     bgImg.classList.add('hasImg');
 });
-function preview(input) {
-    if (input.files && input.files[0]) {
+
+function preview(imageFile) {
+    if (imageFile) {
         const reader = new FileReader();
         reader.onload = (e) => {
             previewImg.src = e.target.result;
         };
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(imageFile);
     }
 }
 
 // 사용자 이름 검증
 const invalidName = document.querySelector('.invalid-username');
-let isValidName = false;
+let isValidName = true;
 inputName.addEventListener('blur', (e) => {
     isValidName = validateName(e.target.value);
     isSubmittable();
@@ -108,7 +138,7 @@ function validateName(name) {
 
 // 계정 ID 검증 (중복 불가)
 const invalidId = document.querySelector('.invalid-userId');
-let isValidId = false;
+let isValidId = true;
 inputId.addEventListener('blur', async (e) => {
     isValidId = await validateId(e.target.value);
     isSubmittable();
@@ -136,7 +166,7 @@ async function validateId(id) {
 
 async function checkDuplicateId(accountname) {
     try {
-        const res = await fetch(API_URL + 'user/accountnamevalid', {
+        const res = await fetch(API_URL + '/user/accountnamevalid', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -167,12 +197,13 @@ function isSubmittable() {
         });
     }
 }
+isSubmittable();
 
 // 업로드하려는 이미지 filename 받아오기
 async function getFileName(files) {
     const formData = new FormData();
-    formData.append('image', files[0]); //formData.append("키이름","값")
-    const res = await fetch(API_URL + 'image/uploadfile', {
+    formData.append('image', files[0]);
+    const res = await fetch(API_URL + '/image/uploadfile', {
         method: 'POST',
         body: formData,
     });
@@ -197,7 +228,7 @@ if (isLogin) {
             image = previewImg.src.split('/')[3];
         }
         try {
-            const res = await fetch(API_URL + 'user', {
+            const res = await fetch(API_URL + '/user', {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${TOKEN}`,
@@ -234,7 +265,7 @@ if (isLogin) {
             image = fileName;
         }
         try {
-            const res = await fetch(API_URL + 'user', {
+            const res = await fetch(API_URL + '/user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
