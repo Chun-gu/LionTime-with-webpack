@@ -1,4 +1,4 @@
-import { API_URL } from './key';
+import { API_URL } from './key.js';
 const email = document.querySelector('#idEmailInput');
 const pw = document.querySelector('#loginPWInput');
 const loginForm = document.querySelector('.loginForm');
@@ -50,6 +50,7 @@ async function login() {
         body: JSON.stringify(loginData),
     });
     const json = await res.json(); //외않됌? 포인트 res.json()도 비동기. await을 해줘야한다.
+
     if (json.message === '이메일 또는 비밀번호가 일치하지 않습니다.') {
         errorMessage.innerText = '*이메일 또는 비밀번호가 일치하지 않습니다.';
     } else {

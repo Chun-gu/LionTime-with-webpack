@@ -1,4 +1,4 @@
-import { API_URL } from './key';
+import { API_URL } from './key.js';
 const TOKEN = sessionStorage.getItem('my-token');
 
 async function getFeed() {

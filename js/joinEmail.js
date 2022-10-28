@@ -1,4 +1,4 @@
-import { API_URL } from './key';
+import { API_URL } from './key.js';
 const inputEmail = document.querySelector('#emailInput');
 const errorEmail = document.querySelector('.emailMessage');
 let isEmailValid = false;
