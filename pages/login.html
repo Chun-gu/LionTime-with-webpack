@@ -6,21 +6,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="../css/reset.css" />
         <link rel="stylesheet" href="../font/font.css" />
+        <link rel="stylesheet" href="../css/statusBar.css" />
         <link rel="stylesheet" href="../css/login.css" />
+        <script src="../js/statusBar.js" type="module" defer></script>
         <title>로그인</title>
     </head>
 
     <body>
         <div class="container">
-            <div class="statusBar">
-                <div class="statusBarLeft">
-                    <img src="../images/Wifi.png" alt="statusBarWifi" />
-                    <img
-                        src="../images/Mobile_Signal.png"
-                        alt="statusBarMobile"
-                    />
-                    <img src="../images/battery.png" alt="statusBarBattery" />
-                </div>
+            <div class="status-bar">
+                <time class="current-time"></time>
+                <ul class="status-menu">
+                    <li class="signal"></li>
+                    <li class="wifi"></li>
+                    <li class="battery"></li>
+                </ul>
             </div>
             <header>
                 <img src="../images/logo-lion-white.png" alt="LikelionLogo" />

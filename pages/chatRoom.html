@@ -4,26 +4,28 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>채팅</title>
         <link rel="stylesheet" href="../css/reset.css" />
         <link rel="stylesheet" href="../font/font.css" />
+        <link rel="stylesheet" href="../css/statusBar.css" />
         <link rel="stylesheet" href="../css/chatRoom.css" />
         <link rel="stylesheet" href="../css/modal.css" />
-        <script src="../js/modal.js" type="module" defer></script>
+        <script src="../js/statusBar.js" type="module" defer></script>
         <script src="../js/chatRoom.js" type="module" defer></script>
+        <script src="../js/modal.js" type="module" defer></script>
+        <title>채팅</title>
     </head>
     <body>
         <h1 class="sr-only">채팅방 화면</h1>
 
+        <div class="status-bar">
+            <time class="current-time"></time>
+            <ul class="status-menu">
+                <li class="signal"></li>
+                <li class="wifi"></li>
+                <li class="battery"></li>
+            </ul>
+        </div>
         <header>
-            <div class="status-bar">
-                <time class="text-current-time"></time>
-                <ul class="status-menu">
-                    <li class="mobile-signal"></li>
-                    <li class="wifi"></li>
-                    <li class="battery"></li>
-                </ul>
-            </div>
             <div class="top-nav">
                 <div class="wrap-cont">
                     <button type="button" class="btn-back-key">뒤로가기</button>

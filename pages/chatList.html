@@ -4,20 +4,22 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>채팅목록</title>
         <link rel="stylesheet" href="../css/reset.css" />
         <link rel="stylesheet" href="../font/font.css" />
+        <link rel="stylesheet" href="../css/statusBar.css" />
         <link rel="stylesheet" href="../css/chatList.css" />
+        <script src="../js/statusBar.js" type="module" defer></script>
+        <script src="../js/chatList.js" type="module" defer></script>
         <script src="../js/footer.js" type="module" defer></script>
+        <title>채팅목록</title>
     </head>
     <body>
-        <h1 class="sr-only">채팅리스트 화면</h1>
-
+        
         <header>
             <div class="status-bar">
-                <time class="text-current-time"></time>
+                <time class="current-time"></time>
                 <ul class="status-menu">
-                    <li class="mobile-signal"></li>
+                    <li class="signal"></li>
                     <li class="wifi"></li>
                     <li class="battery"></li>
                 </ul>
@@ -27,6 +29,8 @@
                 <button type="button" class="btn-menu">메뉴</button>
             </div>
         </header>
+
+        <h1 class="sr-only">채팅목록</h1>
 
         <main>
             <ul class="list-chat">
@@ -118,7 +122,5 @@
                 </a>
             </nav>
         </footer>
-
-        <script src="../js/chatList.js"></script>
     </body>
 </html>
