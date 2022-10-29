@@ -2,28 +2,15 @@ body {
     background-color: #e5e5e5;
 }
 
-.statusBar {
+#app {
+    position: relative;
     width: 390px;
-    height: 24px;
-    background-color: #dbdbdb;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0 8px 0;
-    position: fixed;
-    top: 0;
-}
-.statusBarLeft {
-    justify-content: space-around;
-}
-.statusBarLeft img {
-    margin-left: 6px;
+    margin: 0 auto;
 }
 
 .container {
     width: 390px;
     min-height: 100vh;
-    margin: 0 auto;
     background-color: #fff;
     display: flex;
     justify-content: center;

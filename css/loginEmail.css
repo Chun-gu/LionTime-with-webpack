@@ -5,24 +5,6 @@ body {
     background-color: #e5e5e5;
 }
 
-.statusBar {
-    position: relative;
-    width: 390px;
-    height: 24px;
-    background-color: #dbdbdb;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    text-align: center;
-    padding: 0 8px 0;
-}
-.statusBarLeft {
-    justify-content: space-around;
-}
-.statusBarLeft img {
-    margin-left: 6px;
-}
-
 .container {
     width: 390px;
     height: 820px;
@@ -34,8 +16,7 @@ h1 {
     text-align: center;
     font-weight: 500;
     line-height: 30.05px;
-    /* padding: 54px 162px; */
-    margin: 30px 161px 40px;
+    margin: 54px 161px 40px;
 }
 
 .idEmail {
@@ -89,7 +70,6 @@ label {
     position: relative;
     width: 322px;
     height: 44px;
-    /* border: 1px solid#f26e22; */
     background: #f26e22;
     border-radius: 44px;
     color: #ffff;

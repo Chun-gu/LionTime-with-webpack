@@ -92,35 +92,3 @@ body {
 .btn-follow.cancel::before {
     content: '취소';
 }
-
-/* footer */
-/* .footer {
-    font-size: 10px;
-    line-height: 14px;
-    text-align: center;
-    color: #767676;
-    background-color: #fff;
-    padding: 0 6px;
-    border-top: 0.5px solid #dbdbdb;
-    position: sticky;
-    bottom: 0;
-}
-.link-list {
-    display: flex;
-    justify-content: space-between;
-}
-.link-list li a {
-    display: inline-block;
-    width: 84px;
-    height: 60px;
-    padding: 11.5px;
-}
-.footer img {
-    display: block;
-    width: 24px;
-    height: 24px;
-    margin: 0 auto;
-}
-.active {
-    color: #f26e22;
-} */
