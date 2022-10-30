@@ -35,15 +35,20 @@
                                 class="arrowLeft"
                             />
                         </button>
-                        <form action="">
+                        <div class="search-bar-wrapper">
                             <input
+                                id="search-bar"
                                 type="text"
                                 placeholder="계정 검색"
                                 class="searchBar"
                             />
-                        </form>
+                        </div>
                     </div>
                 </header>
+                <main>
+                    <h2 class="sr-only">검색 결과</h2>
+                    <ul id="search-result-list"></ul>
+                </main>
                 <footer>
                     <nav class="nav-wrap-link">
                         <a
