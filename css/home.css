@@ -24,6 +24,7 @@ body {
     justify-content: space-between;
     width: 390px;
     padding-top: 34px;
+    border-bottom: 1px solid #dbdbdb;
 }
 
 h2 {
@@ -49,107 +50,118 @@ main {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 0 16px;
+    padding: 72px 16px 62px;
 }
 
-.noFeed {
-    display: block;
-    margin-top: 10vh;
+/* 피드 목록 */
+.feed-list {
+    height: 100%;
+    padding-top: 20px;
 }
-.noFeed li img {
+
+/* 피드 없음 */
+.no-feed {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.no-feed img {
     margin-bottom: 20px;
 }
-
-main li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100px;
     height: 100px;
 }
-
-h3 {
-    display: flex;
+.follow-suggestion {
     width: 181px;
     height: 18px;
-    align-items: center;
     font-size: 14px;
     font-weight: 400;
     color: #767676;
-    margin-bottom: 2px;
+    margin-bottom: 20px;
 }
-
 .searchBtn {
-    margin-top: 20px;
-    padding: 13px 33px;
+    width: 120px;
+    height: 44px;
+    color: #ffffff;
+    line-height: 44px;
+    text-align: center;
     background-color: #f26e22;
     border-radius: 44px;
-    color: #ffffff;
 }
-.post {
-    padding: 70px 0;
-    height: 100%;
-}
-.postCont {
+
+/* 피드 있음 */
+.post-card {
     display: flex;
-    width: 100%;
-}
-
-.usrImg {
-    width: 42px;
-}
-
-.postOne {
-    display: block;
-    margin-left: 12px;
     margin-bottom: 20px;
 }
 
-.usrName {
+.author-image {
+    display: inline-block;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+.author-image img {
+    width: inherit;
+    height: inherit;
+    object-fit: center;
+    border: 0.5px solid #bdbdbd;
+    border-radius: 50%;
+}
+
+.post-content {
+    display: block;
+    /* margin-left: 12px;
+    margin-bottom: 20px; */
+}
+
+.author-profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4px 0;
+    margin-bottom: 12px;
+}
+.user-name {
     font-size: 14px;
-    line-height: 18px;
     font-weight: 500;
+    line-height: 18px;
     color: #000000;
 }
-
-.usrSubName {
-    color: #767676;
+.account-name {
     font-size: 12px;
-    line-height: 14px;
     font-weight: 400;
-    margin-top: 10px;
+    line-height: 14px;
+    color: #767676;
 }
 
-.postTxt {
+.post-text {
     display: block;
     width: 304px;
     font-size: 14px;
     font-weight: 400;
     text-align: left;
-    margin-top: 16px;
+    margin-bottom: 16px;
 }
 
-.postImg {
-    margin-top: 16px;
-    width: 100%;
+.post-image {
+    width: 304px;
     height: 228px;
     border: 0.5px solid #dbdbdb;
     border-radius: 10px;
+    margin-bottom: 14px;
     object-fit: cover;
 }
 
 .like,
-.commentBtn {
+.comment-btn {
     border: none;
     background-color: transparent;
 }
-.commentIcon {
+.comment-icon {
     width: 20px;
     height: 20px;
 }
@@ -168,18 +180,12 @@ h3 {
     height: 20px;
 }
 
-.usrImg {
-    border-radius: 100%;
-    width: 42px;
-    height: 42px;
-}
-
 .reaction {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     text-align: center;
-    margin-top: 12px;
+    margin-bottom: 10px;
 }
 
 .reaction span {
@@ -191,46 +197,7 @@ h3 {
     margin-right: 18px;
 }
 
-.postDate {
+.post-date {
     font-size: 10px;
     color: #767676;
-    margin-top: 18px;
-}
-
-footer ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-
-    height: 60px;
-    width: 390px;
-}
-
-footer li {
-    list-style: none;
-}
-
-footer a {
-    list-style: none;
-    line-height: 14px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-}
-a {
-    text-decoration: none;
-}
-
-footer a img {
-    width: 24px;
-    height: 24px;
-    margin-bottom: 6px;
-}
-
-footer a span {
-    color: #767676;
-    font-size: 10px;
-    font-weight: 400;
 }
