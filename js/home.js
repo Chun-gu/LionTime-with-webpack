@@ -1,7 +1,7 @@
-import { API_URL, IMAGE_URL } from './key.js';
+import { API_URL } from './key.js';
 import { trimImageURL } from './lib.js';
-const TOKEN = sessionStorage.getItem('my-token');
 
+const TOKEN = sessionStorage.getItem('my-token');
 const LIMIT = 5;
 let skip = 0;
 
@@ -83,7 +83,6 @@ async function getFeed() {
 
         return data;
     } catch (error) {
-        console.log(error);
         alert('피드를 가져오는 데에 실패했습니다.');
     }
 }
@@ -112,30 +111,3 @@ function printNoFeed() {
     li.append(a);
     feedList.append(li);
 }
-
-// const goPostPage = document.querySelectorAll('.commentBtn');
-// for (const [idx, comment] of goPostPage.entries()) {
-//     comment.addEventListener('click', () => {
-//         window.location.href = `post.html?postId=${posts[idx].id}`;
-//     });
-// }
-
-// const postContainer = document.querySelector('.post');
-// postContainer.addEventListener('click', (e) => {
-//     if (e.target.classList.contains('like')) {
-//         likePost(e.target);
-//         return;
-//     }
-// });
-
-// function likePost(target) {
-//     const isHearted = target.dataset.hearted;
-//     const likeCount = target.nextSibling.nextSibling;
-//     if (isHearted === 'true') {
-//         target.dataset.hearted = false;
-//         likeCount.textContent -= 1;
-//     } else {
-//         target.dataset.hearted = true;
-//         likeCount.textContent = +likeCount.textContent + 1;
-//     }
-// }
