@@ -1,4 +1,6 @@
 import { API_URL } from './key.js';
+import { getFromQueryString } from './lib.js';
+
 const closeBtn = document.querySelector('.btn-closed');
 const alertModal = document.querySelector('.alert');
 const alertDimd = document.querySelector('.alert-dimd');
@@ -22,7 +24,12 @@ document.addEventListener('click', (e) => {
         alertModal.classList.add('on');
         alertDimd.classList.add('on');
     } else if (classList === 'btn-list post-report') {
-        createAlert('신고하시겠어요?', '신고', 'btn-report');
+        createAlert('이 게시글을 신고하시겠어요?', '신고', 'btn-report-post');
+
+        alertModal.classList.add('on');
+        alertDimd.classList.add('on');
+    } else if (classList === 'btn-list comment-report') {
+        createAlert('이 댓글을 신고하시겠어요?', '신고', 'btn-report-comment');
 
         alertModal.classList.add('on');
         alertDimd.classList.add('on');
@@ -50,8 +57,10 @@ alertModal.addEventListener('click', (e) => {
     } else if (classList === 'btn-alert btn-product-delete') {
         const productId = sessionStorage.getItem('targetProductId');
         deleteProduct(productId);
-    } else if (classList === 'btn-alert btn-report') {
+    } else if (classList === 'btn-alert btn-report-post') {
         reportPost();
+    } else if (classList === 'btn-alert btn-report-comment') {
+        reportComment();
     }
 });
 
@@ -87,10 +96,9 @@ async function deleteProduct(productId) {
 }
 
 function updatePost() {
-    const post = document.querySelector('.post-text');
-    const postID = post.getAttribute('data-post-id');
+    const postId = sessionStorage.getItem('targetPostId');
 
-    location.href = `../pages/postUpload.html?postId=${postID}`;
+    location.href = `../pages/postUpload.html?postId=${postId}`;
 }
 
 async function deletePost() {
@@ -117,17 +125,52 @@ async function deletePost() {
 async function reportPost() {
     const post = document.querySelector('.post-text');
     const postID = post.getAttribute('data-post-id');
-    const res = await fetch(API_URL + `/post/${postID}/report`, {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${TOKEN}`,
-            'Content-type': 'application/json',
-        },
-    });
-    const data = await res.json();
-    if (data) {
-        location.reload();
-    } else {
-        alert('신고 실패');
+
+    try {
+        const res = await fetch(`${API_URL}/post/${postID}/report`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${TOKEN}`,
+                'Content-type': 'application/json',
+            },
+        });
+        const data = await res.json();
+
+        if (data.report) {
+            alert('해당 게시글을 신고했습니다.');
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        alert('오류가 발생했습니다.');
     }
+    location.reload();
+}
+
+async function reportComment() {
+    const postId = getFromQueryString('postId');
+    const commentId = sessionStorage.getItem('targetCommentId');
+
+    try {
+        const res = await fetch(
+            `${API_URL}/post/${postId}/comments/${commentId}/report`,
+            {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`,
+                    'Content-type': 'application/json',
+                },
+            }
+        );
+        const data = await res.json();
+
+        if (data.report) {
+            alert('해당 댓글을 신고했습니다.');
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        alert('오류가 발생했습니다.');
+    }
+    location.reload();
 }
