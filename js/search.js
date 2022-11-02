@@ -1,4 +1,6 @@
 import { API_URL, IMAGE_URL } from './key.js';
+import { debounce } from './lib.js';
+
 const TOKEN = sessionStorage.getItem('my-token');
 
 const backBtn = document.querySelector('.backBtn');
@@ -8,18 +10,14 @@ backBtn.addEventListener('click', () => {
 
 const searchBar = document.querySelector('#search-bar');
 searchBar.addEventListener('input', (e) => debouncedSearchUser(e.target.value));
+let searchKeyword = '';
+const resultList = document.querySelector('#search-result-list');
 
 const debouncedSearchUser = debounce((value) => {
-    if (value) searchUser(value);
+    searchKeyword = value.replaceAll(/\s+/g, '');
+    if (!searchKeyword) resultList.innerHTML = '';
+    if (searchKeyword) searchUser(searchKeyword);
 }, 300);
-
-function debounce(func, timeout) {
-    let timer;
-    return (...args) => {
-        clearTimeout(timer);
-        timer = setTimeout(() => func.apply(this, args), timeout);
-    };
-}
 
 async function searchUser(keyword) {
     try {
@@ -40,13 +38,15 @@ async function searchUser(keyword) {
     }
 }
 
-const resultList = document.querySelector('#search-result-list');
 function printSearchResult(result) {
+    resultList.innerHTML = '';
+
     if (result.length === 0) {
         const noResult = makeNoResult();
         resultList.append(noResult);
         return;
     }
+
     for (const userInfo of result) {
         const userProfileCard = makeUserProfileCard(userInfo);
         resultList.append(userProfileCard);
@@ -85,12 +85,18 @@ function makeUserProfileCard({ username, accountname, image }) {
     const div = document.createElement('div');
     div.classList.add('profile-name');
 
+    const keywordPattern = new RegExp(searchKeyword, 'g');
+    const highlighted = accountname.replaceAll(
+        keywordPattern,
+        `<span class="match-keyword">${searchKeyword}</span>`
+    );
+
     const userName = document.createElement('span');
-    userName.classList.add('user-name');
-    userName.textContent = username;
+    userName.classList.add('user-name', 'single-ellipsis');
+    userName.innerHTML = highlighted;
 
     const accountName = document.createElement('span');
-    accountName.classList.add('account-name');
+    accountName.classList.add('account-name', 'single-ellipsis');
     accountName.textContent = accountname;
 
     div.append(userName);
