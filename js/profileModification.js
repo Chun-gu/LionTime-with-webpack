@@ -1,4 +1,6 @@
 import { API_URL } from './key.js';
+import { trimImageURL } from './lib.js';
+
 const isLogin = !!sessionStorage.getItem('my-token');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
@@ -44,11 +46,8 @@ async function printProfile() {
         intro,
         image,
     } = profileData;
-    const isImage = !!image.match(
-        /^https\:\/\/mandarin\.api\.weniv\.co\.kr\//,
-        'i'
-    );
-    previewImg.src = image;
+
+    previewImg.src = trimImageURL(image);
     username = currentUsername;
     accountname = currentAccountname;
     inputName.value = currentUsername;
@@ -66,9 +65,10 @@ async function fetchData(endpoint) {
             },
         });
         const resJson = await res.json();
+
         return resJson;
     } catch (err) {
-        console.log(err);
+        alert('오류가 발생했습니다.');
     }
 }
 
@@ -178,9 +178,10 @@ async function checkDuplicateId(accountname) {
             }),
         });
         const resJson = await res.json();
+
         return resJson.message === '사용 가능한 계정ID 입니다.' ? false : true;
     } catch (err) {
-        console.log(err);
+        alert('오류가 발생했습니다.');
     }
 }
 
@@ -203,10 +204,12 @@ isSubmittable();
 async function getFileName(files) {
     const formData = new FormData();
     formData.append('image', files[0]);
+
     const res = await fetch(API_URL + '/image/uploadfile', {
         method: 'POST',
         body: formData,
     });
+
     const data = await res.json();
     const fileName = data['filename'];
     return fileName;
@@ -220,6 +223,7 @@ if (isLogin) {
         const username = inputName.value;
         const accountname = inputId.value;
         const intro = inputIntro.value;
+
         let image = '';
         if (inputImg.files.length !== 0) {
             const fileName = await getFileName(inputImg.files);
@@ -227,6 +231,7 @@ if (isLogin) {
         } else {
             image = previewImg.src.split('/')[3];
         }
+
         try {
             const res = await fetch(API_URL + '/user', {
                 method: 'PUT',
@@ -244,11 +249,17 @@ if (isLogin) {
                 }),
             });
             const resJson = await res.json();
+
             const { accountname: modifiedAccountname } = resJson.user;
             sessionStorage.setItem('my-accountname', modifiedAccountname);
-            location.href = `../pages/profile.html?${modifiedAccountname}`;
+            history.replaceState(
+                null,
+                null,
+                `../pages/profile.html?userId=${modifiedAccountname}`
+            );
+            location.reload();
         } catch (err) {
-            console.log(err);
+            alert('오류가 발생했습니다.');
         }
     });
 } else {
@@ -259,11 +270,13 @@ if (isLogin) {
         const username = inputName.value;
         const accountname = inputId.value;
         const intro = inputIntro.value;
+
         let image = '';
         if (inputImg.files.length !== 0) {
             const fileName = await getFileName(inputImg.files);
             image = fileName;
         }
+
         try {
             const res = await fetch(API_URL + '/user', {
                 method: 'POST',
@@ -282,11 +295,12 @@ if (isLogin) {
                 }),
             });
             const resJson = await res.json();
+
             if (resJson.message === '회원가입 성공') {
                 location.href = '../pages/login.html';
             }
         } catch (err) {
-            console.log(err);
+            alert('회원가입에 실패했습니다.');
         }
     });
 }
