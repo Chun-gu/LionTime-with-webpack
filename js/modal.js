@@ -1,6 +1,11 @@
+import { getFromQueryString } from './lib';
+
 const modalContainer = document.querySelector('.list-modal-container');
 const modal = document.querySelector('.modal');
 const dimd = document.querySelector('.dimd');
+const userId = getFromQueryString('userId');
+const myUserId = sessionStorage.getItem('my-accountname');
+const isMyProfile = userId === myUserId;
 
 let bottomValue = 0;
 
@@ -61,6 +66,9 @@ document.addEventListener('click', (e) => {
             addAttr(menuBtnLogOut, 'class', 'btn-list update');
             menuBtnLogOut.appendChild(document.createTextNode('수정'));
 
+            const postId = e.target.closest('.post-list-item').dataset.postId;
+            sessionStorage.setItem('targetPostId', postId);
+
             menulistfirst.appendChild(menuBtnSetting);
             menulistSecond.appendChild(menuBtnLogOut);
             modalContainer.appendChild(menulistfirst);
@@ -101,6 +109,10 @@ document.addEventListener('click', (e) => {
         addAttr(menuBtnSetting, 'class', 'btn-list delete');
         menuBtnSetting.appendChild(document.createTextNode('삭제'));
         addAttr(menuBtnLogOut, 'class', 'btn-list update');
+
+        const targetPostId = getFromQueryString('postId');
+        sessionStorage.setItem('targetPostId', targetPostId);
+
         menuBtnLogOut.appendChild(document.createTextNode('수정'));
 
         menulistfirst.appendChild(menuBtnSetting);
@@ -122,6 +134,28 @@ document.addEventListener('click', (e) => {
         const menulist = createEle('li', 'class', 'list-modal-menu');
         const menuBtn = createEle('button', 'type', 'button');
         addAttr(menuBtn, 'class', 'btn-list post-report');
+        menuBtn.appendChild(document.createTextNode('신고하기'));
+        menulist.appendChild(menuBtn);
+        modalContainer.appendChild(menulist);
+
+        bottomValue = modalContainer.childElementCount * 46 + 46;
+        modal.style.bottom = `-${bottomValue}px`;
+
+        if (modal.classList.value === 'modal') {
+            createModal();
+        } else {
+            removeModal();
+        }
+    }
+
+    if (e.target.classList.value === 'btn-more-mini comment') {
+        const commentId = e.target.closest('.comment-card').dataset.commentId;
+        sessionStorage.setItem('targetCommentId', commentId);
+
+        const menulist = createEle('li', 'class', 'list-modal-menu');
+        const menuBtn = createEle('button', 'type', 'button');
+        addAttr(menuBtn, 'class', 'btn-list comment-report');
+
         menuBtn.appendChild(document.createTextNode('신고하기'));
         menulist.appendChild(menuBtn);
         modalContainer.appendChild(menulist);
@@ -175,7 +209,7 @@ document.addEventListener('click', (e) => {
         }
     }
 
-    //버튼 기능
+    // 채팅방 나가기 또는 웹사이트로 이동
     if (e.target.classList.value === 'btn-list close-chat-room') {
         history.back();
     } else if (e.target.classList.value === 'btn-list website') {
