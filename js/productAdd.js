@@ -1,49 +1,105 @@
-import { API_URL } from './key.js';
-const TOKEN = sessionStorage.getItem('my-token');
-const PRODUCT_ID = location.href.split('?')[1];
+import { API_URL, IMAGE_URL } from './key.js';
+import { getFromQueryString } from './lib.js';
 
-// 0. 뒤로가기
+const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
+const TOKEN = sessionStorage.getItem('my-token');
+const PRODUCT_ID = getFromQueryString('productId');
+
+// 뒤로가기
 const btnBack = document.querySelector('.btn-back');
 btnBack.addEventListener('click', () => {
     history.back();
 });
 
-// 1. input file - image upload preview
-const inpImage = document.querySelector('#img-product');
-const previewImage = document.querySelector('.img-preview');
-let checkImg = false;
+// 상품 수정이면 기존 데이터 불러오기
+if (PRODUCT_ID) {
+    getProductData();
+}
 
-function readImage(input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        // 이미지가 로드가 된 경우
-        reader.onload = (e) => {
-            previewImage.src = e.target.result;
-        };
-        reader.readAsDataURL(input.files[0]);
-    } else {
-        previewImage.src = '../images/img-preview.png';
+async function getProductData() {
+    try {
+        const res = await fetch(`${API_URL}/product/detail/${PRODUCT_ID}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${TOKEN}`,
+            },
+        });
+
+        const {
+            product: { itemName, price, link, itemImage },
+        } = await res.json();
+
+        productNameInput.value = itemName;
+        priceInput.value = price;
+        linkInput.value = link;
+        imagePreview.src = IMAGE_URL + itemImage;
+    } catch (error) {
+        alert('기존 상품 정보를 불러오지 못했습니다.');
     }
 }
 
-inpImage.addEventListener('input', (e) => {
-    checkImg = true;
-    readImage(e.target);
+// 상품 이미지 미리보기
+const productImageInput = document.querySelector('#img-product');
+const imagePreview = document.querySelector('.img-preview');
+
+productImageInput.addEventListener('change', async (e) => {
+    const allowedImageType = [
+        'image/png',
+        'image/jpg',
+        'image/gif',
+        'image/jpeg',
+    ];
+    const imageFile = e.target.files[0];
+
+    if (imageFile.size > 1024 * 1024 * 3) {
+        alert('이미지의 크기가 3MB를 초과했습니다.');
+        return;
+    }
+
+    if (!allowedImageType.includes(imageFile.type)) {
+        alert('jpg, gif, png, jpeg 형식의 이미지만 등록할 수 있습니다.');
+        return;
+    }
+
+    previewImage(imageFile);
     formCheck();
 });
 
-// 2. form 태그 내부값 체크, 버튼 활성화
-const inpName = document.querySelector('.inp-name');
-const inpPrice = document.querySelector('.inp-price');
-const inpLink = document.querySelector('.inp-link');
+function previewImage(imageFile) {
+    if (imageFile) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            imagePreview.src = e.target.result;
+        };
+        reader.readAsDataURL(imageFile);
+    } else {
+        imagePreview.src = '../images/img-preview.png';
+    }
+}
+
+// form 태그 내부값 체크, 버튼 활성화
+const productNameInput = document.querySelector('.inp-name');
+const priceInput = document.querySelector('.inp-price');
+const linkInput = document.querySelector('.inp-link');
 const btnSave = document.querySelector('.btn-save');
+
+productNameInput.addEventListener('input', () => {
+    formCheck();
+});
+priceInput.addEventListener('input', () => {
+    formCheck();
+});
+linkInput.addEventListener('input', () => {
+    formCheck();
+});
 
 function formCheck() {
     if (
-        inpName.value &&
-        inpPrice.value &&
-        inpLink.value &&
-        (inpImage.value || previewImage.src.split('-')[1] !== 'preview.png')
+        productNameInput.value &&
+        priceInput.value &&
+        linkInput.value &&
+        (productImageInput.value || imagePreview.src)
     ) {
         btnSave.disabled = false;
     } else {
@@ -51,17 +107,11 @@ function formCheck() {
     }
 }
 
-inpName.addEventListener('input', (e) => {
-    formCheck();
-});
-inpPrice.addEventListener('input', (e) => {
-    formCheck();
-});
-inpLink.addEventListener('input', (e) => {
-    formCheck();
+// 가격 1000 단위 콤마 찍기
+priceInput.addEventListener('input', (e) => {
+    e.target.value = comma(uncomma(e.target.value));
 });
 
-// 3. 가격 1000 단위 컴마 찍기
 function comma(str) {
     return str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
 }
@@ -69,131 +119,82 @@ function uncomma(str) {
     return str.replace(/[^\d]+/g, '');
 }
 
-inpPrice.addEventListener('input', (e) => {
-    e.target.value = comma(uncomma(e.target.value));
+// 저장 버튼 클릭
+btnSave.addEventListener('click', () => {
+    PRODUCT_ID ? addUpdateProduct('UPDATE') : addUpdateProduct('ADD');
 });
 
-// 5. api 서버로 데이터 전송 (상품 등록)
-async function postData() {
-    const imgName = await imgData();
-    const itemName = inpName.value;
-    const price = parseInt(uncomma(inpPrice.value));
-    const link = inpLink.value;
-    const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
+// 상품 등록 또는 수정
+async function addUpdateProduct(mode) {
+    const itemName = productNameInput.value;
+    const price = parseInt(uncomma(priceInput.value));
+    const link = linkInput.value;
+    const imageFile = productImageInput.files[0];
+    const { filename: itemImage } = await getImageFileName(imageFile);
 
-    const res = await fetch(`${API_URL}/product`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${TOKEN}`,
-        },
-        body: JSON.stringify({
-            product: {
-                itemName: itemName,
-                price: price,
-                link: link,
-                itemImage: imgName.filename,
+    const method = {
+        ADD: 'POST',
+        UPDATE: 'PUT',
+    };
+    const behavior = {
+        ADD: '등록',
+        UPDATE: '수정',
+    };
+    const productId = mode === 'UPDATE' ? PRODUCT_ID : '';
+
+    try {
+        const res = await fetch(`${API_URL}/product/${productId}`, {
+            method: method[mode],
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${TOKEN}`,
             },
-        }),
-    });
-    const json = await res.json();
-    if (json.product) {
-        alert('상품 등록이 완료되었습니다.');
-        location.href = `/pages/profile.html?${MY_ACCOUNTNAME}`;
-    } else {
-        alert('상품 등록에 실패했습니다.');
+            body: JSON.stringify({
+                product: {
+                    itemName,
+                    price,
+                    link,
+                    itemImage,
+                },
+            }),
+        });
+
+        const { product } = await res.json();
+
+        if (product) {
+            alert(`상품 ${behavior[mode]}이 완료되었습니다.`);
+            history.replaceState(
+                null,
+                null,
+                `/pages/profile.html?userId=${MY_ACCOUNTNAME}`
+            );
+            location.reload();
+        } else {
+            alert(`상품 ${behavior[mode]}에 실패했습니다.`);
+        }
+    } catch (error) {
+        alert(`상품 ${behavior[mode]}에 실패했습니다.`);
     }
 }
 
-// 6. 이미지 서버 전달, 새 파일이름 받기
-async function imgData() {
+// 서버로부터 이미지 파일 이름 받기
+async function getImageFileName(imageFile) {
     let formData = new FormData();
-    formData.append('image', inpImage.files[0]);
-    const res = await fetch(`${API_URL}/image/uploadfile`, {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${TOKEN}`,
-        },
-        body: formData,
-    });
-    const data = await res.json();
-    return data;
-}
+    formData.append('image', imageFile);
 
-btnSave.addEventListener('click', (e) => {
-    if (PRODUCT_ID) {
-        putData();
-    } else {
-        postData();
-    }
-});
-
-// 7. status bar 시간
-const timeStatus = document.querySelector('.text-current-time');
-(function timeNow() {
-    const date = new Date();
-    const hour = date.getHours();
-    const min = date.getMinutes();
-    if (hour > 12) {
-        timeStatus.textContent = `${hour - 12}:${min} PM`;
-    } else {
-        timeStatus.textContent = `${hour}:${min} AM`;
-    }
-})();
-
-// 8. 상품 수정
-if (PRODUCT_ID) {
-    getProductData();
-}
-
-async function getProductData() {
-    const res = await fetch(`${API_URL}/product/detail/${PRODUCT_ID}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${TOKEN}`,
-        },
-    });
-    const data = await res.json();
-    previewImage.src = API_URL + data.product.itemImage;
-    inpName.value = data.product.itemName;
-    inpPrice.value = data.product.price;
-    inpLink.value = data.product.link;
-}
-
-async function putData() {
-    let imgLink;
-    if (checkImg) {
-        const imgName = await imgData();
-        imgLink = `${API_URL}/${imgName.filename}`;
-    } else {
-        imgLink = previewImage.src;
-    }
-    const itemName = inpName.value;
-    const price = parseInt(uncomma(inpPrice.value));
-    const link = inpLink.value;
-    const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
-
-    const res = await fetch(`${API_URL}/product/${PRODUCT_ID}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${TOKEN}`,
-        },
-        body: JSON.stringify({
-            product: {
-                itemName: itemName,
-                price: price,
-                link: link,
-                itemImage: imgLink,
+    try {
+        const res = await fetch(`${API_URL}/image/uploadfile`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${TOKEN}`,
             },
-        }),
-    });
-    const data = await res.json();
-    if (data.product) {
-        alert('상품 수정이 완료되었습니다.');
-        location.href = `/pages/profile.html?${MY_ACCOUNTNAME}`;
-    } else {
-        alert('상품 수정에 실패했습니다.');
+            body: formData,
+        });
+
+        const data = await res.json();
+
+        return data;
+    } catch (error) {
+        alert('이미지 정보를 불러오는데 실패했습니다.');
     }
 }
