@@ -1,151 +1,93 @@
-import { API_URL } from './key.js';
-let inpFile;
-const container = document.querySelector('.img-container');
-const row = document.querySelector('.row');
-let dataImg = [];
+import { API_URL, IMAGE_URL } from './key.js';
+import { getFromQueryString } from './lib.js';
 const TOKEN = sessionStorage.getItem('my-token');
-const POST_ID = location.href.split('?')[1];
+const POST_ID = getFromQueryString('postId');
 
-// POST
-const inpText = document.querySelector('.inp-post');
-const btnUpload = document.querySelector('.btn-upload');
+const postContentInput = document.querySelector('.inp-post');
+const imageContainer = document.querySelector('.img-container');
+const row = document.querySelector('.row');
 
-async function postData() {
-    const imgName = await imgData();
-    const content = inpText.value;
+let inpFile;
+let imageNames = [];
 
-    const res = await fetch(`${API_URL}/post`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${TOKEN}`,
-        },
-        body: JSON.stringify({
-            post: {
-                content: content,
-                image: imgName,
-            },
-        }),
-    });
-    const data = await res.json();
-    if (data) {
-        alert('업로드 성공');
-        location.href = `/pages/post.html?${data.post.id}`;
-    } else {
-        alert('업로드 실패');
-    }
-}
+// 뒤로가기
+const btnBack = document.querySelector('.btn-back');
+btnBack.addEventListener('click', () => {
+    history.back();
+});
 
-// 이미지 서버로 전송, filename 값 가져오기
-async function imgData() {
-    if (dataImg.length > 1) {
-        return dataImg.join(',');
-    } else if (dataImg.length === 1) {
-        return dataImg[0];
-    }
-
-    let formData = new FormData();
-    for (const file of inpFile) {
-        formData.append('image', file);
-    }
-    const res = await fetch(`${API_URL}/image/uploadfiles`, {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${TOKEN}`,
-        },
-        body: formData,
-    });
-    const data = await res.json();
-
-    for (const i of data) {
-        dataImg.push(`${API_URL}/${i['filename']}`);
-    }
-    if (dataImg.length > 1) {
-        return dataImg.join(',');
-    } else {
-        return dataImg[0];
-    }
-}
-
-// PUT
-async function getPostData() {
-    const res = await fetch(`${API_URL}/post/${POST_ID}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${TOKEN}`,
-        },
-    });
-    const data = await res.json();
-
-    document.querySelector('.inp-post').value = data.post.content;
-    dataImg = data.post.image.split(',');
-    for (const imgName of dataImg) {
-        row.innerHTML += `
-                <div>
-                    <img class="image" style="width: 168px; height: 126px" src=${imgName} alt="업로드 이미지">
-                    <div class="btnX"></div>
-                </div>`;
-    }
-
-    imgLen(dataImg.length);
-    btnRemove(dataImg);
-    imgSlider();
-}
-
+// 게시글 수정이면 기존 게시글 정보 불러오기
 if (POST_ID) {
     getPostData();
 }
 
-async function putData() {
-    const imgName = await imgData();
-    const content = inpText.value;
-
-    const res = await fetch(`${API_URL}/post/${POST_ID}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${TOKEN}`,
-        },
-        body: JSON.stringify({
-            post: {
-                content: content,
-                image: imgName,
+async function getPostData() {
+    try {
+        const res = await fetch(`${API_URL}/post/${POST_ID}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${TOKEN}`,
             },
-        }),
-    });
-    const data = await res.json();
-    if (data) {
-        alert('업로드 성공');
-        location.href = `/pages/post.html?${data.post.id}`;
-    } else {
-        alert('업로드 실패');
+        });
+        const data = await res.json();
+
+        printPostData(data);
+    } catch (error) {
+        alert('기존 게시글 정보를 불러오는데 실패했습니다.');
     }
 }
 
-btnUpload.addEventListener('click', (e) => {
-    e.preventDefault();
-    POST_ID ? putData() : postData();
+function printPostData(data) {
+    const {
+        post: { content, image },
+    } = data;
+
+    postContentInput.value = content;
+    imageNames = image.split(',');
+    for (const imageName of imageNames) {
+        row.innerHTML += `
+                <div>
+                    <img class="image" style="width: 168px; height: 126px" src=${
+                        IMAGE_URL + imageName
+                    } alt="업로드 이미지">
+                    <div class="btnX"></div>
+                </div>`;
+    }
+
+    resizeImageContainer(imageNames.length);
+    btnRemove(imageNames);
+    imgSlider();
+}
+
+// POST
+const inpText = document.querySelector('.inp-post');
+
+// 게시글 이미지 미리보기
+const postImageInput = document.querySelector('#img-upload');
+postImageInput.addEventListener('change', (e) => {
+    previewImage(e.target.files);
+    formCheck();
 });
 
 // 업로드 이미지 미리보기 (image upload preview)
-function readImage(input) {
-    inpFile = input.files;
+function previewImage(imageFiles) {
+    inpFile = imageFiles;
 
     // 업로드 다시할 떄 기존 자식태그 삭제
     while (row.hasChildNodes()) {
         row.removeChild(row.firstChild);
     }
-    dataImg = [];
+    imageNames = [];
 
-    const fileArr = Array.from(input.files);
+    const fileArr = Array.from(imageFiles);
 
-    if (fileArr.length + dataImg.length > 3) {
+    if (fileArr.length + imageNames.length > 3) {
         return alert('최대 3개까지 업로드 가능합니다');
     }
 
-    if (input.files.length) {
-        fileArr.forEach((file, index) => {
+    if (imageFiles.length) {
+        fileArr.forEach((file) => {
             const reader = new FileReader();
             const imgDiv = document.createElement('div');
             const btnX = document.createElement('div');
@@ -158,7 +100,7 @@ function readImage(input) {
 
             reader.onload = (e) => {
                 img.src = e.target.result;
-                if (input.files.length + dataImg.length > 1) {
+                if (imageFiles.length + imageNames.length > 1) {
                     imgDiv.firstChild.style.width = '168px';
                     imgDiv.firstChild.style.height = '126px';
                 } else {
@@ -169,19 +111,13 @@ function readImage(input) {
             row.appendChild(imgDiv);
             reader.readAsDataURL(file);
         });
-        container.appendChild(row);
+        imageContainer.appendChild(row);
     }
 
     btnRemove(fileArr);
-    imgLen(fileArr.length + dataImg.length);
+    resizeImageContainer(fileArr.length + imageNames.length);
     imgSlider();
 }
-
-const inputImage = document.querySelector('#img-upload');
-inputImage.addEventListener('change', (e) => {
-    readImage(e.target);
-    formCheck();
-});
 
 // 업로드 이미지 슬라이더
 function imgSlider() {
@@ -204,21 +140,21 @@ function imgSlider() {
 }
 
 // 이미지 개수별 img-container 크기
-function imgLen(len) {
-    if (len === 0) {
-        inputImage.value = '';
-    } else if (len === 1) {
-        container.style.height = '228px';
+function resizeImageContainer(imagesCount) {
+    if (imagesCount === 0) {
+        postImageInput.value = '';
+    } else if (imagesCount === 1) {
+        imageContainer.style.height = '228px';
         row.style.width = '304px';
         row.style.height = '228px';
         document.querySelector('.image').style.width = '304px';
         document.querySelector('.image').style.height = '228px';
-    } else if (len === 2) {
-        container.style.height = '126px';
+    } else if (imagesCount === 2) {
+        imageContainer.style.height = '126px';
         row.style.width = '344px';
         row.style.height = '126px';
-    } else if (len === 3) {
-        container.style.height = '126px';
+    } else if (imagesCount === 3) {
+        imageContainer.style.height = '126px';
         row.style.width = '520px';
         row.style.height = '126px';
     }
@@ -234,7 +170,7 @@ function btnRemove(imgArr) {
             element.parentNode.remove();
             imgArr.splice(delIndex, 1);
             btnDelArr.splice(delIndex, 1);
-            imgLen(btnDelArr.length);
+            resizeImageContainer(btnDelArr.length);
             formCheck();
         });
     });
@@ -242,9 +178,9 @@ function btnRemove(imgArr) {
 
 // textarea 높이 자동 조절
 const textArea = document.querySelector('#txt-post');
-textArea.addEventListener('input', (e) => resize(e));
+textArea.addEventListener('input', (e) => resizeTextArea(e));
 
-function resize(e) {
+function resizeTextArea(e) {
     textArea.style.height = 'auto';
     const scrollHeight = e.target.scrollHeight;
     textArea.style.height = `${scrollHeight}px`;
@@ -252,37 +188,98 @@ function resize(e) {
     if (scrollHeight >= 470) textArea.style.overflowY = 'scroll';
 }
 
-// 뒤로가기
-const btnBack = document.querySelector('.btn-back');
-btnBack.addEventListener('click', () => {
-    history.back();
-});
-
 // 입력 값 체크, 버튼 활성화
 const inpPost = document.querySelector('.inp-post');
+const btnUpload = document.querySelector('.btn-upload');
 
 formCheck();
-inpPost.addEventListener('input', (e) => {
+inpPost.addEventListener('input', () => {
     formCheck();
 });
 
 function formCheck() {
-    if (inpPost.value && (inputImage.value || dataImg.length)) {
+    if (inpPost.value && (postImageInput.value || imageNames.length)) {
         btnUpload.disabled = false;
     } else {
         btnUpload.disabled = true;
     }
 }
 
-// status bar 시간
-const timeStatus = document.querySelector('.text-current-time');
-(function timeNow() {
-    const date = new Date();
-    const hour = date.getHours();
-    const min = date.getMinutes();
-    if (hour > 12) {
-        timeStatus.textContent = `${hour - 12}:${min} PM`;
-    } else {
-        timeStatus.textContent = `${hour}:${min} AM`;
+// 업로드 버튼 클릭
+btnUpload.addEventListener('click', (e) => {
+    e.preventDefault();
+    POST_ID ? addUpdatePost('UPDATE') : addUpdatePost('ADD');
+});
+
+// 게시글 등록 또는 추가
+async function addUpdatePost(mode) {
+    const imageFileName = await getImageFileName();
+    const content = inpText.value;
+
+    const method = {
+        ADD: 'POST',
+        UPDATE: 'PUT',
+    };
+    const behavior = {
+        ADD: '작성',
+        UPDATE: '수정',
+    };
+    const postId = mode === 'UPDATE' ? POST_ID : '';
+
+    try {
+        const res = await fetch(`${API_URL}/post/${postId}`, {
+            method: method[mode],
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${TOKEN}`,
+            },
+            body: JSON.stringify({
+                post: {
+                    content,
+                    image: imageFileName,
+                },
+            }),
+        });
+
+        const { post } = await res.json();
+
+        if (post) {
+            alert(`게시글 ${behavior[mode]}이 완료되었습니다.`);
+            history.replaceState(
+                null,
+                null,
+                `../pages/post.html?postId=${post.id}`
+            );
+            location.reload();
+        } else {
+            alert(`게시글 ${behavior[mode]}에 실패했습니다.`);
+        }
+    } catch (error) {
+        alert(`게시글 ${behavior[mode]}에 실패했습니다.`);
     }
-})();
+}
+
+// 이미지 서버로 전송, filename 값 가져오기
+async function getImageFileName() {
+    if (imageNames.length > 1) {
+        return imageNames.join(',');
+    } else if (imageNames.length === 1) {
+        return imageNames[0];
+    }
+
+    let formData = new FormData();
+    for (const file of inpFile) {
+        formData.append('image', file);
+    }
+    const res = await fetch(`${API_URL}/image/uploadfiles`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${TOKEN}`,
+        },
+        body: formData,
+    });
+    const fileInfos = await res.json();
+    const fileName = fileInfos.map((info) => info.filename).join(',');
+
+    return fileName;
+}
