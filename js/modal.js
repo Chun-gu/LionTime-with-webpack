@@ -1,4 +1,4 @@
-import { getFromQueryString } from './lib';
+import { getFromQueryString } from './lib.js';
 
 const modalContainer = document.querySelector('.list-modal-container');
 const modal = document.querySelector('.modal');
