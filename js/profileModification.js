@@ -82,8 +82,6 @@ inputImg.addEventListener('change', async (e) => {
         'image/jpeg',
     ];
     const imageFile = e.target.files[0];
-    const formData = new FormData();
-    formData.append('image', imageFile);
 
     if (imageFile.size > 1024 * 1024 * 3) {
         alert('이미지의 크기가 3MB를 초과했습니다.');
