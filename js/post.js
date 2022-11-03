@@ -1,12 +1,12 @@
 import { API_URL } from './key.js';
+import { getFromQueryString, trimImageURL } from './lib.js';
 
 const TOKEN = sessionStorage.getItem('my-token');
 const MY_ID = sessionStorage.getItem('my-id');
 const accountName = sessionStorage.getItem('my-accountname');
+const POST_ID = getFromQueryString('postId');
 
-let dataId;
 let heartCheck;
-const POST_ID = location.href.split('?')[1]; // 로컬의 게시글 아이디값
 
 // 1. 뒤로가기 버튼
 const btnBack = document.querySelector('.btn-back');
@@ -34,11 +34,13 @@ const commentUser = document.querySelector('.img-profile');
             Authorization: `Bearer ${TOKEN}`,
         },
     });
-    const data = await res.json();
+    const { post } = await res.json();
 
-    let imgData = data.post.image.split(',');
-    for (const imgName of imgData) {
-        postList.innerHTML += `<li><img src="${imgName}" alt="게시글 이미지"></li>`;
+    let imageNames = post.image.split(',');
+    for (const imageName of imageNames) {
+        postList.innerHTML += `<li><img src="${trimImageURL(
+            imageName
+        )}" alt="게시글 이미지" onerror="this.src='../images/default-post-product-image.png'"></li>`;
         imgCheck.innerHTML += `<li></li>`;
     }
     imgCheck.firstChild.style.backgroundColor = '#F26E22';
@@ -52,11 +54,11 @@ const commentUser = document.querySelector('.img-profile');
         heartCount,
         commentCount,
         createdAt,
-    } = data.post;
+    } = post;
 
     document.querySelector(
         '.img-user a'
-    ).href = `../pages/profile.html?${author.accountname}`;
+    ).href = `../pages/profile.html?userId=${author.accountname}`;
     nameUser.textContent = author.username;
     idUser.textContent = author.accountname;
     txtDesc.textContent = content;
@@ -64,16 +66,11 @@ const commentUser = document.querySelector('.img-profile');
     countComment.textContent = commentCount;
     const createDate = createdAt.split('T')[0].split('-');
     postDate.textContent = `${createDate[0]}년 ${createDate[1]}월 ${createDate[2]}일`;
-    if (author.image.split(':')[0] === 'https') {
-        postUserProfile.src = author.image;
-    } else {
-        postUserProfile.src = API_URL + author.image;
-    }
+    postUserProfile.src = trimImageURL(author.image);
     postUserProfile.addEventListener('click', () => {
         targetAccountName(author.accountname);
     });
 
-    dataId = id;
     heartCheck = hearted;
 
     if (heartCheck === true) {
@@ -85,7 +82,6 @@ const commentUser = document.querySelector('.img-profile');
     }
 
     getComment();
-    timeNow();
     myProfile();
 })();
 
@@ -100,7 +96,7 @@ postBtn.addEventListener('click', () => {
         const btnUpdate = document.querySelector('.update');
         if (btnUpdate) {
             btnUpdate.addEventListener('click', () => {
-                location.href = `../pages/postUpload.html?${POST_ID}`;
+                location.href = `../pages/postUpload.html?postId=${POST_ID}`;
             });
         }
     }, 20);
@@ -108,7 +104,7 @@ postBtn.addEventListener('click', () => {
 
 // 3-2. 게시글 삭제
 async function postDel() {
-    const res = await fetch(`${API_URL}/post/${dataId}`, {
+    const res = await fetch(`${API_URL}/post/${POST_ID}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -118,7 +114,7 @@ async function postDel() {
     const data = await res.json();
 
     if (data) {
-        location.href = `/pages/profile.html?${accountName}`;
+        location.href = `/pages/profile.html?userId=${accountName}`;
     } else {
         alert('삭제 실패');
     }
@@ -126,7 +122,7 @@ async function postDel() {
 
 // 3-3. 게시글 신고
 async function postReport() {
-    const res = await fetch(`${API_URL}/post/${dataId}/report`, {
+    const res = await fetch(`${API_URL}/post/${POST_ID}/report`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -225,7 +221,7 @@ btnLike.addEventListener('click', () => {
 
 // 좋아요
 async function heart() {
-    await fetch(`${API_URL}/post/${dataId}/heart`, {
+    await fetch(`${API_URL}/post/${POST_ID}/heart`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -235,7 +231,7 @@ async function heart() {
 }
 // 좋아요 취소
 async function unHeart() {
-    await fetch(`${API_URL}/post/${dataId}/unheart`, {
+    await fetch(`${API_URL}/post/${POST_ID}/unheart`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -262,33 +258,11 @@ inpComment.addEventListener('input', () => {
     }
 });
 
-btnComment.addEventListener('click', (e) => {
-    postComment();
-});
-
-// 7-2. 댓글 작성
-async function postComment() {
-    await fetch(`${API_URL}/post/${dataId}/comments`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${TOKEN}`,
-        },
-        body: JSON.stringify({
-            comment: {
-                content: inpComment.value,
-            },
-        }),
-    });
-    inpComment.value = '';
-    location.reload();
-}
-
 // 7-3. 댓글 리스트
 let commentsId = [];
 let delId;
 async function getComment() {
-    const res = await fetch(`${API_URL}/post/${dataId}/comments`, {
+    const res = await fetch(`${API_URL}/post/${POST_ID}/comments`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -301,19 +275,13 @@ async function getComment() {
     for (const [index, comment] of data.comments.entries()) {
         commentsId.push(comment.id);
 
-        let commentAuthorImage = '';
-        if (comment.author.image.split(':')[0] === 'https') {
-            commentAuthorImage = comment.author.image;
-        } else {
-            commentAuthorImage =
-                `${API_URL}/` + comment.author.image;
-        }
-
         liComment.innerHTML += `
-        <li>
+        <li class="comment-card" data-comment-id="${comment.id}">
             <button></button>    
-            <a href="profile.html?${comment.author.accountname}">
-                <img src=${commentAuthorImage} alt="작성자 프로필 사진" class="img-user-comment">
+            <a href="profile.html?userId=${comment.author.accountname}">
+                <img src=${trimImageURL(
+                    comment.author.image
+                )} alt="작성자 프로필 사진" class="img-user-comment" onerror="this.src='../images/default-profile-img-small.png'">
             </a>
             <div class="box-comment">
                 <p class="txt-comment-name-user">${comment.author.username}
@@ -334,7 +302,7 @@ async function getComment() {
                 [index].classList.add('btn-more-mini');
             document
                 .querySelectorAll('.li-comments li button')
-                [index].classList.add('user');
+                [index].classList.add('comment');
         }
     }
 
@@ -362,45 +330,63 @@ async function getComment() {
     }
 }
 
-// 7-4. 댓글 삭제
-async function commentDel() {
-    const res = await fetch(
-        `${API_URL}/post/${dataId}/comments/${delId}`,
-        {
-            method: 'DELETE',
+// 7-2. 댓글 작성
+const commentForm = document.querySelector('#comment-form');
+commentForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    postComment();
+});
+
+async function postComment() {
+    try {
+        const res = await fetch(`${API_URL}/post/${POST_ID}/comments`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${TOKEN}`,
             },
-        }
-    );
-    const data = await res.json();
+            body: JSON.stringify({
+                comment: {
+                    content: inpComment.value,
+                },
+            }),
+        });
+        const { comment } = await res.json();
 
-    if (data) {
-        location.reload();
-    } else {
-        alert('삭제 실패');
+        if (comment) {
+            inpComment.value = '';
+            location.reload();
+        } else {
+            alert('댓글 작성을 실패했습니다.');
+        }
+    } catch (error) {
+        alert('댓글 작성을 실패했습니다.');
     }
 }
 
-// 7-5. 댓글 신고
-async function commentReport() {
-    const res = await fetch(
-        `${API_URL}/post/${dataId}/comments/${delId}`,
-        {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${TOKEN}`,
-            },
-        }
-    );
-    const data = await res.json();
+// 7-4. 댓글 삭제
+async function commentDel() {
+    try {
+        const res = await fetch(
+            `${API_URL}/post/${POST_ID}/comments/${delId}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${TOKEN}`,
+                },
+            }
+        );
+        const data = await res.json();
 
-    if (data) {
-        location.reload();
-    } else {
-        alert('신고 실패');
+        if (data.status === '200') {
+            alert(data.message);
+            location.reload();
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        alert('댓글 삭제를 실패했습니다.');
     }
 }
 
@@ -411,7 +397,7 @@ function dateBefore(createdAt) {
     if (nowISO.slice(0, 4) > createdAt.slice(0, 4)) {
         return `${nowISO.slice(0, 4) - createdAt.slice(0, 4)}년 전`;
     } else if (nowISO.slice(5, 7) > createdAt.slice(5, 7)) {
-        return `${nowISO.slice(5, 7) - createdAt.slice(5, 7)}월 전`;
+        return `${nowISO.slice(5, 7) - createdAt.slice(5, 7)}개월 전`;
     } else if (nowISO.slice(8, 10) > createdAt.slice(8, 10)) {
         return `${nowISO.slice(8, 10) - createdAt.slice(8, 10)}일 전`;
     } else if (nowISO.slice(11, 13) > createdAt.slice(11, 13)) {
@@ -420,19 +406,6 @@ function dateBefore(createdAt) {
         return `${nowISO.slice(14, 16) - createdAt.slice(14, 16)}분 전`;
     } else {
         return '방금';
-    }
-}
-
-// 9. status bar 시간
-const timeStatus = document.querySelector('.text-current-time');
-function timeNow() {
-    const date = new Date();
-    const hour = date.getHours();
-    const min = date.getMinutes();
-    if (hour > 12) {
-        timeStatus.textContent = `${hour - 12}:${min} PM`;
-    } else {
-        timeStatus.textContent = `${hour}:${min} AM`;
     }
 }
 
@@ -446,14 +419,10 @@ async function myProfile() {
         },
     });
     const data = await res.json();
-    if (data.profile.image.split(':')[0] === 'https') {
-        commentUser.src = data.profile.image;
-    } else {
-        commentUser.src = `${API_URL}/` + data.profile.image;
-    }
+    commentUser.src = trimImageURL(data.profile.image);
 }
 
 // 11. store Target User AccountName
 function targetAccountName(id) {
-    location.href = `../pages/profile.html?${id}`;
+    location.href = `../pages/profile.html?userId=${id}`;
 }
