@@ -1,9 +1,10 @@
 import { API_URL } from './key.js';
+import { getFromQueryString, trimImageURL } from './lib.js';
+
 const MY_ID = sessionStorage.getItem('my-id');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const TOKEN = sessionStorage.getItem('my-token');
-const queryString = new URLSearchParams(location.search);
-const TARGET_ACCOUNTNAME = queryString.get('userId');
+const TARGET_ACCOUNTNAME = getFromQueryString('userId');
 const isMyProfile = MY_ACCOUNTNAME === TARGET_ACCOUNTNAME;
 
 // API 데이터 가져오기
@@ -16,9 +17,11 @@ async function fetchData(endpoint) {
                 'Content-Type': 'application/json',
             },
         });
-        const resJson = await res.json();
-        return resJson;
-    } catch (err) {}
+        const data = await res.json();
+        return data;
+    } catch (err) {
+        alert('데이터를 가져오는 데에 실패했습니다.');
+    }
 }
 
 //  본인 프로필인지 남의 프로필인지 확인해서 분기
@@ -32,9 +35,13 @@ if (isMyProfile) {
 
 // 프로필 정보 출력하기
 (async function printProfile() {
-    const endpoint = '/user/myinfo';
+    const endpoint = `/profile/${TARGET_ACCOUNTNAME}`;
     const data = await fetchData(endpoint);
-    const profileData = data.user;
+    if (data.message === '해당 계정이 존재하지 않습니다.') {
+        alert(data.message);
+        history.back();
+        return;
+    }
     const {
         username,
         accountname,
@@ -43,7 +50,7 @@ if (isMyProfile) {
         follower,
         followerCount,
         followingCount,
-    } = profileData;
+    } = data.profile;
 
     const profileImg = document.querySelector('.profile-img');
     const followersNum = document.querySelector('.followers-num');
@@ -51,14 +58,17 @@ if (isMyProfile) {
     const userName = document.querySelector('.user-name');
     const userId = document.querySelector('.user-id');
     const userIntro = document.querySelector('.user-intro');
+    const chatBtn = document.querySelector('.btn-chat');
     const followBtn = document.querySelector('.btn-follow');
 
-    profileImg.setAttribute('src', API_URL + image);
+    profileImg.setAttribute('src', trimImageURL(image));
     followersNum.textContent = `${followerCount}`;
     followingNum.textContent = `${followingCount}`;
     userName.textContent = username;
     userId.textContent = `@ ${accountname}`;
     userIntro.textContent = intro;
+    chatBtn.href = `./chatRoom.html?userId=${accountname}`;
+
     if (followBtn) {
         followBtn.dataset.accountname = accountname;
         if (follower.includes(MY_ID)) {
@@ -85,12 +95,13 @@ async function getProductData() {
 
 function makeProductItem(product) {
     const { id: productId, itemImage, itemName, link, price } = product;
+
     const li = document.createElement('li');
     li.classList.add('product-item');
     li.dataset.link = link;
     li.dataset.productId = productId;
     const img = document.createElement('img');
-    img.setAttribute('src', API_URL + itemImage);
+    img.setAttribute('src', trimImageURL(itemImage));
     img.setAttribute(
         'onError',
         "this.src='../images/default-post-product-image.png'"
@@ -156,10 +167,7 @@ function observeLastItem(productIo, items) {
     }
     printProductList(productData);
     if (productData.length >= productLimit) {
-        observeLastItem(
-            productIo,
-            document.querySelectorAll('.product-item')
-        );
+        observeLastItem(productIo, document.querySelectorAll('.product-item'));
     }
 })();
 
@@ -191,58 +199,72 @@ function makePostListItem(post) {
 
     const listItem = document.createElement('li');
     listItem.classList.add('post-list-item');
+    listItem.dataset.postId = id;
+
     const authorImage = document.createElement('img');
     authorImage.classList.add('post-author-img');
-    if (authorImg.match(/^https\:\/\/mandarin\.api\.weniv\.co\.kr\//, 'i')) {
-        authorImage.setAttribute('src', authorImg);
-    } else {
-        authorImage.setAttribute('src', API_URL + authorImg);
-    }
+    authorImage.setAttribute('src', trimImageURL(authorImg));
+    authorImage.setAttribute(
+        'onerror',
+        "this.src='../images/default-profile-img-small.png'"
+    );
+
     const div = document.createElement('div');
+
     const authorInfo = document.createElement('div');
     authorInfo.classList.add('post-author-info');
+
     const author = document.createElement('strong');
     author.classList.add('post-author');
     author.textContent = username;
+
     const authorId = document.createElement('span');
     authorId.classList.add('post-author-id');
     authorId.textContent = `@ ${accountname}`;
+
     const postText = document.createElement('p');
     postText.classList.add('post-text');
     postText.dataset.postId = id;
     postText.textContent = content;
+
     const postImg = document.createElement('img');
     postImg.classList.add('post-img');
     postImg.dataset.postId = id;
-    if (image.split(',').length > 1) {
-        postImg.setAttribute('src', image.split(',')[0]);
-    } else {
-        postImg.setAttribute('src', image);
-    }
+
+    const images = image.split(',');
+    postImg.setAttribute('src', trimImageURL(images[0]));
     postImg.setAttribute(
         'onerror',
         "this.src='../images/default-post-product-image.png'"
     );
+
     const utils = document.createElement('div');
     utils.classList.add('post-utils');
+
     const btnLike = document.createElement('button');
     btnLike.classList.add('btn-like');
     btnLike.dataset.hearted = hearted;
+
     const likeText = document.createElement('span');
     likeText.classList.add('sr-only');
     likeText.textContent = '좋아요';
+
     const countLike = document.createElement('span');
     countLike.classList.add('count-like');
     countLike.textContent = heartCount;
+
     const btnComment = document.createElement('button');
     btnComment.classList.add('btn-comment');
     btnComment.dataset.postId = id;
+
     const commentText = document.createElement('span');
     commentText.classList.add('sr-only');
     commentText.textContent = '댓글';
+
     const countComment = document.createElement('span');
     countComment.classList.add('count-comment');
     countComment.textContent = commentCount;
+
     const date = document.createElement('span');
     date.classList.add('post-date');
     date.textContent = `
@@ -250,8 +272,10 @@ function makePostListItem(post) {
     ${createdAt.slice(5, 7)}월 
     ${createdAt.slice(8, 10)}일
     `;
+
     const btnMenu = document.createElement('button');
     btnMenu.classList.add('btn-post-menu');
+
     const menuText = document.createElement('span');
     menuText.classList.add('sr-only');
     menuText.textContent = '게시글 메뉴 열기';
@@ -281,13 +305,14 @@ function makePostAlbumItem(post) {
     const albumItem = document.createElement('li');
     albumItem.classList.add('post-album-item-wrap');
     const a = document.createElement('a');
-    a.setAttribute('href', './post.html');
+    a.setAttribute('href', `./post.html?postId=${id}`);
     a.classList.add('post-album-item');
     a.dataset.postId = id;
     const albumImg = document.createElement('img');
-    albumImg.setAttribute('src', `${image}`);
-    if (image.split(',').length > 1) {
-        albumImg.setAttribute('src', `${image.split(',')[0]}`);
+    albumImg.setAttribute('src', trimImageURL(image));
+    const images = image.split(',');
+    if (images.length > 1) {
+        albumImg.setAttribute('src', trimImageURL(images[0]));
     }
     albumImg.setAttribute(
         'onError',
@@ -295,7 +320,7 @@ function makePostAlbumItem(post) {
     );
     albumImg.classList.add('post-album-img');
     a.append(albumImg);
-    if (image.split(',').length > 1) {
+    if (images.length > 1) {
         const multiIcon = document.createElement('div');
         multiIcon.classList.add('icon-multi-image');
         a.append(multiIcon);
@@ -375,28 +400,21 @@ const followersLink = document.querySelector('.followers-num');
 followersLink.addEventListener('click', (e) => {
     e.preventDefault();
     localStorage.setItem('is-followers-page', true);
-    location.href = `../pages/profileFollow.html?${TARGET_ACCOUNTNAME}`;
+    location.href = `../pages/profileFollow.html?userId=${TARGET_ACCOUNTNAME}`;
 });
 
 const followingsLink = document.querySelector('.followings-num');
 followingsLink.addEventListener('click', (e) => {
     e.preventDefault();
     localStorage.setItem('is-followers-page', false);
-    location.href = `../pages/profileFollow.html?${TARGET_ACCOUNTNAME}`;
+    location.href = `../pages/profileFollow.html?userId=${TARGET_ACCOUNTNAME}`;
 });
 
-// 채팅하기
-if (!isMyProfile) {
-    const chatBtn = document.querySelector('.btn-chat');
-    chatBtn.addEventListener('click', () => {
-        localStorage.setItem('target-id', TARGET_ID);
-    });
-}
-
 async function toggleFollow(accountname, endpoint, method) {
+    let isSuccess = false;
     try {
         const res = await fetch(
-            API_URL + `profile/${accountname}/${endpoint}`,
+            `${API_URL}/profile/${accountname}/${endpoint}`,
             {
                 method: method,
                 headers: {
@@ -405,24 +423,42 @@ async function toggleFollow(accountname, endpoint, method) {
                 },
             }
         );
+        const { profile } = await res.json();
+
+        if (profile) isSuccess = true;
+        else alert('오류가 발생했습니다.');
     } catch (error) {
-        console.log(error);
+        alert('오류가 발생했습니다.');
     }
+
+    return isSuccess;
 }
 
 // 팔로우 버튼 토글
 const followBtn = document.querySelector('.btn-follow');
 if (followBtn) {
-    followBtn.addEventListener('click', (e) => {
+    followBtn.addEventListener('click', async (e) => {
         const target_accountname = e.target.dataset.accountname;
         if (followBtn.classList.contains('following')) {
-            followBtn.classList.remove('following');
-            followBtn.textContent = '팔로우';
-            toggleFollow(target_accountname, 'unfollow', 'DELETE');
+            const isSuccess = await toggleFollow(
+                target_accountname,
+                'unfollow',
+                'DELETE'
+            );
+            if (isSuccess) {
+                followBtn.classList.remove('following');
+                followBtn.textContent = '팔로우';
+            }
         } else {
-            followBtn.classList.add('following');
-            followBtn.textContent = '언팔로우';
-            toggleFollow(target_accountname, 'follow', 'POST');
+            const isSuccess = await toggleFollow(
+                target_accountname,
+                'follow',
+                'POST'
+            );
+            if (isSuccess) {
+                followBtn.classList.add('following');
+                followBtn.textContent = '언팔로우';
+            }
         }
     });
 }
@@ -500,7 +536,7 @@ postList.addEventListener('click', (e) => {
         return;
     }
     if (e.target.classList.contains('btn-like')) {
-        likePost(e.target);
+        handleClickLikeBtn(e.target);
         return;
     }
 });
@@ -513,16 +549,53 @@ postAlbum.addEventListener('click', (e) => {
 });
 
 // 게시글 좋아요
-function likePost(likeBtn) {
+async function handleClickLikeBtn(likeBtn) {
     const isHearted = likeBtn.dataset.hearted;
     const likeCount = likeBtn.nextSibling;
-    if (isHearted === 'true') {
-        likeBtn.dataset.hearted = false;
-        likeCount.textContent -= 1;
+    const targetPostId = likeBtn.closest('.post-list-item').dataset.postId;
+
+    if (isHearted === 'false') {
+        const isSuccess = await toggleHeart(targetPostId, 'heart');
+        if (isSuccess) {
+            likeBtn.dataset.hearted = true;
+            likeCount.textContent = +likeCount.textContent + 1;
+        }
     } else {
-        likeBtn.dataset.hearted = true;
-        likeCount.textContent = +likeCount.textContent + 1;
+        const isSuccess = await toggleHeart(targetPostId, 'unheart');
+        if (isSuccess) {
+            likeBtn.dataset.hearted = false;
+            likeCount.textContent -= 1;
+        }
     }
+}
+
+async function toggleHeart(postId, mode) {
+    const method = {
+        heart: 'POST',
+        unheart: 'DELETE',
+    };
+    let isSuccess = false;
+
+    try {
+        const res = await fetch(`${API_URL}/post/${postId}/${mode}`, {
+            method: method[mode],
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${TOKEN}`,
+            },
+        });
+        const { post } = await res.json();
+
+        if (post) {
+            isSuccess = true;
+        } else {
+            alert('오류가 발생했습니다.');
+        }
+    } catch (error) {
+        alert('오류가 발생했습니다.', error.message);
+    }
+
+    return isSuccess;
 }
 
 // 게시글 상세 페이지 이동
