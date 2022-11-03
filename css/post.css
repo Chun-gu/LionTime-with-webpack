@@ -160,6 +160,7 @@ main .box-post {
     box-sizing: border-box;
     border-radius: 10px;
     margin-top: 16px;
+    object-fit: cover;
 }
 .box-post .img-check {
     display: flex;
@@ -224,6 +225,7 @@ li .btn-more-mini {
 li .img-user-comment {
     width: 36px;
     height: 36px;
+    border-radius: 50%;
     margin-left: 16px;
 }
 li .box-comment {
@@ -265,6 +267,7 @@ footer {
 footer img {
     width: 36px;
     height: 36px;
+    border-radius: 50%;
     margin-left: 16px;
 }
 footer form {
