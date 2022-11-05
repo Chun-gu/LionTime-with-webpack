@@ -174,29 +174,29 @@ document.addEventListener('click', (e) => {
         const productId = e.target.closest('li').dataset.productId;
         sessionStorage.setItem('targetProductId', productId);
 
-        const menulistfirst = createEle('li', 'class', 'list-modal-menu');
-        const menulistSecond = createEle('li', 'class', 'list-modal-menu');
+        if (isMyProfile) {
+            const menulistfirst = createEle('li', 'class', 'list-modal-menu');
+            const menuBtnSetting = createEle('button', 'type', 'button');
+            addAttr(menuBtnSetting, 'class', 'btn-list productDelete');
+            menuBtnSetting.appendChild(document.createTextNode('삭제'));
+            menulistfirst.appendChild(menuBtnSetting);
+            modalContainer.appendChild(menulistfirst);
+
+            const menulistSecond = createEle('li', 'class', 'list-modal-menu');
+            const menuBtnLogOut = createEle('button', 'type', 'button');
+            addAttr(menuBtnLogOut, 'class', 'btn-list productUpdate');
+            menuBtnLogOut.appendChild(document.createTextNode('수정'));
+            menulistSecond.appendChild(menuBtnLogOut);
+            modalContainer.appendChild(menulistSecond);
+        }
+
         const menulistThrid = createEle('li', 'class', 'list-modal-menu');
-
-        const menuBtnSetting = createEle('button', 'type', 'button');
-        const menuBtnLogOut = createEle('button', 'type', 'button');
         const menuBtnWeb = createEle('button', 'type', 'button');
-
-        addAttr(menuBtnSetting, 'class', 'btn-list productDelete');
-        menuBtnSetting.appendChild(document.createTextNode('삭제'));
-        addAttr(menuBtnLogOut, 'class', 'btn-list productUpdate');
-        menuBtnLogOut.appendChild(document.createTextNode('수정'));
         addAttr(menuBtnWeb, 'class', 'btn-list website');
         menuBtnWeb.appendChild(
             document.createTextNode('웹사이트에서 상품 보기')
         );
-
-        menulistfirst.appendChild(menuBtnSetting);
-        menulistSecond.appendChild(menuBtnLogOut);
         menulistThrid.appendChild(menuBtnWeb);
-
-        modalContainer.appendChild(menulistfirst);
-        modalContainer.appendChild(menulistSecond);
         modalContainer.appendChild(menulistThrid);
 
         bottomValue = modalContainer.childElementCount * 46 + 46;
