@@ -58,8 +58,11 @@ if (isMyProfile) {
     const userName = document.querySelector('.user-name');
     const userId = document.querySelector('.user-id');
     const userIntro = document.querySelector('.user-intro');
-    const chatBtn = document.querySelector('.btn-chat');
     const followBtn = document.querySelector('.btn-follow');
+    if (!isMyProfile) {
+        const chatBtn = document.querySelector('.btn-chat');
+        chatBtn.href = `./chatRoom.html?userId=${accountname}`;
+    }
 
     profileImg.setAttribute('src', trimImageURL(image));
     followersNum.textContent = `${followerCount}`;
@@ -67,7 +70,6 @@ if (isMyProfile) {
     userName.textContent = username;
     userId.textContent = `@ ${accountname}`;
     userIntro.textContent = intro;
-    chatBtn.href = `./chatRoom.html?userId=${accountname}`;
 
     if (followBtn) {
         followBtn.dataset.accountname = accountname;
