@@ -118,11 +118,26 @@ function makeMessage(message) {
     const myMessage = document.createElement('div');
     myMessage.classList.add('my-message');
 
-    const content = document.createElement('p');
-    content.classList.add('my', 'message-content');
-    content.textContent = message;
+    const messageType = typeof message;
+    if (messageType === 'string') {
+        const content = document.createElement('p');
+        content.classList.add('my', 'message-content');
+        content.textContent = message;
 
-    myMessage.append(content);
+        myMessage.append(content);
+    }
+    if (messageType === 'object') {
+        const img = document.createElement('img');
+        img.classList.add('attached-image');
+
+        const reader = new FileReader();
+        reader.readAsDataURL(message);
+        reader.onload = (e) => {
+            img.src = e.target.result;
+        };
+
+        myMessage.append(img);
+    }
 
     const time = document.createElement('small');
     time.classList.add('time-sended');
@@ -131,6 +146,41 @@ function makeMessage(message) {
     myMessage.append(time);
 
     return myMessage;
+}
+
+imageInput.addEventListener('input', (e) => {
+    const imageFile = e.target.files[0];
+    const isValid = validateImageFile(imageFile);
+    if (isValid) sendAttachedImage(imageFile);
+});
+
+function validateImageFile(imageFile) {
+    const allowedImageType = [
+        'image/png',
+        'image/jpg',
+        'image/gif',
+        'image/jpeg',
+    ];
+
+    if (imageFile.size > 1024 * 1024 * 3) {
+        alert('이미지의 크기가 3MB를 초과했습니다.');
+        return false;
+    }
+
+    if (!allowedImageType.includes(imageFile.type)) {
+        alert('jpg, gif, png, jpeg 형식의 이미지만 등록할 수 있습니다.');
+        return false;
+    }
+
+    return true;
+}
+
+function sendAttachedImage(imageFile) {
+    const message = makeMessage(imageFile);
+
+    messageSection.append(message);
+
+    scrollToBottom();
 }
 
 function getCurrentTime() {
