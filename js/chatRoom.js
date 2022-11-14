@@ -51,3 +51,25 @@ async function getPartnerInfo(userId) {
         alert('상대의 정보를 가져오는 데에 실패했습니다.');
     }
 }
+
+messageTextarea.addEventListener('input', () => {
+    validateInput();
+    resizeTextarea();
+});
+
+function validateInput() {
+    const message = messageTextarea.value;
+    const canSend = /\S+/.test(message);
+
+    if (canSend) sendButton.disabled = false;
+    else sendButton.disabled = true;
+}
+
+function resizeTextarea() {
+    messageTextarea.style.height = 'auto';
+    const scrollHeight = messageTextarea.scrollHeight;
+    messageTextarea.style.height = `${scrollHeight}px`;
+
+    if (scrollHeight < 90) messageTextarea.style.overflowY = 'hidden';
+    if (scrollHeight >= 90) messageTextarea.style.overflowY = 'scroll';
+}
