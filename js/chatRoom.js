@@ -92,3 +92,51 @@ const resizeObserver = new ResizeObserver((entries) => {
 });
 
 resizeObserver.observe(inputContainer);
+
+messageTextarea.addEventListener('keydown', (e) => {
+    if (!e.shiftKey && e.key === 'Enter') {
+        e.preventDefault();
+        sendButton.click();
+    }
+});
+
+messageForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const inputValue = e.target.message.value;
+    const message = makeMessage(inputValue);
+
+    messageSection.append(message);
+    messageTextarea.value = '';
+
+    resizeTextarea();
+    scrollToBottom();
+    validateInput();
+});
+
+function makeMessage(message) {
+    const myMessage = document.createElement('div');
+    myMessage.classList.add('my-message');
+
+    const content = document.createElement('p');
+    content.classList.add('my', 'message-content');
+    content.textContent = message;
+
+    myMessage.append(content);
+
+    const time = document.createElement('small');
+    time.classList.add('time-sended');
+    time.textContent = getCurrentTime();
+
+    myMessage.append(time);
+
+    return myMessage;
+}
+
+function getCurrentTime() {
+    const date = new Date();
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+
+    return `${hours}:${minutes}`;
+}
