@@ -73,3 +73,22 @@ function resizeTextarea() {
     if (scrollHeight < 90) messageTextarea.style.overflowY = 'hidden';
     if (scrollHeight >= 90) messageTextarea.style.overflowY = 'scroll';
 }
+
+const initialPaddingBottom = window
+    .getComputedStyle(messageSection)
+    .getPropertyValue('padding-bottom')
+    .split('px')
+    .map(Number)[0];
+const resizeObserver = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+        if (entry.borderBoxSize) {
+            const changingHeight = entry.borderBoxSize[0].blockSize;
+            messageSection.style.paddingBottom = `${
+                initialPaddingBottom + changingHeight
+            }px`;
+            scrollToBottom();
+        }
+    }
+});
+
+resizeObserver.observe(inputContainer);
