@@ -18,24 +18,36 @@ function scrollToBottom() {
 }
 
 const backKeyBtn = document.querySelector('.btn-back-key');
-const currentTime = document.querySelector('.text-current-time');
-
-inputText.addEventListener('input', () => {
-    if (inputText.value !== '') {
-        messageSendBtn.classList.add('change-color');
-    } else {
-        messageSendBtn.classList.remove('change-color');
-    }
-});
-
 backKeyBtn.addEventListener('click', () => {
     history.back();
 });
 
-function currentTimer() {
-    let date = new Date();
-    currentTime.innerText = `${date.getHours()} : ${
-        date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
-    } ${date.getHours() >= 12 ? `PM` : `AM`}`;
+if (partnerId) printPartnerInfo(partnerId);
+
+async function printPartnerInfo(partnerId) {
+    const { username, image } = await getPartnerInfo(partnerId);
+
+    const partnerName = document.querySelector('.chat-partner-name');
+    partnerName.textContent = username;
+    const partnerImage = document.querySelector('.partner-image');
+
+    partnerImage.src = trimImageURL(image);
 }
-setInterval(currentTimer, 1000);
+
+async function getPartnerInfo(userId) {
+    try {
+        const res = await fetch(`${API_URL}/profile/${userId}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${TOKEN}`,
+                'Content-type': 'application/json',
+            },
+        });
+        const { profile } = await res.json();
+
+        if (profile) return profile;
+        else alert('상대의 정보를 가져오는 데에 실패했습니다.');
+    } catch (error) {
+        alert('상대의 정보를 가져오는 데에 실패했습니다.');
+    }
+}
