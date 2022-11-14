@@ -5,7 +5,13 @@ const TOKEN = sessionStorage.getItem('my-token');
 const LIMIT = 5;
 let skip = 0;
 
-printFeed();
+if (!TOKEN) {
+    alert('로그인이 필요한 서비스입니다.');
+    history.replaceState(null, null, '../pages/login.html');
+    location.reload();
+}
+
+if (TOKEN) printFeed();
 
 async function printFeed() {
     const { posts } = await getFeed();
