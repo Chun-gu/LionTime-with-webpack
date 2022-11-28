@@ -1,75 +1,16 @@
 import { API_URL } from './key.js';
-import { trimImageURL } from './lib.js';
+import { makePostListItem } from '../components/post.js';
 
 const TOKEN = sessionStorage.getItem('my-token');
-const LIMIT = 5;
+const LIMIT = 3;
 let skip = 0;
 
-if (!TOKEN) {
-    alert('로그인이 필요한 서비스입니다.');
-    history.replaceState(null, null, '../pages/login.html');
-    location.reload();
-}
+const feedList = document.querySelector('.feed-list');
 
-if (TOKEN) printFeed();
-
-async function printFeed() {
-    const { posts } = await getFeed();
-
-    if (posts.length === 0) {
-        printNoFeed();
-        return;
-    }
-
-    for (const post of posts) {
-        const {
-            id,
-            author: { image: authorImage, username, accountname },
-            content,
-            image,
-            heartCount,
-            hearted,
-            commentCount,
-            createdAt,
-        } = post;
-        feedList.innerHTML += `
-        <li class="post-card">
-            <a class="author-image" href="../pages/profile.html?userId=${accountname}">
-                <img src=${trimImageURL(
-                    authorImage
-                )} alt="${accountname}" onerror="this.src='../images/default-profile-img.png'"/>
-            </a>
-            <div class="post-content">
-                <a class="author-profile">
-                    <span class="user-name">${username}</span>
-                    <span class="account-name">@ ${accountname}</span>
-                </a>
-                <p class="post-text">
-                    ${content}
-                </p>
-                <a href="../pages/post.html?postId=${id}">
-                    <img src=${trimImageURL(
-                        image
-                    )} alt="post image" onerror="this.src='../images/default-post-product-image.png'" class="post-image" />
-                </a>
-                <div class="reaction">
-                    <button type="button" class="like" data-hearted=${hearted}></button>
-                    <span class="count heart-count">${heartCount}</span>
-                    <a href= "../pages/post.html?postId=${id}">
-                        <button class="comment-btn" type="button" data-post-id=${id}>
-                            <img src="../images/icon-message-small.png" class="comment-icon" />
-                        </button>
-                        <span class="count comment-count">${commentCount}</span>
-                    </a>
-                </div>
-                <small class="post-date">
-                    ${createdAt.slice(0, 4)}년 
-                    ${createdAt.slice(5, 7)}월 
-                    ${createdAt.slice(8, 10)}일 
-                </small>
-            </div>
-        </li>
-        `;
+function printFeed(feeds) {
+    for (const feed of feeds) {
+        const postItem = makePostListItem(feed);
+        feedList.innerHTML += postItem;
     }
 }
 
@@ -86,6 +27,7 @@ async function getFeed() {
             }
         );
         const data = await res.json();
+        skip += 3;
 
         return data;
     } catch (error) {
@@ -93,7 +35,31 @@ async function getFeed() {
     }
 }
 
-const feedList = document.querySelector('.feed-list');
+function feedIOCallback(entries, feedIO) {
+    entries.forEach(async (entry) => {
+        if (entry.isIntersecting) {
+            feedIO.unobserve(entry.target);
+            const { posts } = await getFeed();
+            if (posts && posts.length === 0) {
+                feedIO.disconnect();
+            } else {
+                printFeed(posts);
+                observeLastPost(
+                    feedIO,
+                    document.querySelectorAll('.post-card')
+                );
+            }
+        }
+    });
+}
+
+const feedIO = new IntersectionObserver(feedIOCallback);
+
+function observeLastPost(feedIO, items) {
+    const lastItem = items[items.length - 1];
+    feedIO.observe(lastItem);
+}
+
 function printNoFeed() {
     const li = document.createElement('li');
     li.classList.add('no-feed');
@@ -117,3 +83,23 @@ function printNoFeed() {
     li.append(a);
     feedList.append(li);
 }
+
+(async function initFeed() {
+    if (!TOKEN) {
+        alert('로그인이 필요한 서비스입니다.');
+        history.replaceState(null, null, '../pages/login.html');
+        location.reload();
+    } else {
+        const { posts } = await getFeed();
+
+        if (posts.length === 0) {
+            printNoFeed();
+            return;
+        }
+
+        printFeed(posts);
+        if (posts.length >= LIMIT) {
+            observeLastPost(feedIO, document.querySelectorAll('.post-card'));
+        }
+    }
+})();
