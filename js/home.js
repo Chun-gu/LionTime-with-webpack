@@ -2,7 +2,7 @@ import { API_URL } from './key.js';
 import { makePostListItem } from '../components/post.js';
 
 const TOKEN = sessionStorage.getItem('my-token');
-const LIMIT = 3;
+const LIMIT = 4;
 let skip = 0;
 
 const feedList = document.querySelector('.feed-list');
@@ -27,7 +27,7 @@ async function getFeed() {
             }
         );
         const data = await res.json();
-        skip += 3;
+        skip += 4;
 
         return data;
     } catch (error) {
