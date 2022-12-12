@@ -1,0 +1,51 @@
+@import url(./reset.css);
+@import url(./font.css);
+@import url(./statusBar.css);
+@import url(./footer.css);
+
+html,
+input {
+  font-family: Pretendard;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+body {
+  background-color: #e5e5e5;
+}
+
+#container {
+  width: 390px;
+  min-height: 100vh;
+  background-color: white;
+  margin: 0 auto;
+  position: relative;
+}
+
+header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+}
+
+main {
+  padding-top: 24px;
+}
+
+.sr-only {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+}
+
+.single-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
