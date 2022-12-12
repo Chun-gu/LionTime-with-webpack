@@ -1,0 +1,43 @@
+@import url(@styles/common.css);
+
+main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.logo {
+  font-size: 45px;
+  font-weight: bold;
+  color: #f26e22;
+  text-align: center;
+}
+.logo img {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 30px;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-layout {
+  position: absolute;
+  top: 24px;
+  width: 390px;
+  height: calc(100vh - 24px);
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 1);
+  animation: fade ease 1.5s;
+}
