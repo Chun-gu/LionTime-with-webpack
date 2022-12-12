@@ -1,0 +1,115 @@
+@import url(@styles/common.css);
+
+#container {
+  background: #ea7f42;
+}
+
+.loginBtn {
+  text-decoration: none;
+  outline: tomato;
+}
+
+.logo {
+  width: 144px;
+  height: 144px;
+  margin: 60% auto;
+  background-image: url(@images/logo-lion-white.webp);
+  background-size: cover;
+}
+
+.login {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  width: 390px;
+  height: 320px;
+  padding: 50px 34px 0 34px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+li {
+  list-style: none;
+}
+li a {
+  display: block;
+  text-decoration: none;
+  position: relative;
+  text-align: center;
+  padding: 13px 0;
+  color: #767676;
+  font-size: 14px;
+  line-height: 18px;
+  width: 322px;
+  height: 44px;
+  border-radius: 44px;
+  margin-bottom: 10px;
+}
+
+.kakaoLogin {
+  border: 1px solid #f2c94c;
+}
+
+.googleLogin {
+  border: 1px solid #767676;
+}
+
+.facebookLogin {
+  border: 1px solid #2d9cdb;
+}
+
+.kakaoLogin::before {
+  position: absolute;
+  content: '';
+  background: url(@images/logo-kakaotalk.webp) no-repeat center;
+  background-size: 100%;
+  width: 18px;
+  height: 18px;
+  left: 17px;
+}
+
+.googleLogin::before {
+  position: absolute;
+  content: '';
+  background: url(@images/logo-google.webp) no-repeat center;
+  background-size: 100%;
+  width: 18px;
+  height: 18px;
+  left: 17px;
+}
+
+.facebookLogin::before {
+  position: absolute;
+  content: '';
+  background: url(@images/logo-facebook.webp) no-repeat center;
+  background-size: 100%;
+  width: 18px;
+  height: 18px;
+  left: 17px;
+}
+
+.loginBottom {
+  font-size: 12px;
+  font-weight: 15px;
+  color: #767676;
+  position: absolute;
+  top: 222px;
+  display: block;
+  justify-content: center;
+  align-items: center;
+}
+
+.signin::before {
+  position: relative;
+  content: '|';
+  margin: 0 12px;
+}
+
+a span {
+  font-size: 12px;
+  font-weight: 400;
+  color: #767676;
+}
