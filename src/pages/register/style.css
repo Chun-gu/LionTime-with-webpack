@@ -1,0 +1,61 @@
+@import url(@styles/common.css);
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 24px;
+  text-align: center;
+  font-weight: 500;
+  line-height: 30.05px;
+  margin-top: 54px;
+  margin-bottom: 40px;
+}
+
+.input-wrapper {
+  height: 48px;
+  margin-top: 18px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #767676;
+}
+
+input {
+  width: 322px;
+  padding-top: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #767676;
+}
+input:focus {
+  border-bottom-color: #f26e22;
+}
+input::placeholder {
+  color: #dbdbdb;
+}
+
+.error-message {
+  padding: 1px;
+  color: #eb5757;
+}
+
+#next-button {
+  width: 322px;
+  height: 44px;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 17.53px;
+  background-color: #f26e22;
+  border-radius: 44px;
+  margin-top: 30px;
+}
+#next-button:disabled {
+  cursor: default;
+  background-color: #ffc7a7;
+}
