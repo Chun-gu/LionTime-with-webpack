@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Bold.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Medium.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Regular.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <title>프로필 설정</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        <div class="status-bar">
+          <time class="current-time"></time>
+          <ul class="status-menu">
+            <li class="signal"></li>
+            <li class="wifi"></li>
+            <li class="battery"></li>
+          </ul>
+        </div>
+      </header>
+      <main>
+        <h1>프로필 설정</h1>
+        <p class="subtitle">나중에 언제든지 변경할 수 있습니다.</p>
+        <form id="form">
+          <div id="user-image">
+            <img src="~@images/default-profile-image.webp" id="image-preview" />
+            <input
+              type="file"
+              id="image-input"
+              class="sr-only"
+              accept=".jpg, .gif, .png, .jpeg"
+            />
+            <label for="image-input" class="image-upload-button">
+              <img
+                src="~@images/icon-image-button-fill.webp"
+                alt="프로필 사진 업로드"
+              />
+              <span class="sr-only">프로필 사진 업로드</span>
+            </label>
+          </div>
+          <div class="input-wrapper">
+            <label for="username-input">사용자 이름</label>
+            <input
+              type="text"
+              id="username-input"
+              minlength="2"
+              maxlength="10"
+              placeholder="2~10자 이내여야 합니다."
+            />
+            <span id="username-error" class="error-message"></span>
+          </div>
+          <div class="input-wrapper">
+            <label for="accountname-input">계정 ID</label>
+            <input
+              type="text"
+              id="accountname-input"
+              maxlength="18"
+              placeholder="영문, 숫자, 마침표, 언더바만 사용 가능합니다. (18자 제한)"
+            />
+            <span id="accountname-error" class="error-message"></span>
+          </div>
+          <label for="intro-input">소개</label>
+          <input
+            type="text"
+            id="intro-input"
+            maxlength="100"
+            placeholder="자신과 판매할 상품에 대해 소개해 주세요! (100자 제한)"
+          />
+        </form>
+        <button type="submit" id="submit-button" form="form" disabled>
+          라이언타임 시작하기
+        </button>
+      </main>
+    </div>
+  </body>
+</html>
