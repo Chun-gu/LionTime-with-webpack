@@ -34,3 +34,14 @@ export async function register(user) {
     return { ok: false, error };
   }
 }
+
+export async function login(user) {
+  try {
+    const response = await api.post('/user/login', { user });
+
+    if (response.user) return { ok: true, user: response.user };
+    throw new ResponseError(response);
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
