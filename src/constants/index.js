@@ -1,4 +1,5 @@
 export const PAGE = {
+  home: 'home',
   profileSetting: 'profileSetting',
   loginEmail: 'loginEmail',
 };
