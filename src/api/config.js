@@ -20,9 +20,31 @@ function init(method, body) {
 }
 
 const api = {
+  get: async (url) => {
+    try {
+      const response = await fetch(API_URL + url, init('GET'));
+
+      if (response.ok) return await response.json();
+      else throw await response.json();
+    } catch (error) {
+      throw new HTTPError(error);
+    }
+  },
+
   post: async (url, body) => {
     try {
       const response = await fetch(API_URL + url, init('POST', body));
+
+      if (response.ok) return await response.json();
+      else throw await response.json();
+    } catch (error) {
+      throw new HTTPError(error);
+    }
+  },
+
+  delete: async (url) => {
+    try {
+      const response = await fetch(API_URL + url, init('DELETE'));
 
       if (response.ok) return await response.json();
       else throw await response.json();
