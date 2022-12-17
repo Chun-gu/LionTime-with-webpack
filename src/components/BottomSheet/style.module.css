@@ -1,0 +1,45 @@
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 200;
+}
+
+.bottom-sheet {
+  width: 390px;
+  background-color: #ffffff;
+  padding: 30px 16px 20px;
+  padding-bottom: 20px;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  position: fixed;
+  bottom: 0;
+  z-index: 210;
+}
+.bottom-sheet::before {
+  content: '';
+  display: inline-block;
+  width: 100px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #dbdbdb;
+  transform: translateX(50%);
+  position: absolute;
+  top: 10px;
+  right: 50%;
+}
+
+.button {
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 6px;
+}
+.button:first-child {
+  margin-bottom: 4px;
+}
+.button:hover {
+  background-color: #ffc7a7;
+}
