@@ -40,6 +40,16 @@ export const IMAGE_ERROR = {
   format: 'jpg, gif, png, jpeg 형식의 이미지만 등록할 수 있습니다.',
 };
 
+export const BUTTON = {
+  post: (isMine) => (isMine ? ['update', 'delete'] : ['report']),
+};
+
+export const ACTION = {
+  update: '수정',
+  delete: '삭제',
+  report: '신고',
+};
+
 export const REGEX = {
   email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
   accountname: /^[a-zA-Z0-9._]+$/,
