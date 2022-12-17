@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Bold.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Medium.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Regular.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <title>피드</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        <div class="status-bar">
+          <time class="current-time"></time>
+          <ul class="status-menu">
+            <li class="signal"></li>
+            <li class="wifi"></li>
+            <li class="battery"></li>
+          </ul>
+        </div>
+        <div class="header-nav">
+          <h1>라이언타임 피드</h1>
+          <a href="search" class="search">
+            <img src="~@images/icon-search.webp" alt="유저 검색" />
+          </a>
+        </div>
+      </header>
+      <main>
+        <ul class="feed-list"></ul>
+      </main>
+      <footer>
+        <nav class="nav-wrap-link">
+          <a href="home" class="link-other-page home this-page">
+            <span class="link-img home this-page"></span>
+            <em>홈</em>
+          </a>
+          <a href="chatList" class="link-other-page chat">
+            <span class="link-img chat"></span>
+            <em>채팅</em>
+          </a>
+          <a href="postUpload" class="link-other-page write">
+            <span class="link-img write"></span>
+            <em>게시물 작성</em>
+          </a>
+          <a href="profile" class="link-other-page profile">
+            <span class="link-img profile"></span>
+            <em>프로필</em>
+          </a>
+        </nav>
+      </footer>
+    </div>
+  </body>
+</html>
