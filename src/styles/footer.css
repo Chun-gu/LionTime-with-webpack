@@ -1,0 +1,8 @@
+footer {
+  width: 390px;
+  min-height: 60px;
+  background-color: #fff;
+  border-top: 1px solid #dbdbdb;
+  position: fixed;
+  bottom: 0;
+}
