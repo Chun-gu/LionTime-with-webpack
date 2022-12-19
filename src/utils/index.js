@@ -1,7 +1,9 @@
 export * from './debounce';
+export { default as getFromQueryString } from './getFromQueryString';
 export { default as getImageDataURL } from './getImageDataURL';
 export { default as hasScroll } from './hasScroll';
 export { default as intersectionObserver } from './intersectionObserver';
+export { default as relativeDateTo } from './relativeDateTo';
 export { default as replaceToPrevPage } from './replaceToPrevPage';
 export { default as useScrollFix } from './useScrollFix';
 export { default as trimImageURL } from './trimImageURL';
