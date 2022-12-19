@@ -1,20 +1,24 @@
 import styles from './style.module.css';
 
-import { deletePost, reportPost } from '@api';
+import { deleteComment, deletePost, reportComment, reportPost } from '@api';
 import { replaceToPrevPage } from '@utils';
 
 export default class ConfirmDialog {
   #confirmDialog;
   #dialogAnimation;
 
-  constructor({ action, postId }) {
+  constructor({ action, postId, commentId }) {
     this.#confirmDialog = this.template(action);
-    this.addEvent({ postId });
+    this.addEvent({ postId, commentId });
   }
 
   template(action) {
     const BUTTONS = [action, 'cancel'];
-    const ACTION = { report: '신고', delete: '삭제', cancel: '취소' };
+    const ACTION = {
+      report: '신고',
+      delete: '삭제',
+      cancel: '취소',
+    };
 
     const wrapper = document.createElement('div');
     wrapper.classList.add(styles['wrapper']);
@@ -40,7 +44,7 @@ export default class ConfirmDialog {
     return wrapper;
   }
 
-  addEvent({ postId }) {
+  addEvent({ postId, commentId }) {
     this.#confirmDialog.addEventListener('click', async ({ target }) => {
       if (target.classList.contains('cancel')) {
         this.close();
@@ -48,7 +52,9 @@ export default class ConfirmDialog {
       }
 
       if (target.classList.contains('report')) {
-        const { ok, error } = await reportPost(postId);
+        const { ok, error } = commentId
+          ? await reportComment(postId, commentId)
+          : await reportPost(postId);
 
         if (ok) {
           alert('신고했습니다.');
@@ -58,10 +64,12 @@ export default class ConfirmDialog {
       }
 
       if (target.classList.contains('delete')) {
-        const { ok, error } = await deletePost(postId);
+        const { ok, error } = commentId
+          ? await deleteComment(postId, commentId)
+          : await deletePost(postId);
 
         if (!ok) alert(error);
-        else replaceToPrevPage();
+        else commentId ? location.reload() : replaceToPrevPage();
       }
 
       if (target.classList.contains('logout')) {
