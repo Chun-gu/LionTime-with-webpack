@@ -2,6 +2,17 @@ import api from './config';
 
 import { ResponseError } from '@components';
 
+export async function getMyInfo() {
+  try {
+    const response = await api.get(`/user/myinfo`);
+
+    if (response.user) return { ok: true, user: response.user };
+    else throw new ResponseError(response);
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
 export async function checkIsEmailAvailable(email) {
   try {
     const response = await api.post('/user/emailvalid', { user: { email } });
