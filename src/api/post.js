@@ -12,6 +12,17 @@ export async function getFeed(LIMIT, skip) {
   }
 }
 
+export async function getPost(postId) {
+  try {
+    const response = await api.get(`/post/${postId}`);
+
+    if (response.post) return { ok: true, post: response.post };
+    throw new ResponseError(response);
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
 export async function reportPost(postId) {
   try {
     const response = await api.post(`/post/${postId}/report`);
