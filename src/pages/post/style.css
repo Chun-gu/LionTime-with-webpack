@@ -1,0 +1,60 @@
+@import url(@styles/common.css);
+@import url(@styles/headerNav.css);
+
+.link-back img {
+  width: 22px;
+  height: 22px;
+}
+
+main {
+  padding-top: 72px;
+  padding-bottom: 61px;
+}
+
+#post-section {
+  border-bottom: 0.5px solid #dbdbdb;
+}
+
+#comments-list {
+  padding: 12px 0;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-top: 0.5px solid #dbdbdb;
+}
+
+#my-profile-image {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+#comment-form {
+  flex-grow: 1;
+  padding: 0 8px;
+}
+
+#comment-input {
+  width: 100%;
+  font-size: 14px;
+  line-height: 18px;
+}
+#comment-input::placeholder {
+  color: #c4c4c4;
+}
+
+#submit-button {
+  width: 30px;
+  height: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #f26e22;
+}
+#submit-button:disabled {
+  color: #c4c4c4;
+}
