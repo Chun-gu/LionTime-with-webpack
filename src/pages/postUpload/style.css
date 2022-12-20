@@ -1,0 +1,82 @@
+@import url(@styles/common.css);
+@import url(@styles/headerNav.css);
+
+main {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 92px;
+}
+
+.link-back img {
+  width: 22px;
+  height: 22px;
+}
+
+#author-profile-image {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#post-form {
+  display: flex;
+  flex-direction: column;
+  width: 304px;
+}
+
+#post-content-textarea {
+  max-height: 470px;
+  font-size: 14px;
+  line-height: 18px;
+  padding-top: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  resize: none;
+}
+#post-content-textarea::placeholder {
+  color: #c4c4c4;
+}
+
+#post-image-input:focus + label {
+  outline: 2px solid #000000;
+  border-radius: 50%;
+}
+
+#post-image-label {
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  cursor: pointer;
+}
+#post-image-label img {
+  width: 100%;
+  height: 100%;
+}
+
+#image-list {
+  display: flex;
+  width: 304px;
+  height: 200px;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+#image-list::-webkit-scrollbar {
+  display: none;
+}
+
+#upload-button {
+  width: 90px;
+  height: 32px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #f26e22;
+  border-radius: 32px;
+}
+#upload-button:disabled {
+  background-color: #ffc7a7;
+}

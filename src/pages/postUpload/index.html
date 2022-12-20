@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Bold.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Medium.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Regular.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <title>게시물 업로드</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        <div class="status-bar">
+          <time class="current-time"></time>
+          <ul class="status-menu">
+            <li class="signal"></li>
+            <li class="wifi"></li>
+            <li class="battery"></li>
+          </ul>
+        </div>
+        <div class="header-nav">
+          <a href="javascript:history.back();" class="link-back">
+            <img src="~@images/icon-arrow-left.webp" alt="뒤로 가기" />
+          </a>
+          <button type="button" id="upload-button" form="post-form" disabled>
+            업로드
+          </button>
+        </div>
+      </header>
+      <main>
+        <h1 class="sr-only">게시글 작성</h1>
+        <img
+          src="~@images/default-profile-img-small.webp"
+          alt="작성자 프로필 사진"
+          id="author-profile-image"
+        />
+        <form id="post-form">
+          <label for="post-content-textarea" class="sr-only">
+            게시글 내용 입력란
+          </label>
+          <textarea
+            id="post-content-textarea"
+            maxlength="500"
+            placeholder="게시글 입력하기 (500자 제한)"
+          ></textarea>
+          <ul id="image-list"></ul>
+          <input
+            type="file"
+            multiple
+            accept=".png, .jpg, .jpeg, .gif"
+            id="post-image-input"
+            class="sr-only"
+          />
+          <label id="post-image-label" for="post-image-input">
+            <img
+              src="~@images/icon-image-button-fill.webp"
+              alt="이미지 첨부하기"
+            />
+          </label>
+        </form>
+      </main>
+    </div>
+  </body>
+</html>
