@@ -23,6 +23,28 @@ export async function getPost(postId) {
   }
 }
 
+export async function postPost(post) {
+  try {
+    const response = await api.post('/post', { post });
+
+    if (response.post) return { ok: true, postId: response.post.id };
+    throw new ResponseError(response);
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
+export async function updatePost(postId, post) {
+  try {
+    const response = await api.put(`/post/${postId}`, { post });
+
+    if (response.post) return { ok: true, postId: response.post.id };
+    throw new ResponseError(response);
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
 export async function reportPost(postId) {
   try {
     const response = await api.post(`/post/${postId}/report`);
