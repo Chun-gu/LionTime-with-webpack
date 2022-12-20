@@ -36,6 +36,7 @@ export const IMAGE = {
 };
 
 export const IMAGE_ERROR = {
+  count: '이미지는 3개까지만 첨부할 수 있습니다.',
   size: '이미지의 크기가 3MB를 초과했습니다.',
   format: 'jpg, gif, png, jpeg 형식의 이미지만 등록할 수 있습니다.',
 };
