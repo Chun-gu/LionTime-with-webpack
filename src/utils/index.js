@@ -5,6 +5,8 @@ export { default as hasScroll } from './hasScroll';
 export { default as intersectionObserver } from './intersectionObserver';
 export { default as relativeDateTo } from './relativeDateTo';
 export { default as replaceToPrevPage } from './replaceToPrevPage';
+export { default as resizeTextarea } from './resizeTextarea';
+export { default as scrollHorizontal } from './scrollHorizontal';
 export { default as useScrollFix } from './useScrollFix';
 export { default as trimImageURL } from './trimImageURL';
 export { default as validateImageFiles } from './validateImageFiles';
