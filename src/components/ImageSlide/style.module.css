@@ -1,0 +1,29 @@
+.image-slide {
+  flex-grow: 1;
+  flex-shrink: 0;
+  aspect-ratio: 4 / 3;
+  border: 0.5px solid #bdbdbd;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.image-slide:not(:last-child) {
+  margin-right: 8px;
+}
+.image-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.delete-button {
+  width: 22px;
+  height: 22px;
+  background-image: url('@images/icon-x.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
