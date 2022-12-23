@@ -138,3 +138,34 @@ export function PostItem(post, page) {
 
   return postItem;
 }
+
+export function PostAlbumItem(post) {
+  const { id: postId, image } = post;
+
+  const albumItem = document.createElement('li');
+  albumItem.classList.add('post-album-item');
+
+  const a = document.createElement('a');
+  a.setAttribute('href', `post?postId=${postId}`);
+  a.classList.add(styles['post-album-item']);
+  a.dataset.postId = postId;
+
+  const albumImg = document.createElement('img');
+  albumImg.setAttribute('src', trimImageURL(image));
+
+  const images = image.split(',');
+  if (images.length) albumImg.src = trimImageURL(images[0]);
+  albumImg.onerror = `this.src='${defaultPostProductImage}'`;
+  albumImg.classList.add(styles['post-album-image']);
+  a.append(albumImg);
+
+  if (images.length > 1) {
+    const multiIcon = document.createElement('div');
+    multiIcon.classList.add(styles['icon-multi-image']);
+    a.append(multiIcon);
+  }
+
+  albumItem.append(a);
+
+  return albumItem;
+}

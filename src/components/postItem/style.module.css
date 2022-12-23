@@ -107,3 +107,25 @@
   top: 20px;
   right: 16px;
 }
+
+/* 앨범 형식 */
+.post-album-item {
+  display: block;
+  position: relative;
+}
+
+.post-album-image {
+  width: 114px;
+  height: 114px;
+  object-fit: cover;
+}
+
+.icon-multi-image {
+  width: 20px;
+  height: 20px;
+  background-image: url(@images/icon-img-layers.webp);
+  background-size: 20px;
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
