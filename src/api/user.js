@@ -56,3 +56,36 @@ export async function login(user) {
     return { ok: false, error };
   }
 }
+
+export async function getProfile(accountname) {
+  try {
+    const response = await api.get(`/profile/${accountname}`);
+
+    if (response.profile) return { ok: true, profile: response.profile };
+    throw new ResponseError(response);
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
+export async function follow(accountname) {
+  try {
+    const response = await api.post(`/profile/${accountname}/follow`);
+
+    if (response.profile) return { ok: true };
+    throw new ResponseError(response);
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
+export async function unfollow(accountname) {
+  try {
+    const response = await api.delete(`/profile/${accountname}/unfollow`);
+
+    if (response.profile) return { ok: true };
+    throw new ResponseError(response);
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
