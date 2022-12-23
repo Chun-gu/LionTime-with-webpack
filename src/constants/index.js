@@ -44,12 +44,23 @@ export const IMAGE_ERROR = {
 export const BUTTON = {
   post: (isMine) => (isMine ? ['update', 'delete'] : ['report']),
   comment: (isMine) => (isMine ? ['delete'] : ['report']),
+  header: () => ['logout'],
 };
 
 export const ACTION = {
   update: '수정',
   delete: '삭제',
   report: '신고',
+  cancel: '취소',
+  logout: '로그아웃',
+};
+
+export const POST_MESSAGE = {
+  noPost: '게시글이 없습니다.',
+};
+
+export const PRODUCT_MESSAGE = {
+  noProduct: '판매 중인 상품이 없습니다.',
 };
 
 export const REGEX = {
