@@ -23,6 +23,19 @@ export async function getPost(postId) {
   }
 }
 
+export async function getPosts({ accountname, LIMIT, skip }) {
+  try {
+    const response = await api.get(
+      `/post/${accountname}/userpost?limit=${LIMIT}&skip=${skip}`,
+    );
+
+    if (response.post) return { ok: true, posts: response.post };
+    throw new ResponseError(response);
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
 export async function postPost(post) {
   try {
     const response = await api.post('/post', { post });
