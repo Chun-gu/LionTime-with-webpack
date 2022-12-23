@@ -1,6 +1,7 @@
 import styles from './style.module.css';
 
 import { deleteComment, deletePost, reportComment, reportPost } from '@api';
+import { ACTION } from '@constants';
 import { replaceToPrevPage } from '@utils';
 
 export default class ConfirmDialog {
@@ -14,11 +15,6 @@ export default class ConfirmDialog {
 
   template(action) {
     const BUTTONS = [action, 'cancel'];
-    const ACTION = {
-      report: '신고',
-      delete: '삭제',
-      cancel: '취소',
-    };
 
     const wrapper = document.createElement('div');
     wrapper.classList.add(styles['wrapper']);
