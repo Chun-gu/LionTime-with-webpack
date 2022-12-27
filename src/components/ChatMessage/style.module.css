@@ -1,0 +1,35 @@
+.my-message {
+  display: flex;
+  justify-content: end;
+  flex-direction: row-reverse;
+  gap: 12px;
+}
+
+.message-content {
+  max-width: 240px;
+  font-size: 14px;
+  line-height: 18px;
+  word-break: break-all;
+  white-space: pre-wrap;
+  color: #ffffff;
+  padding: 12px;
+  background-color: #f26e22;
+  border: 1px solid #f26e22;
+  border-radius: 10px;
+  border-top-right-radius: 0px;
+}
+
+.attached-image {
+  width: 240px;
+  height: 240px;
+  border-radius: 12px;
+  object-fit: contain;
+  background-color: #ffffff;
+}
+
+.time-sended {
+  align-self: flex-end;
+  font-size: 10px;
+  line-height: 13px;
+  color: #767676;
+}

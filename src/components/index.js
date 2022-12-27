@@ -1,4 +1,5 @@
 export { default as BottomSheet } from './BottomSheet';
+export { default as ChatMessage } from './ChatMessage';
 export { default as Comment } from './Comment';
 export * from './CustomError';
 export { default as ImageSlide } from './ImageSlide';
