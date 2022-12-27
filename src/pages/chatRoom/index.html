@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Bold.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Medium.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Regular.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <title>채팅방</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        <div class="status-bar">
+          <time class="current-time"></time>
+          <ul class="status-menu">
+            <li class="signal"></li>
+            <li class="wifi"></li>
+            <li class="battery"></li>
+          </ul>
+        </div>
+        <div class="header-nav">
+          <a href="javascript:history.back();" class="link-back">
+            <img src="~@images/icon-arrow-left.webp" alt="뒤로 가기" />
+          </a>
+          <div>
+            <span class="chat-partner-name">애월읍 위니브 감귤농장</span>
+          </div>
+          <button class="btn-profile-menu">
+            <img
+              src="~@images/icon-more-vertical.webp"
+              alt="프로필 메뉴 열기"
+              class="btn-profile-menu"
+            />
+          </button>
+        </div>
+      </header>
+      <main class="message-section"></main>
+      <footer>
+        <div class="input-container">
+          <label for="image-attach-input" id="image-attach-label">
+            <span class="sr-only">사진 첨부</span>
+          </label>
+          <input
+            type="file"
+            id="image-attach-input"
+            accept=".png, .jpg, .jpeg, .gif"
+          />
+          <form id="message-form">
+            <textarea
+              id="message-textarea"
+              name="message"
+              type="text"
+              placeholder="전송(Enter), 줄바꿈(Shift + Enter)"
+              rows="1"
+              required
+            ></textarea>
+          </form>
+          <button
+            id="send-button"
+            form="message-form"
+            type="submit"
+            disabled="true"
+          >
+            전송
+          </button>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

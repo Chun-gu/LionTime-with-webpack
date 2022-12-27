@@ -1,0 +1,175 @@
+@import url(@styles/common.css);
+
+.header-nav {
+  width: 390px;
+  height: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 0 12px 0 16px;
+  border-bottom: 0.5px solid #dbdbdb;
+}
+.link-back img {
+  width: 22px;
+  height: 22px;
+}
+.btn-profile-menu img {
+  width: 24px;
+  height: 24px;
+}
+
+.wrap-cont {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-partner-name {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: bold;
+}
+
+.message-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 9px;
+  min-height: 100vh;
+  background-color: #f2f2f2;
+  padding-top: 92px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 20px;
+}
+
+.partner-message {
+  display: flex;
+  gap: 12px;
+}
+
+.my-message {
+  display: flex;
+  justify-content: end;
+  flex-direction: row-reverse;
+  gap: 12px;
+}
+
+.partner-image {
+  width: 42px;
+  height: 42px;
+  border: 0.5px solid #dbdbdb;
+  border-radius: 50%;
+}
+
+.time-sended {
+  align-self: flex-end;
+  font-size: 10px;
+  line-height: 13px;
+  color: #767676;
+}
+
+.message-content {
+  max-width: 240px;
+  font-size: 14px;
+  line-height: 18px;
+  word-break: break-all;
+  white-space: pre-wrap;
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 10px;
+}
+.partner.message-content {
+  border: 1px solid #c4c4c4;
+  background-color: #fff;
+  border-top-left-radius: 0px;
+}
+.my.message-content {
+  color: #ffffff;
+  background-color: #f26e22;
+  border: 1px solid #f26e22;
+  border-top-right-radius: 0px;
+}
+
+.attached-image {
+  width: 240px;
+  height: 240px;
+  border-radius: 12px;
+  object-fit: contain;
+  background-color: #ffffff;
+}
+
+/* 하단 */
+footer {
+  width: 390px;
+}
+
+.input-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 12px 16px;
+  border-top: 0.5px solid #dbdbdb;
+  gap: 16px;
+  min-height: 60px;
+}
+
+/* 이미지 첨부 버튼 */
+#image-attach-label {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  background-image: url(@images/icon-image-button.webp);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+#image-attach-label:hover {
+  background-image: url(@images/icon-image-button-fill.webp);
+}
+#image-attach-input {
+  display: none;
+}
+
+/* 메시지 입력 폼 */
+#message-form {
+  flex-grow: 1;
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+}
+#message-textarea {
+  width: 100%;
+  min-height: 18px;
+  max-height: 90px;
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  resize: none;
+  position: relative;
+}
+#message-textarea::placeholder {
+  font-size: 14px;
+  color: #c4c4c4;
+}
+#message-textarea:focus {
+  outline: none;
+}
+#message-textarea::-webkit-scrollbar {
+  display: none;
+}
+
+/* 전송 버튼 */
+#send-button:disabled {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 500;
+  color: #c4c4c4;
+}
+
+#send-button {
+  width: 36px;
+  height: 36px;
+  color: #f26e22;
+}
