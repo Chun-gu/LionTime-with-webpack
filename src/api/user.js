@@ -57,6 +57,17 @@ export async function login(user) {
   }
 }
 
+export async function searchUser(keyword) {
+  try {
+    const response = await api.get(`/user/searchuser/?keyword=${keyword}`);
+
+    if (response instanceof Array) return { ok: true, users: response };
+    throw new ResponseError(response);
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
 export async function getProfile(accountname) {
   try {
     const response = await api.get(`/profile/${accountname}`);
