@@ -1,0 +1,73 @@
+.user-profile-card {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 6px;
+}
+.user-profile-card:hover {
+  outline: 1px solid #f26e22;
+}
+
+.link {
+  flex-grow: 1;
+  display: flex;
+  min-width: 0;
+}
+
+.profile-image {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border: 0.5px solid #dbdbdb;
+  border-radius: 50%;
+}
+
+.names-wrapper {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0 12px;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.account-name {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: #767676;
+}
+
+.match-keyword {
+  color: #f26e22;
+}
+
+.follow-button {
+  flex-shrink: 0;
+  width: 56px;
+  height: 28px;
+  font-size: 12px;
+  border-radius: 14px;
+}
+.follow-button[data-is-following='true'] {
+  color: #767676;
+  background-color: #ffffff;
+  border: 1px solid #dbdbdb;
+}
+.follow-button[data-is-following='true']::after {
+  content: '취소';
+}
+.follow-button[data-is-following='false'] {
+  color: #ffffff;
+  background-color: #f26e22;
+  border: none;
+}
+.follow-button[data-is-following='false']::after {
+  content: '팔로우';
+}
