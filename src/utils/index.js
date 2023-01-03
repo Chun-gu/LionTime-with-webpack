@@ -9,4 +9,5 @@ export { default as resizeTextarea } from './resizeTextarea';
 export { default as scrollHorizontal } from './scrollHorizontal';
 export { default as useScrollFix } from './useScrollFix';
 export { default as trimImageURL } from './trimImageURL';
+export { default as InputValidator } from './InputValidator';
 export { default as validateImageFiles } from './validateImageFiles';
