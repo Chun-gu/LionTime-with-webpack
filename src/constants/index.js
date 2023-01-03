@@ -15,11 +15,13 @@ export const PASSWORD = {
 };
 
 export const USERNAME = {
-  length: '사용자 이름은 2 ~ 10자이어야 합니다.',
+  minLength: '사용자 이름은 2자 이상이어야 합니다.',
+  maxLength: '사용자 이름은 10자 이하여야 합니다.',
   noSpaces: '시작과 끝이 공백이거나, 연속된 공백을 넣을 수 없습니다.',
 };
 
 export const ACCOUNTNAME = {
+  length: '계정 ID를 입력해 주세요.',
   wrongPattern: '영문, 숫자, 마침표, 언더바만 사용 가능합니다.',
   available: '사용 가능한 계정ID 입니다.',
 };
@@ -66,4 +68,5 @@ export const PRODUCT_MESSAGE = {
 export const REGEX = {
   email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
   accountname: /^[a-zA-Z0-9._]+$/,
+  spaces: /^\s|\s{2,}|\s$/,
 };
