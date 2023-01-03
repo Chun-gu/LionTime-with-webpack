@@ -1,0 +1,114 @@
+@import url(@styles/common.css);
+@import url(@styles/headerNav.css);
+
+.link-back img {
+  width: 22px;
+  height: 22px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 102px 34px 0;
+  position: relative;
+}
+
+#form {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+#user-image {
+  width: 110px;
+  height: 110px;
+  background-image: url(@images/default-profile-image.webp);
+  background-size: 110px;
+  border: 1px solid #dbdbdb;
+  border-radius: 50%;
+  margin: 0 auto 30px;
+  position: relative;
+}
+#user-image.has-image {
+  background-image: none;
+}
+
+#image-preview {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#image-input:focus + .image-upload-button {
+  outline: 2px solid #f26e22;
+  border-radius: 3px;
+  outline-offset: 3px;
+}
+
+.image-upload-button {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.image-upload-button img {
+  width: 36px;
+  height: 36px;
+}
+
+.input-wrapper {
+  position: relative;
+  padding-bottom: 18px;
+  margin-bottom: 6px;
+}
+
+label {
+  display: block;
+  color: #767676;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+}
+
+input[type='text'] {
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  border-bottom: 1px solid #dbdbdb;
+}
+input[type='text']::placeholder {
+  color: #dbdbdb;
+  font-size: 14px;
+}
+input[type='text']:focus {
+  border-bottom: 1px solid #f26e22;
+}
+
+.error-message {
+  color: #eb5757;
+  font-size: 12px;
+  line-height: 14px;
+  position: absolute;
+  bottom: 0;
+}
+
+#save-button {
+  width: 90px;
+  height: 32px;
+  color: #fff;
+  font-weight: 500;
+  background-color: #f26e22;
+  border-radius: 32px;
+  position: absolute;
+  top: 30.5px;
+  right: 16px;
+  z-index: 200;
+}
+#save-button:disabled {
+  cursor: default;
+  background-color: #ffc7a7;
+}
