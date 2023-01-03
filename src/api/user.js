@@ -79,6 +79,17 @@ export async function getProfile(accountname) {
   }
 }
 
+export async function modifyProfile(user) {
+  try {
+    const response = await api.put('/user', { user });
+
+    if (response.user) return { ok: true };
+    throw new ResponseError(response);
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
 export async function follow(accountname) {
   try {
     const response = await api.post(`/profile/${accountname}/follow`);
