@@ -9,6 +9,7 @@ export { default as NoProduct } from './NoProduct';
 export { default as NoSearchResult } from './NoSearchResult';
 export * from './PostItem';
 export { default as ProductItem } from './ProductItem';
+export { default as ProductPreview } from './ProductPreview';
 export { default as ProfileSection } from './ProfileSection';
 export { default as UserProfileCard } from './UserProfileCard';
 export { default as StatusBar } from './StatusBar';
