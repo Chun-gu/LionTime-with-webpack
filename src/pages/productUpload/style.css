@@ -1,0 +1,86 @@
+@import url(@styles/common.css);
+@import url(@styles/headerNav.css);
+
+.link-back img {
+  width: 22px;
+  height: 22px;
+}
+
+main {
+  padding: 92px 34px 0;
+}
+
+#product-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#preview-section {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-color: #e5e5e5;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+#image-input:focus + label {
+  outline: 2px solid #000000;
+  border-radius: 50%;
+}
+
+#image-upload-button {
+  width: 36px;
+  height: 36px;
+  background-image: url(@images/icon-image-button.webp);
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.text-label {
+  font-size: 14px;
+  color: #767676;
+  margin-bottom: 6px;
+}
+
+.text-input {
+  font-size: 14px;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 6px 0;
+  margin-bottom: 10px;
+}
+.text-input::placeholder {
+  color: #dbdbdb;
+}
+.text-input:focus {
+  outline: none;
+}
+
+#price-input::-webkit-outer-spin-button,
+#price-input::-webkit-inner-spin-button {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#submit-button {
+  width: 90px;
+  height: 32px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #f26e22;
+  border-radius: 32px;
+  position: absolute;
+  top: 32px;
+  right: 16px;
+  z-index: 100;
+}
+#submit-button:disabled {
+  background-color: #ffc7a7;
+}
