@@ -11,10 +11,10 @@ export default class BottomSheet {
   #bottomSheetAnimation;
   #toggleScrollFix;
 
-  constructor({ type, postId, commentId, isMine }) {
+  constructor({ type, postId, commentId, productId, isMine }) {
     this.#bottomSheet = this.template({ type, isMine });
     this.#toggleScrollFix = useScrollFix(document.querySelector('html'));
-    this.addEvent(postId, commentId);
+    this.addEvent(postId, commentId, productId);
   }
 
   template({ type, isMine }) {
@@ -49,7 +49,7 @@ export default class BottomSheet {
     return wrapper;
   }
 
-  addEvent(postId, commentId) {
+  addEvent(postId, commentId, productId) {
     const ACTIONS = [...Object.keys(ACTION)];
 
     this.#bottomSheet.addEventListener('click', ({ target }) => {
@@ -58,10 +58,12 @@ export default class BottomSheet {
       const action = target.id;
       if (ACTIONS.includes(action)) {
         if (action === 'update') {
-          return (location.href = `postUpload?postId=${postId}`);
+          if (postId) return (location.href = `postUpload?postId=${postId}`);
+          if (productId)
+            return (location.href = `productUpload?productId=${productId}`);
         }
 
-        new ConfirmDialog({ action, postId, commentId }).open();
+        new ConfirmDialog({ action, postId, commentId, productId }).open();
       }
     });
   }
