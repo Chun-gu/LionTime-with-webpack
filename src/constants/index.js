@@ -46,6 +46,7 @@ export const IMAGE_ERROR = {
 export const BUTTON = {
   post: (isMine) => (isMine ? ['update', 'delete'] : ['report']),
   comment: (isMine) => (isMine ? ['delete'] : ['report']),
+  product: () => ['update', 'delete'],
   header: () => ['logout'],
 };
 
