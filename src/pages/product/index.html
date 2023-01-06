@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Bold.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Medium.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="../../assets/fonts/woff2-subset/Pretendard-Regular.subset.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <title>상품</title>
+  </head>
+  <body>
+    <div id="container">
+      <header>
+        <div class="status-bar">
+          <time class="current-time"></time>
+          <ul class="status-menu">
+            <li class="signal"></li>
+            <li class="wifi"></li>
+            <li class="battery"></li>
+          </ul>
+        </div>
+        <div class="header-nav">
+          <a href="javascript:history.back();" class="link-back">
+            <img src="~@images/icon-arrow-left.webp" alt="뒤로 가기" />
+          </a>
+          <button class="product-menu-button hidden">
+            <img
+              src="~@images/icon-more-vertical.webp"
+              alt="프로필 메뉴 열기"
+            />
+          </button>
+        </div>
+      </header>
+      <main>
+        <h1 class="sr-only">상품 상세정보</h1>
+        <div id="product-image"></div>
+        <dl>
+          <dt class="field">상품명</dt>
+          <dd id="product-name" class="value"></dd>
+          <dt class="field">가격</dt>
+          <dd id="product-price" class="value"></dd>
+          <dt class="field">링크</dt>
+          <dd class="value"><a id="product-link" target="_blank"> </a></dd>
+        </dl>
+      </main>
+      <footer>
+        <nav class="nav-wrap-link">
+          <a href="home" class="link-other-page home">
+            <span class="link-img home"></span>
+            <em>홈</em>
+          </a>
+          <a href="chatList" class="link-other-page chat">
+            <span class="link-img chat"></span>
+            <em>채팅</em>
+          </a>
+          <a href="postUpload" class="link-other-page write">
+            <span class="link-img write"></span>
+            <em>게시물 작성</em>
+          </a>
+          <a href="profile" class="link-other-page profile">
+            <span class="link-img profile"></span>
+            <em>프로필</em>
+          </a>
+        </nav>
+      </footer>
+    </div>
+  </body>
+</html>
