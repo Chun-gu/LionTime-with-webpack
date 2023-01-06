@@ -1,6 +1,12 @@
 import styles from './style.module.css';
 
-import { deleteComment, deletePost, reportComment, reportPost } from '@api';
+import {
+  deleteComment,
+  deletePost,
+  deleteProduct,
+  reportComment,
+  reportPost,
+} from '@api';
 import { ACTION } from '@constants';
 import { replaceToPrevPage } from '@utils';
 
@@ -8,9 +14,9 @@ export default class ConfirmDialog {
   #confirmDialog;
   #dialogAnimation;
 
-  constructor({ action, postId, commentId }) {
+  constructor({ action, postId, commentId, productId }) {
     this.#confirmDialog = this.template(action);
-    this.addEvent({ postId, commentId });
+    this.addEvent({ postId, commentId, productId });
   }
 
   template(action) {
@@ -40,7 +46,7 @@ export default class ConfirmDialog {
     return wrapper;
   }
 
-  addEvent({ postId, commentId }) {
+  addEvent({ postId, commentId, productId }) {
     this.#confirmDialog.addEventListener('click', async ({ target }) => {
       if (target.classList.contains('cancel')) {
         this.close();
@@ -60,7 +66,9 @@ export default class ConfirmDialog {
       }
 
       if (target.classList.contains('delete')) {
-        const { ok, error } = commentId
+        const { ok, error } = productId
+          ? await deleteProduct(productId)
+          : commentId
           ? await deleteComment(postId, commentId)
           : await deletePost(postId);
 
