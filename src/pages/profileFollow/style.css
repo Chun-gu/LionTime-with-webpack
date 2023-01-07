@@ -1,0 +1,17 @@
+@import url(@styles/common.css);
+@import url(@styles/headerNav.css);
+@import url(@styles/footerNav.css);
+
+.link-back img {
+  width: 22px;
+  height: 22px;
+}
+
+main {
+  padding-top: 72px;
+  padding-bottom: 62px;
+}
+
+#user-list {
+  padding: 12px 8px;
+}
