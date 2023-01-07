@@ -90,6 +90,19 @@ export async function modifyProfile(user) {
   }
 }
 
+export async function getFollowStatus({ accountname, page, LIMIT, skip }) {
+  try {
+    const response = await api.get(
+      `/profile/${accountname}/${page}?limit=${LIMIT}&skip=${skip}`,
+    );
+
+    if (response instanceof Array) return { ok: true, users: response };
+    throw new ResponseError(response);
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
 export async function follow(accountname) {
   try {
     const response = await api.post(`/profile/${accountname}/follow`);
