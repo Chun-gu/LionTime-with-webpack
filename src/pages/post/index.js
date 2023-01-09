@@ -74,8 +74,6 @@ commentForm.addEventListener('submit', async (e) => {
     commentInput.value = '';
     skip = 0;
     await printComments();
-    commentsList.addEventListener('intersect', printComments);
-    commentsListObserver.observe(commentsList.lastChild);
     validateCommentInput(commentInput.value);
   } else alert(error);
 });
