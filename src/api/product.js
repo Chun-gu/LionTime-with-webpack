@@ -38,6 +38,17 @@ export async function postProduct(product) {
   }
 }
 
+export async function updateProduct(productId, product) {
+  try {
+    const response = await api.put(`/product/${productId}`, { product });
+
+    if (response.product) return { ok: true, productId: response.product.id };
+    throw new ResponseError(response);
+  } catch (error) {
+    return { ok: false, error };
+  }
+}
+
 export async function deleteProduct(productId) {
   try {
     const response = await api.delete(`/product/${productId}`);
