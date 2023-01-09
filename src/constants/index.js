@@ -62,8 +62,13 @@ export const POST_MESSAGE = {
   noPost: '게시글이 없습니다.',
 };
 
-export const PRODUCT_MESSAGE = {
+export const PRODUCT_ERROR = {
   noProduct: '판매 중인 상품이 없습니다.',
+  nameRequired: '상품명을 입력하세요.',
+  priceRequired: '가격은 숫자로 입력해야 합니다.',
+  priceShouldBeNumber: '가격은 숫자로 입력해야 합니다.',
+  linkRequired: '판매 링크를 입력하세요.',
+  linkPattern: 'url 형식(ex. naver.com)으로 입력해주세요.',
 };
 
 export const REGEX = {
