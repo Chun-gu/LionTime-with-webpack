@@ -3,6 +3,30 @@ export default class InputValidator {
   #isValid;
   #cause;
 
+  required(cause) {
+    this.#validators.push({
+      validator: (target) => {
+        if (!target) return false;
+        return true;
+      },
+      cause,
+    });
+
+    return this;
+  }
+
+  number(cause) {
+    this.#validators.push({
+      validator: (target) => {
+        if (!/^[0-9]+$/.test(target)) return false;
+        return true;
+      },
+      cause,
+    });
+
+    return this;
+  }
+
   minLength(length, cause) {
     this.#validators.push({
       validator: (target) => {
