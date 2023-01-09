@@ -1,15 +1,12 @@
 import styles from './style.module.css';
 
-import { getImageDataURL } from '@utils';
-
-export default async function ProductPreview(image) {
+export default function ProductPreview(image) {
   const productPreview = document.createElement('div');
   productPreview.classList.add('product-preview', styles['product-preview']);
 
   const previewImage = document.createElement('img');
   previewImage.classList.add(styles['preview-image']);
-  const imageURL = await getImageDataURL(image);
-  previewImage.src = imageURL;
+  previewImage.src = image;
   previewImage.alt = '업로드 이미지';
 
   const deleteButton = document.createElement('button');
