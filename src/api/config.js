@@ -42,6 +42,17 @@ const api = {
     }
   },
 
+  put: async (url, body) => {
+    try {
+      const response = await fetch(API_URL + url, init('PUT', body));
+
+      if (response.ok) return await response.json();
+      else throw await response.json();
+    } catch (error) {
+      throw new HTTPError(error);
+    }
+  },
+
   delete: async (url) => {
     try {
       const response = await fetch(API_URL + url, init('DELETE'));
