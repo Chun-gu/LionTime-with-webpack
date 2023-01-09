@@ -42,6 +42,13 @@ main {
   cursor: pointer;
 }
 
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 21px;
+  position: relative;
+}
+
 .text-label {
   font-size: 14px;
   color: #767676;
@@ -52,13 +59,20 @@ main {
   font-size: 14px;
   border-bottom: 1px solid #dbdbdb;
   padding: 6px 0;
-  margin-bottom: 10px;
 }
 .text-input::placeholder {
   color: #dbdbdb;
 }
 .text-input:focus {
   outline: none;
+}
+
+.error-message {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #eb5757;
+  position: absolute;
+  bottom: 0;
 }
 
 #price-input::-webkit-outer-spin-button,
