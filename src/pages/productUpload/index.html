@@ -59,31 +59,41 @@
             </label>
           </div>
 
-          <label for="name-input" class="text-label">상품명</label>
-          <input
-            id="name-input"
-            type="text"
-            class="text-input"
-            minlength="2"
-            maxlength="15"
-            placeholder="2~15자 이내여야 합니다."
-          />
+          <div class="input-wrapper">
+            <label for="name-input" class="text-label">상품명</label>
+            <input
+              id="name-input"
+              type="text"
+              class="text-input"
+              minlength="2"
+              maxlength="15"
+              placeholder="2~15자 이내여야 합니다."
+            />
+            <p id="name-error-message" class="error-message"></p>
+          </div>
 
-          <label for="price-input" class="text-label">가격</label>
-          <input
-            id="price-input"
-            type="number"
-            class="text-input"
-            placeholder="숫자만 입력 가능합니다."
-          />
+          <div class="input-wrapper">
+            <label for="price-input" class="text-label">가격</label>
+            <input
+              id="price-input"
+              type="number"
+              class="text-input"
+              placeholder="숫자만 입력 가능합니다."
+            />
+            <p id="price-error-message" class="error-message"></p>
+          </div>
 
-          <label for="link-input" class="text-label">판매 링크</label>
-          <input
-            id="link-input"
-            type="text"
-            class="text-input"
-            placeholder="URL을 입력해주세요. ex) naver.com"
-          />
+          <div class="input-wrapper">
+            <label for="link-input" class="text-label">판매 링크</label>
+            <input
+              id="link-input"
+              type="text"
+              class="text-input"
+              placeholder="URL을 입력해주세요. ex) naver.com"
+            />
+            <p id="link-error-message" class="error-message"></p>
+          </div>
+
           <button type="submit" id="submit-button" form="product-form" disabled>
             등록
           </button>
