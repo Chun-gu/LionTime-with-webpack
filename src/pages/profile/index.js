@@ -1,4 +1,4 @@
-import "./style.css";
+import './style.css';
 
 import {
   follow,
@@ -8,7 +8,7 @@ import {
   getProfile,
   heartPost,
   unheartPost,
-} from "@api";
+} from '@api';
 import {
   BottomSheet,
   NoPost,
@@ -18,25 +18,25 @@ import {
   PostAlbumItem,
   ProfileSection,
   StatusBar,
-} from "@components";
+} from '@components';
 import {
   getFromQueryString,
   intersectionObserver,
   scrollHorizontal,
-} from "@utils";
+} from '@utils';
 
-const MY_ID = sessionStorage.getItem("my-id");
-const MY_ACCOUNTNAME = sessionStorage.getItem("my-accountname");
-const TARGET_ACCOUNTNAME = getFromQueryString("userId") || MY_ACCOUNTNAME;
+const MY_ID = sessionStorage.getItem('my-id');
+const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
+const TARGET_ACCOUNTNAME = getFromQueryString('userId') || MY_ACCOUNTNAME;
 const isMyProfile = MY_ACCOUNTNAME === TARGET_ACCOUNTNAME;
 
-const profileMenuButton = document.querySelector(".profile-menu-button");
-const profileSection = document.querySelector(".profile-section");
-const productList = document.querySelector(".product-list");
-const postList = document.querySelector(".post-list");
-const postAlbum = document.querySelector(".post-album");
-const listButton = document.querySelector(".list-button");
-const albumButton = document.querySelector(".album-button");
+const profileMenuButton = document.querySelector('.profile-menu-button');
+const profileSection = document.querySelector('.profile-section');
+const productList = document.querySelector('.product-list');
+const postList = document.querySelector('.post-list');
+const postAlbum = document.querySelector('.post-album');
+const listButton = document.querySelector('.list-button');
+const albumButton = document.querySelector('.album-button');
 
 const productListObserver = intersectionObserver(productList);
 const postListObserver = intersectionObserver(postList);
@@ -49,47 +49,48 @@ let postSkip = 0;
 StatusBar();
 initializePage();
 
-profileMenuButton.addEventListener("click", () => {
-  new BottomSheet({ type: "header" }).open();
+profileMenuButton.addEventListener('click', () => {
+  new BottomSheet({ type: 'header' }).open();
 });
 
-profileSection.addEventListener("click", async ({ target }) => {
-  if (target.id === "follow-button") toggleFollow(target);
+profileSection.addEventListener('click', async ({ target }) => {
+  if (target.id === 'follow-button') toggleFollow(target);
+  if (target.id === 'intro') target.classList.toggle('single-ellipsis');
 });
 
-productList.addEventListener("intersect", printProducts);
+productList.addEventListener('intersect', printProducts);
 
-productList.addEventListener("wheel", (e) => scrollHorizontal(e, productList));
+productList.addEventListener('wheel', (e) => scrollHorizontal(e, productList));
 
-postAlbum.addEventListener("intersect", printPosts);
+postAlbum.addEventListener('intersect', printPosts);
 
-postList.addEventListener("intersect", printPosts);
+postList.addEventListener('intersect', printPosts);
 
-postList.addEventListener("click", async ({ target }) => {
+postList.addEventListener('click', async ({ target }) => {
   const targetClassList = target.classList;
 
-  if (targetClassList.contains("post-menu-button")) openBottomSheet(target);
+  if (targetClassList.contains('post-menu-button')) openBottomSheet(target);
 
-  if (targetClassList.contains("heart-button")) toggleHeart(target);
+  if (targetClassList.contains('heart-button')) toggleHeart(target);
 
-  if (targetClassList.contains("comment-button")) {
-    const postId = target.closest(".post-card").dataset.postId;
+  if (targetClassList.contains('comment-button')) {
+    const postId = target.closest('.post-card').dataset.postId;
     location.href = `post?postId=${postId}`;
   }
 });
 
-listButton.addEventListener("click", () => {
-  listButton.classList.add("selected");
-  albumButton.classList.remove("selected");
-  postList.classList.remove("hidden");
-  postAlbum.classList.add("hidden");
+listButton.addEventListener('click', () => {
+  listButton.classList.add('selected');
+  albumButton.classList.remove('selected');
+  postList.classList.remove('hidden');
+  postAlbum.classList.add('hidden');
 });
 
-albumButton.addEventListener("click", () => {
-  listButton.classList.remove("selected");
-  albumButton.classList.add("selected");
-  postList.classList.add("hidden");
-  postAlbum.classList.remove("hidden");
+albumButton.addEventListener('click', () => {
+  listButton.classList.remove('selected');
+  albumButton.classList.add('selected');
+  postList.classList.add('hidden');
+  postAlbum.classList.remove('hidden');
 });
 
 async function initializePage() {
@@ -127,11 +128,11 @@ function appendProducts(products) {
   if (products.length === 0) {
     if (productSkip === 0) productList.append(NoProduct());
     productListObserver.disconnect();
-    productList.removeEventListener("intersect", printProducts);
+    productList.removeEventListener('intersect', printProducts);
   } else if (products.length < PRODUCT_LIMIT) {
     products.forEach((product) => productList.append(ProductItem(product)));
     productListObserver.disconnect();
-    productList.removeEventListener("intersect", printProducts);
+    productList.removeEventListener('intersect', printProducts);
   } else {
     productSkip += PRODUCT_LIMIT;
     products.forEach((product) => productList.append(ProductItem(product)));
@@ -157,20 +158,20 @@ function appendPosts(posts) {
       postAlbum.append(NoPost());
     }
     postListObserver.disconnect();
-    postList.removeEventListener("intersect", printPosts);
-    postAlbum.removeEventListener("intersect", printPosts);
+    postList.removeEventListener('intersect', printPosts);
+    postAlbum.removeEventListener('intersect', printPosts);
   } else if (posts.length < POST_LIMIT) {
     posts.forEach((post) => {
-      postList.append(PostItem(post, "profile"));
+      postList.append(PostItem(post, 'profile'));
       if (post.image) postAlbum.append(PostAlbumItem(post));
     });
     postListObserver.disconnect();
-    postList.removeEventListener("intersect", printPosts);
-    postAlbum.removeEventListener("intersect", printPosts);
+    postList.removeEventListener('intersect', printPosts);
+    postAlbum.removeEventListener('intersect', printPosts);
   } else {
     postSkip += POST_LIMIT;
     posts.forEach((post) => {
-      postList.append(PostItem(post, "profile"));
+      postList.append(PostItem(post, 'profile'));
       if (post.image) postAlbum.append(PostAlbumItem(post));
     });
     postListObserver.observe(postList.lastChild);
@@ -197,13 +198,13 @@ async function toggleFollow(target) {
     : await follow(TARGET_ACCOUNTNAME);
 
   if (ok) {
-    target.textContent = isFollowing ? "팔로우" : "언팔로우";
+    target.textContent = isFollowing ? '팔로우' : '언팔로우';
     target.dataset.isFollowing = !isFollowing;
   } else alert(error);
 }
 
 async function toggleHeart(target) {
-  const postId = target.closest(".post-card").dataset.postId;
+  const postId = target.closest('.post-card').dataset.postId;
   const heartCount = target.nextElementSibling;
   const isHearted = JSON.parse(target.dataset.hearted);
 
@@ -219,8 +220,8 @@ async function toggleHeart(target) {
 }
 
 function openBottomSheet(target) {
-  const postId = target.closest(".post-card").dataset.postId;
-  const isMine = target.closest(".post-card").dataset.author === MY_ACCOUNTNAME;
+  const postId = target.closest('.post-card').dataset.postId;
+  const isMine = target.closest('.post-card').dataset.author === MY_ACCOUNTNAME;
 
-  new BottomSheet({ type: "post", postId, isMine }).open();
+  new BottomSheet({ type: 'post', postId, isMine }).open();
 }

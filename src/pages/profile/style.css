@@ -23,7 +23,7 @@ main {
 }
 
 .profile-section {
-  height: 317px;
+  min-height: 317px;
   text-align: center;
   padding: 30px 55px 26px;
   margin-bottom: 6px;

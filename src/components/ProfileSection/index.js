@@ -49,7 +49,7 @@ export default function ProfileSection({ profile, isMyProfile, myId }) {
   <div class=${styles['profile-bottom']}>
     <strong class=${styles['username']}>${username}</strong>
     <span class=${styles['accountname']}>@ ${accountname}</span>
-    <p class=${styles['intro']}>${intro}</p>
+    <p id="intro" class="${styles['intro']} single-ellipsis">${intro}</p>
   </div>
   <div>
   ${
