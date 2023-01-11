@@ -75,7 +75,7 @@ function appendNoFeed() {
 function appendPosts(posts) {
   posts.forEach((post) => {
     const li = document.createElement('li');
-    li.append(PostItem(post, 'profile'));
+    li.append(PostItem(post, 'home'));
     feedList.append(li);
   });
 }
