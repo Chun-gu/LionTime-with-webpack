@@ -27,7 +27,10 @@ const linkErrorMessage = document.querySelector('#link-error-message');
 
 const submitButton = document.querySelector('#submit-button');
 
-const nameValidator = new InputValidator().required(PRODUCT_ERROR.nameRequired);
+const nameValidator = new InputValidator()
+  .required(PRODUCT_ERROR.nameRequired)
+  .minLength(2, PRODUCT_ERROR.nameMinLength)
+  .maxLength(15, PRODUCT_ERROR.nameMaxLength);
 const priceValidator = new InputValidator()
   .required(PRODUCT_ERROR.priceRequired)
   .number(PRODUCT_ERROR.priceShouldBeNumber);

@@ -65,6 +65,8 @@ export const POST_MESSAGE = {
 export const PRODUCT_ERROR = {
   noProduct: '판매 중인 상품이 없습니다.',
   nameRequired: '상품명을 입력하세요.',
+  nameMinLength:'상품명은 2자 이상이어야 합니다.',
+  nameMaxLength:'상품명은 15자 이하여야 합니다.',
   priceRequired: '가격은 숫자로 입력해야 합니다.',
   priceShouldBeNumber: '가격은 숫자로 입력해야 합니다.',
   linkRequired: '판매 링크를 입력하세요.',
