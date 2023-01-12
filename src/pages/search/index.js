@@ -2,40 +2,71 @@ import './style.css';
 
 import { searchUser } from '@api';
 import { NoSearchResult, StatusBar, UserProfileCard } from '@components';
-import { promisedDebounce } from '@utils';
+import { debounce, intersectionObserver } from '@utils';
 
 const searchBar = document.querySelector('#search-bar');
 const resultList = document.querySelector('#search-result-list');
 
-let keyword = '';
+const resultListObserver = intersectionObserver(resultList);
+
+let keyword;
+let searchResult;
+const LIMIT = 15;
+let skip = 0;
 
 StatusBar();
 
-searchBar.addEventListener('input', async (e) => {
-  const searchResult = await getSearchResult(e.target.value);
-  printSearchResult(searchResult);
-});
+(function loadPreviousResult() {
+  keyword = sessionStorage.getItem('search-keyword');
+  searchBar.value = keyword;
+  searchResult = JSON.parse(sessionStorage.getItem('search-result'));
 
-const getSearchResult = promisedDebounce(async (value) => {
-  keyword = value.replaceAll(/\s+/g, '');
+  if (keyword) printSearchResult();
+})();
 
-  if (!keyword) return (resultList.innerHTML = '');
+resultList.addEventListener('intersect', printSearchResult);
 
-  const { ok, users, error } = await searchUser(keyword);
+searchBar.addEventListener(
+  'input',
+  debounce(async ({ target: { value } }) => {
+    keyword = value.replaceAll(/\s+/g, '');
+    sessionStorage.setItem('search-keyword', keyword);
 
-  if (ok) return users;
-  else return alert(error);
-}, 300);
+    if (!keyword) return;
 
-function printSearchResult(result = []) {
-  resultList.innerHTML = '';
+    const { ok, users, error } = await searchUser(keyword);
 
-  if (result.length === 0) {
-    resultList.append(NoSearchResult());
-    return;
-  }
+    if (ok) {
+      skip = 0;
+      searchResult = users;
+      resultList.innerHTML = '';
+      sessionStorage.setItem('search-result', JSON.stringify(users));
+      resultList.addEventListener('intersect', printSearchResult);
 
-  for (const user of result) {
-    resultList.append(UserProfileCard({ user, keyword }));
+      printSearchResult();
+    } else return alert(error);
+  }, 300),
+);
+
+function printSearchResult() {
+  const users = searchResult.slice(skip, skip + LIMIT);
+  console.log(users);
+
+  if (users.length === 0) {
+    if (skip === 0) resultList.append(NoSearchResult());
+    resultListObserver.disconnect();
+    resultList.removeEventListener('intersect', printSearchResult);
+  } else if (users.length < LIMIT) {
+    for (const user of users) {
+      resultList.append(UserProfileCard({ user, keyword }));
+    }
+    resultListObserver.disconnect();
+    resultList.removeEventListener('intersect', printSearchResult);
+  } else {
+    skip += LIMIT;
+    for (const user of users) {
+      resultList.append(UserProfileCard({ user, keyword }));
+    }
+    resultListObserver.observe(resultList.lastChild);
   }
 }
