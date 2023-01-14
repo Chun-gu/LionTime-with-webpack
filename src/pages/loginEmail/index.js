@@ -1,8 +1,9 @@
 import './style.css';
 
 import { login } from '@api';
-import { PAGE } from '@constants';
 import { StatusBar } from '@components';
+import { PAGE } from '@constants';
+import { navigate } from '@utils';
 
 const emailInput = document.querySelector('#email-input');
 const passwordInput = document.querySelector('#password-input');
@@ -33,7 +34,7 @@ loginForm.addEventListener('submit', async (e) => {
     sessionStorage.setItem('my-id', response.user._id);
     sessionStorage.setItem('my-token', response.user.token);
     sessionStorage.setItem('my-accountname', response.user.accountname);
-    location.href = PAGE.home;
+    navigate(PAGE.home, { replace: true });
   } else {
     errorMessage.textContent = response.error.message;
   }
