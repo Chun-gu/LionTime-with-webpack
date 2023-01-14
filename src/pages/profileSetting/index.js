@@ -8,6 +8,7 @@ import {
   getImageDataURL,
   navigate,
   promisedDebounce,
+  saveCurrentPageURL,
   validateImageFiles,
 } from '@utils';
 
@@ -30,6 +31,7 @@ let isUsernameValid = false;
 let isAccountnameValid = false;
 
 StatusBar();
+saveCurrentPageURL();
 
 imageInput.addEventListener('change', async ({ target: { files } }) => {
   const { isValid, cause } = validateImageFiles(files);

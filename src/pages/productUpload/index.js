@@ -9,6 +9,7 @@ import {
   getImageDataURL,
   InputValidator,
   navigate,
+  saveCurrentPageURL,
   trimImageURL,
   validateImageFiles,
 } from '@utils';
@@ -51,10 +52,8 @@ let isLinkValid = false;
 
 StatusBar();
 
-if (isUpdating) {
-  printPrevProduct(productId);
-  previewSection.append();
-}
+if (isUpdating) printPrevProduct(productId);
+else saveCurrentPageURL();
 
 imageInput.addEventListener('change', async ({ target: { files } }) => {
   const { isValid, cause } = validateImageFiles(files);
@@ -164,6 +163,8 @@ async function printPrevProduct(productId) {
     nameInput.value = product.itemName;
     priceInput.value = product.price;
     linkInput.value = product.link;
+
+    saveCurrentPageURL();
   } else {
     alert(error);
     navigate({ goBack: true, replace: true });

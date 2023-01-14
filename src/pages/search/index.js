@@ -2,7 +2,7 @@ import './style.css';
 
 import { searchUser } from '@api';
 import { NoSearchResult, StatusBar, UserProfileCard } from '@components';
-import { debounce, intersectionObserver } from '@utils';
+import { debounce, intersectionObserver, saveCurrentPageURL } from '@utils';
 
 const searchBar = document.querySelector('#search-bar');
 const resultList = document.querySelector('#search-result-list');
@@ -15,6 +15,7 @@ const LIMIT = 15;
 let skip = 0;
 
 StatusBar();
+saveCurrentPageURL();
 
 (function loadPreviousResult() {
   keyword = sessionStorage.getItem('search-keyword');

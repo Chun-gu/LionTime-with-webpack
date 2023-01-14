@@ -16,6 +16,7 @@ import {
   getImageDataURL,
   navigate,
   resizeTextarea,
+  saveCurrentPageURL,
   scrollHorizontal,
   trimImageURL,
   validateImageFiles,
@@ -36,6 +37,7 @@ printAuthorImage();
 formCheck();
 
 if (postId) printPostData();
+else saveCurrentPageURL();
 
 postImageInput.addEventListener('change', ({ target: { files } }) => {
   const { isValid, cause } = validateImageFiles(files);
@@ -67,7 +69,7 @@ function formCheck() {
 uploadButton.addEventListener('click', upload);
 
 async function printAuthorImage() {
-  const { ok, user, error } = await getMyInfo();
+  const { ok, user } = await getMyInfo();
 
   if (ok) {
     authorProfileImage.src = trimImageURL(user.image);
@@ -76,18 +78,25 @@ async function printAuthorImage() {
       target.onerror = null;
       target.src = defaultProfileImage;
     };
-  } else alert(error);
+  }
 }
 
 async function printPostData() {
-  const {
-    post: { content, image },
-  } = await getPost(postId);
+  const { ok, post, error } = await getPost(postId);
+
+  if (!ok) {
+    alert(error);
+    navigate({ goBack: true, replace: true });
+  }
+
+  const { content, image } = post;
 
   postContentTextarea.value = content;
 
   images = image.split(',');
   printImageSlider(images);
+
+  saveCurrentPageURL();
 }
 
 function printImageSlider(images) {

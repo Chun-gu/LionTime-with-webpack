@@ -2,7 +2,11 @@ import './style.css';
 
 import { getFollowStatus, follow, unfollow } from '@api';
 import { StatusBar, UserProfileCard } from '@components';
-import { getFromQueryString, intersectionObserver } from '@utils';
+import {
+  getFromQueryString,
+  intersectionObserver,
+  saveCurrentPageURL,
+} from '@utils';
 
 const myId = sessionStorage.getItem('my-id');
 const accountname = getFromQueryString('accountname');
@@ -15,6 +19,7 @@ const LIMIT = 15;
 let skip = 0;
 
 StatusBar();
+saveCurrentPageURL();
 printUsers();
 
 userList.addEventListener('intersect', printUsers);

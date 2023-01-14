@@ -3,7 +3,7 @@ import './style.css';
 import { checkIsEmailAvailable } from '@api';
 import { StatusBar } from '@components';
 import { REGEX, EMAIL, PASSWORD, PAGE } from '@constants';
-import { navigate, promisedDebounce } from '@utils';
+import { navigate, promisedDebounce, saveCurrentPageURL } from '@utils';
 
 let isEmailValid = false;
 let isPasswordValid = false;
@@ -16,6 +16,7 @@ const nextButton = document.querySelector('#next-button');
 const signupForm = document.querySelector('#signup-form');
 
 StatusBar();
+saveCurrentPageURL();
 
 emailInput.addEventListener('input', async ({ target: { value: email } }) => {
   isEmailValid = await validateEmail(email);

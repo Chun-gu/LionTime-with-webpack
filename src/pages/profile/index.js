@@ -24,6 +24,7 @@ import {
   getFromQueryString,
   intersectionObserver,
   navigate,
+  saveCurrentPageURL,
   scrollHorizontal,
 } from '@utils';
 
@@ -125,6 +126,7 @@ async function initializePage() {
 
   appendProducts(products.products);
   appendPosts(posts.posts);
+  saveCurrentPageURL();
 }
 
 function appendProducts(products) {

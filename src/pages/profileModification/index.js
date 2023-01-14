@@ -14,6 +14,7 @@ import {
   InputValidator,
   navigate,
   promisedDebounce,
+  saveCurrentPageURL,
   trimImageURL,
   validateImageFiles,
 } from '@utils';
@@ -57,6 +58,8 @@ let isAccountnameValid = true;
     usernameInput.value = prevUsername;
     accountnameInput.value = prevAccountname;
     introInput.value = prevIntro;
+
+    saveCurrentPageURL();
   } else {
     alert(error);
     navigate({ goBack: true, replace: true });

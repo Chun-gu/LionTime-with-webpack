@@ -3,7 +3,7 @@ import './style.css';
 import { login } from '@api';
 import { StatusBar } from '@components';
 import { PAGE } from '@constants';
-import { navigate } from '@utils';
+import { navigate, saveCurrentPageURL } from '@utils';
 
 const emailInput = document.querySelector('#email-input');
 const passwordInput = document.querySelector('#password-input');
@@ -12,6 +12,7 @@ const loginButton = document.querySelector('#login-button');
 const errorMessage = document.querySelector('#error-message');
 
 StatusBar();
+saveCurrentPageURL();
 
 [emailInput, passwordInput].forEach((input) =>
   input.addEventListener('input', () => {

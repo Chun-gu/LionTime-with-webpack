@@ -7,6 +7,7 @@ import { ChatMessage, StatusBar } from '@components';
 import {
   getFromQueryString,
   resizeTextarea,
+  saveCurrentPageURL,
   trimImageURL,
   validateImageFiles,
 } from '@utils';
@@ -94,6 +95,7 @@ async function printPartnerInfo(partnerId) {
       target.onerror = null;
       target.src = defaultProfileImage;
     };
+    saveCurrentPageURL();
   } else alert(error);
 }
 

@@ -2,7 +2,7 @@ import './style.css';
 
 import { getFeed, heartPost, unheartPost } from '@api';
 import { BottomSheet, PostItem, NoFeed, StatusBar } from '@components';
-import { intersectionObserver } from '@utils';
+import { intersectionObserver, saveCurrentPageURL } from '@utils';
 
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 
@@ -14,6 +14,7 @@ const feedListObserver = intersectionObserver(feedList);
 
 StatusBar();
 printFeed();
+saveCurrentPageURL();
 
 feedList.addEventListener('intersect', printFeed);
 

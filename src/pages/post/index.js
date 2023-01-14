@@ -13,6 +13,7 @@ import {
   getFromQueryString,
   intersectionObserver,
   navigate,
+  saveCurrentPageURL,
   trimImageURL,
 } from '@utils';
 
@@ -115,6 +116,8 @@ async function initializePage() {
 
   if (myInfo.ok) myProfileImage.src = trimImageURL(myInfo.user.image);
   else alert(myInfo.error);
+
+  saveCurrentPageURL();
 }
 
 async function printComments() {
