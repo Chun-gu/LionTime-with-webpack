@@ -4,7 +4,7 @@ import defaultProductImage from '@images/default-post-product-image.webp';
 
 import { getProduct } from '@api';
 import { BottomSheet } from '@components';
-import { getFromQueryString, trimImageURL } from '@utils';
+import { getFromQueryString, navigate, trimImageURL } from '@utils';
 
 const productMenuButton = document.querySelector('.product-menu-button');
 const productImage = document.querySelector('#product-image');
@@ -52,6 +52,6 @@ async function initializePage() {
     if (myId === authorId) productMenuButton.classList.toggle('hidden');
   } else {
     alert(error);
-    history.back();
+    navigate({ goBack: true, replace: true });
   }
 }
