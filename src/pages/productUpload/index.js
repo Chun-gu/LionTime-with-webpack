@@ -1,8 +1,8 @@
 import './style.css';
 
 import { getImageFileName, getProduct, postProduct, updateProduct } from '@api';
-import { PRODUCT_ERROR, REGEX } from '@constants';
 import { ProductPreview, StatusBar } from '@components';
+import { PAGE, PRODUCT_ERROR, REGEX } from '@constants';
 import {
   debounce,
   getFromQueryString,
@@ -139,7 +139,10 @@ productForm.addEventListener('submit', async (e) => {
     : await postProduct(product);
 
   if (result.ok)
-    navigate(`product?productId=${result.productId}`, { replace: true });
+    navigate({
+      to: `${PAGE.product}?productId=${result.productId}`,
+      replace: true,
+    });
   else alert(result.error);
 });
 

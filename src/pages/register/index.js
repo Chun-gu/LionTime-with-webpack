@@ -1,8 +1,8 @@
 import './style.css';
 
 import { checkIsEmailAvailable } from '@api';
-import { REGEX, EMAIL, PASSWORD, PAGE } from '@constants';
 import { StatusBar } from '@components';
+import { REGEX, EMAIL, PASSWORD, PAGE } from '@constants';
 import { navigate, promisedDebounce } from '@utils';
 
 let isEmailValid = false;

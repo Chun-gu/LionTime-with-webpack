@@ -6,8 +6,8 @@ import {
   getMyInfo,
   modifyProfile,
 } from '@api';
-import { ACCOUNTNAME, REGEX, REGISTER, USERNAME } from '@constants';
 import { StatusBar } from '@components';
+import { ACCOUNTNAME, PAGE, REGEX, REGISTER, USERNAME } from '@constants';
 import {
   debounce,
   getImageDataURL,
@@ -129,7 +129,7 @@ form.addEventListener('submit', async (e) => {
 
   const { ok, error } = await modifyProfile(user);
 
-  if (ok) navigate({ to: 'profile', replace: true });
+  if (ok) navigate({ to: PAGE.profile, replace: true });
   else alert(error);
 });
 

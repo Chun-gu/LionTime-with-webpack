@@ -1,8 +1,8 @@
 import './style.css';
 
 import { checkIsAccountnameAvailable, getImageFileName, register } from '@api';
-import { ACCOUNTNAME, PAGE, REGEX, REGISTER, USERNAME } from '@constants';
 import { StatusBar } from '@components';
+import { ACCOUNTNAME, PAGE, REGEX, REGISTER, USERNAME } from '@constants';
 import {
   debounce,
   getImageDataURL,

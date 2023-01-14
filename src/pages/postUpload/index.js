@@ -9,8 +9,8 @@ import {
   postPost,
   updatePost,
 } from '@api';
-import { IMAGE_ERROR } from '@constants';
 import { ImageSlide, StatusBar } from '@components';
+import { IMAGE_ERROR, PAGE } from '@constants';
 import {
   getFromQueryString,
   getImageDataURL,
@@ -136,6 +136,6 @@ async function upload() {
     : await postPost(post);
 
   if (response.ok)
-    navigate({ to: `post?postId=${response.postId}`, replace: true });
+    navigate({ to: `${PAGE.post}?postId=${response.postId}`, replace: true });
   else alert(response.error);
 }

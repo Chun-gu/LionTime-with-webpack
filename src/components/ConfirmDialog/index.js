@@ -7,7 +7,7 @@ import {
   reportComment,
   reportPost,
 } from '@api';
-import { ACTION } from '@constants';
+import { ACTION, PAGE } from '@constants';
 import { navigate } from '@utils';
 
 export default class ConfirmDialog {
@@ -83,7 +83,7 @@ export default class ConfirmDialog {
         sessionStorage.removeItem('my-id');
         sessionStorage.removeItem('my-token');
         sessionStorage.removeItem('my-accountname');
-        navigate({ to: 'login', replace: true });
+        navigate({ to: PAGE.login, replace: true });
       }
     });
   }

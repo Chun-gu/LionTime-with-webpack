@@ -19,6 +19,7 @@ import {
   ProfileSection,
   StatusBar,
 } from '@components';
+import { PAGE } from '@constants';
 import {
   getFromQueryString,
   intersectionObserver,
@@ -76,7 +77,7 @@ postList.addEventListener('click', async ({ target }) => {
 
   if (targetClassList.contains('comment-button')) {
     const postId = target.closest('.post-card').dataset.postId;
-    navigate(`post?postId=${postId}`);
+    navigate(`${PAGE.post}?postId=${postId}`);
   }
 });
 

@@ -34,7 +34,7 @@ loginForm.addEventListener('submit', async (e) => {
     sessionStorage.setItem('my-id', response.user._id);
     sessionStorage.setItem('my-token', response.user.token);
     sessionStorage.setItem('my-accountname', response.user.accountname);
-    navigate(PAGE.home, { replace: true });
+    navigate({ to: PAGE.home, replace: true });
   } else {
     errorMessage.textContent = response.error.message;
   }
