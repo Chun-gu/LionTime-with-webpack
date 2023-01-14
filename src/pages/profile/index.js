@@ -22,6 +22,7 @@ import {
 import {
   getFromQueryString,
   intersectionObserver,
+  navigate,
   scrollHorizontal,
 } from '@utils';
 
@@ -75,7 +76,7 @@ postList.addEventListener('click', async ({ target }) => {
 
   if (targetClassList.contains('comment-button')) {
     const postId = target.closest('.post-card').dataset.postId;
-    location.href = `post?postId=${postId}`;
+    navigate(`post?postId=${postId}`);
   }
 });
 
@@ -111,7 +112,8 @@ async function initializePage() {
   const [profile, products, posts] = await Promise.all(requests);
 
   if (profile.error || products.error || posts.error) {
-    return alert(profile.error || products.error || posts.error);
+    alert(profile.error || products.error || posts.error);
+    navigate({ goBack: true, replace: true });
   }
 
   profileSection.innerHTML = ProfileSection({

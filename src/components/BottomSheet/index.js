@@ -3,7 +3,7 @@ import styles from './style.module.css';
 import ConfirmDialog from '../ConfirmDialog';
 
 import { BUTTON, ACTION } from '@constants';
-import { useScrollFix } from '@utils';
+import { navigate, useScrollFix } from '@utils';
 
 export default class BottomSheet {
   #bottomSheet;
@@ -58,9 +58,9 @@ export default class BottomSheet {
       const action = target.id;
       if (ACTIONS.includes(action)) {
         if (action === 'update') {
-          if (postId) return (location.href = `postUpload?postId=${postId}`);
+          if (postId) navigate({ to: `postUpload?postId=${postId}` });
           if (productId)
-            return (location.href = `productUpload?productId=${productId}`);
+            navigate({ to: `productUpload?productId=${productId}` });
         }
 
         new ConfirmDialog({ action, postId, commentId, productId }).open();

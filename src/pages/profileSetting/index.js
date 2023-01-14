@@ -6,6 +6,7 @@ import { StatusBar } from '@components';
 import {
   debounce,
   getImageDataURL,
+  navigate,
   promisedDebounce,
   validateImageFiles,
 } from '@utils';
@@ -101,7 +102,7 @@ form.addEventListener('submit', async (e) => {
 
   if (!email || !password) {
     alert(REGISTER.omitEmailPassword);
-    history.back();
+    navigate({ goBack: true, replace: true });
   }
 
   if (!isSubmitable()) return alert(REGISTER.requireValidation);
@@ -130,7 +131,7 @@ form.addEventListener('submit', async (e) => {
 
   if (ok) {
     alert(REGISTER.success);
-    location.href = PAGE.loginEmail;
+    navigate({ to: PAGE.loginEmail, replace: true });
   } else alert(error);
 });
 

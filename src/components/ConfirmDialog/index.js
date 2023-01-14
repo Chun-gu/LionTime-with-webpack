@@ -8,7 +8,7 @@ import {
   reportPost,
 } from '@api';
 import { ACTION } from '@constants';
-import { replaceToPrevPage } from '@utils';
+import { navigate } from '@utils';
 
 export default class ConfirmDialog {
   #confirmDialog;
@@ -73,14 +73,17 @@ export default class ConfirmDialog {
           : await deletePost(postId);
 
         if (!ok) alert(error);
-        else commentId ? location.reload() : replaceToPrevPage();
+        else
+          commentId
+            ? location.reload()
+            : navigate({ goBack: true, replace: true });
       }
 
       if (target.classList.contains('logout')) {
         sessionStorage.removeItem('my-id');
         sessionStorage.removeItem('my-token');
         sessionStorage.removeItem('my-accountname');
-        location.href = 'login';
+        navigate({ to: 'login', replace: true });
       }
     });
   }

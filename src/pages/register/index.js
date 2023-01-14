@@ -3,7 +3,7 @@ import './style.css';
 import { checkIsEmailAvailable } from '@api';
 import { REGEX, EMAIL, PASSWORD, PAGE } from '@constants';
 import { StatusBar } from '@components';
-import { promisedDebounce } from '@utils';
+import { navigate, promisedDebounce } from '@utils';
 
 let isEmailValid = false;
 let isPasswordValid = false;
@@ -38,7 +38,7 @@ signupForm.addEventListener('submit', async (e) => {
   if (isEmailValid && isPasswordValid) {
     sessionStorage.setItem('email', emailInput.value);
     sessionStorage.setItem('password', passwordInput.value);
-    location.href = PAGE.profileSetting;
+    navigate({ to: PAGE.profileSetting });
   }
 });
 

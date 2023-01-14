@@ -11,10 +11,10 @@ import { StatusBar } from '@components';
 import {
   debounce,
   getImageDataURL,
-  promisedDebounce,
-  replaceToPrevPage,
-  trimImageURL,
   InputValidator,
+  navigate,
+  promisedDebounce,
+  trimImageURL,
   validateImageFiles,
 } from '@utils';
 
@@ -59,7 +59,7 @@ let isAccountnameValid = true;
     introInput.value = prevIntro;
   } else {
     alert(error);
-    replaceToPrevPage();
+    navigate({ goBack: true, replace: true });
   }
 })();
 
@@ -129,7 +129,7 @@ form.addEventListener('submit', async (e) => {
 
   const { ok, error } = await modifyProfile(user);
 
-  if (ok) location.href = 'profile';
+  if (ok) navigate({ to: 'profile', replace: true });
   else alert(error);
 });
 

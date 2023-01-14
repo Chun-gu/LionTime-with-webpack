@@ -1,5 +1,6 @@
 import './style.css';
 import { StatusBar } from '@components';
+import { navigate } from '@utils';
 
 StatusBar();
 
@@ -7,8 +8,8 @@ const isLoggedIn = !!sessionStorage.getItem('my-token');
 
 setTimeout(function () {
   if (isLoggedIn) {
-    window.location.href = 'pages/home';
+    navigate({ to: 'pages/home', replace: true });
   } else {
-    window.location.href = 'pages/login';
+    navigate({ to: 'pages/login', replace: true });
   }
 }, 1500);
