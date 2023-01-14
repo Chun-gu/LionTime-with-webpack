@@ -3,6 +3,7 @@ export { default as getFromQueryString } from './getFromQueryString';
 export { default as getImageDataURL } from './getImageDataURL';
 export { default as hasScroll } from './hasScroll';
 export { default as intersectionObserver } from './intersectionObserver';
+export { default as navigate } from './navigate';
 export { default as relativeDateTo } from './relativeDateTo';
 export { default as replaceToPrevPage } from './replaceToPrevPage';
 export { default as resizeTextarea } from './resizeTextarea';
