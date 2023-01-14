@@ -14,8 +14,8 @@ import { ImageSlide, StatusBar } from '@components';
 import {
   getFromQueryString,
   getImageDataURL,
+  navigate,
   resizeTextarea,
-  replaceToPrevPage,
   scrollHorizontal,
   trimImageURL,
   validateImageFiles,
@@ -135,6 +135,7 @@ async function upload() {
     ? await updatePost(postId, post)
     : await postPost(post);
 
-  if (response.ok) location.href = `post?postId=${response.postId}`;
+  if (response.ok)
+    navigate({ to: `post?postId=${response.postId}`, replace: true });
   else alert(response.error);
 }
