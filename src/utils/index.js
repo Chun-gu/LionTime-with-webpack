@@ -7,6 +7,7 @@ export { default as navigate } from './navigate';
 export { default as relativeDateTo } from './relativeDateTo';
 export { default as replaceToPrevPage } from './replaceToPrevPage';
 export { default as resizeTextarea } from './resizeTextarea';
+export { default as saveCurrentPageURL } from './saveCurrentPageURL';
 export { default as scrollHorizontal } from './scrollHorizontal';
 export { default as useScrollFix } from './useScrollFix';
 export { default as trimImageURL } from './trimImageURL';
