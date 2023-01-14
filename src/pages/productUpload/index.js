@@ -8,6 +8,7 @@ import {
   getFromQueryString,
   getImageDataURL,
   InputValidator,
+  navigate,
   trimImageURL,
   validateImageFiles,
 } from '@utils';
@@ -137,7 +138,8 @@ productForm.addEventListener('submit', async (e) => {
     ? await updateProduct(productId, product)
     : await postProduct(product);
 
-  if (result.ok) location.href = `product?productId=${result.productId}`;
+  if (result.ok)
+    navigate(`product?productId=${result.productId}`, { replace: true });
   else alert(result.error);
 });
 
@@ -161,7 +163,7 @@ async function printPrevProduct(productId) {
     linkInput.value = product.link;
   } else {
     alert(error);
-    history.back();
+    navigate({ goBack: true, replace: true });
   }
 }
 
