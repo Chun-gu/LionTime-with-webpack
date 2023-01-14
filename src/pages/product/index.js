@@ -27,19 +27,17 @@ productMenuButton.addEventListener('click', () => {
 });
 
 async function initializePage() {
-  const {
-    ok,
-    product: {
+  const { ok, product, error } = await getProduct(productId);
+
+  if (ok) {
+    const {
       itemImage,
       itemName,
       price,
       link,
       author: { _id: authorId },
-    },
-    error,
-  } = await getProduct(productId);
+    } = product;
 
-  if (ok) {
     const img = document.createElement('img');
     img.src = trimImageURL(itemImage);
     img.alt = '상품 이미지';
