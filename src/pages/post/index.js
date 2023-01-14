@@ -9,7 +9,12 @@ import {
   unheartPost,
 } from '@api';
 import { BottomSheet, Comment, PostItem, StatusBar } from '@components';
-import { getFromQueryString, intersectionObserver, trimImageURL } from '@utils';
+import {
+  getFromQueryString,
+  intersectionObserver,
+  navigate,
+  trimImageURL,
+} from '@utils';
 
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
 const postId = getFromQueryString('postId');
@@ -102,7 +107,7 @@ async function initializePage() {
   if (post.ok) postSection.append(PostItem(post.post, 'post'));
   else {
     alert(post.error);
-    return history.back();
+    return navigate({ goBack: true, replace: true });
   }
 
   if (comments.ok) appendComments(comments.comments);
