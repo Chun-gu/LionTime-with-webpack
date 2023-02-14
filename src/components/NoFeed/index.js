@@ -1,5 +1,6 @@
 import styles from './style.module.css';
 
+import { PAGE } from '@constants';
 import logoLionGrey from '@images/logo-lion-grey.webp';
 
 export default function NoFeed() {
@@ -17,7 +18,7 @@ export default function NoFeed() {
 
   const a = document.createElement('a');
   a.classList.add(styles['search-button']);
-  a.href = 'search';
+  a.href = PAGE.search;
   a.textContent = '검색하기';
 
   noFeed.append(img);

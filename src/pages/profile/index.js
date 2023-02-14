@@ -30,7 +30,7 @@ import {
 
 const MY_ID = sessionStorage.getItem('my-id');
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
-const TARGET_ACCOUNTNAME = getFromQueryString('userId') || MY_ACCOUNTNAME;
+const TARGET_ACCOUNTNAME = getFromQueryString('accountname') || MY_ACCOUNTNAME;
 const isMyProfile = MY_ACCOUNTNAME === TARGET_ACCOUNTNAME;
 
 const profileMenuButton = document.querySelector('.profile-menu-button');
@@ -78,7 +78,7 @@ postList.addEventListener('click', async ({ target }) => {
 
   if (targetClassList.contains('comment-button')) {
     const postId = target.closest('.post-card').dataset.postId;
-    navigate(`${PAGE.post}?postId=${postId}`);
+    navigate(PAGE.post(postId));
   }
 });
 

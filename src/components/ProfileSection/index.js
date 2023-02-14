@@ -2,6 +2,7 @@ import styles from './style.module.css';
 
 import defaultProfileImage from '@images/default-profile-image.webp';
 
+import { PAGE } from '@constants';
 import { trimImageURL } from '@utils';
 
 export default function ProfileSection({ profile, isMyProfile, myId }) {
@@ -29,7 +30,7 @@ export default function ProfileSection({ profile, isMyProfile, myId }) {
     </div>
     <div class=${styles['followers']}>
       <span class="sr-only">팔로워</span>
-      <a href="profileFollow?accountname=${accountname}&page=follower" 
+      <a href=${PAGE.profileFollower(accountname)}
         class=${styles['followers-count']}>
         ${followerCount}
       </a>
@@ -38,7 +39,7 @@ export default function ProfileSection({ profile, isMyProfile, myId }) {
     </div>
     <div class=${styles['followings']}>
       <span class="sr-only">팔로잉</span>
-      <a href="profileFollow?accountname=${accountname}&page=following"
+      <a href=${PAGE.profileFollowing(accountname)}
         class=${styles['followings-count']}>
         ${followingCount}
       </a>
@@ -55,14 +56,16 @@ export default function ProfileSection({ profile, isMyProfile, myId }) {
   ${
     isMyProfile
       ? `
-    <a href="profileModification" class="${styles['tablet-shape-button']}">
+    <a href=${PAGE.profileModification} class="${
+          styles['tablet-shape-button']
+        }">
       프로필 수정
     </a>
-    <a href="productUpload" class="${styles['tablet-shape-button']}">
+    <a href=${PAGE.productUpload()} class="${styles['tablet-shape-button']}">
       상품 등록
     </a>`
       : `
-    <a href="chatRoom?accountname=${accountname}"
+    <a href=${PAGE.chatRoom(accountname)}
       class="${styles['round-button']} ${styles['chat-button']}">
       <span class="sr-only">채팅하기</span>
     </a>

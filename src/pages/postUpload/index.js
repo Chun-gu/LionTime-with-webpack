@@ -144,7 +144,6 @@ async function upload() {
     ? await updatePost(postId, post)
     : await postPost(post);
 
-  if (response.ok)
-    navigate({ to: `${PAGE.post}?postId=${response.postId}`, replace: true });
+  if (response.ok) navigate({ to: PAGE.post(response.postId), replace: true });
   else alert(response.error);
 }

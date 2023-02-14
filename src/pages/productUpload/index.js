@@ -137,7 +137,7 @@ productForm.addEventListener('submit', async (e) => {
 
   if (result.ok)
     navigate({
-      to: `${PAGE.product}?productId=${result.productId}`,
+      to: PAGE.product(result.productId),
       replace: true,
     });
   else alert(result.error);

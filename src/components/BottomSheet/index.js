@@ -58,9 +58,8 @@ export default class BottomSheet {
       const action = target.id;
       if (ACTIONS.includes(action)) {
         if (action === 'update') {
-          if (postId) navigate({ to: `${PAGE.postUpload}?postId=${postId}` });
-          if (productId)
-            navigate({ to: `${PAGE.postUpload}?productId=${productId}` });
+          if (postId) navigate({ to: `${PAGE.postUpload(postId)}` });
+          if (productId) navigate({ to: `${PAGE.productUpload(productId)}` });
         } else
           new ConfirmDialog({ action, postId, commentId, productId }).open();
       }

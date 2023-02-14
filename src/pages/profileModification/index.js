@@ -132,7 +132,7 @@ form.addEventListener('submit', async (e) => {
 
   const { ok, error } = await modifyProfile(user);
 
-  if (ok) navigate({ to: PAGE.profile, replace: true });
+  if (ok) navigate({ to: PAGE.profile(), replace: true });
   else alert(error);
 });
 

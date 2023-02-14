@@ -1,5 +1,6 @@
 import styles from './style.module.css';
 
+import { PAGE } from '@constants';
 import { trimImageURL } from '@utils';
 
 import defaultPostProductImage from '@images/default-post-product-image.webp';
@@ -12,7 +13,7 @@ export default function ProductItem(product) {
   li.dataset.productId = productId;
 
   const a = document.createElement('a');
-  a.href = `product?productId=${productId}`;
+  a.href = PAGE.product(productId);
 
   const img = document.createElement('img');
   img.src = trimImageURL(itemImage);

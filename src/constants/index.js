@@ -1,13 +1,23 @@
 export const PAGE = {
+  chatRoom: (accountname) => `../chatRoom?accountname=${accountname}`,
   home: '../home',
   login: '../login',
   loginEmail: '../loginEmail',
-  post: '../post',
-  postUpload: '../postUpload',
-  product: '../product',
-  productUpload: '../productUpload',
-  profile: '../profile',
+  post: (postId) => `../post?postId=${postId}`,
+  postUpload: (postId) =>
+    postId ? `../postUpload?postId=${postId}` : '../postUpload',
+  product: (productId) => `../product?productId=${productId}`,
+  productUpload: (productId) =>
+    productId ? `../productUpload?productId=${productId}` : '../productUpload',
+  profile: (accountname) =>
+    accountname ? `../profile?accountname=${accountname}` : '../profile',
+  profileFollower: (accountname) =>
+    `../profileFollow?accountname=${accountname}&page=follower`,
+  profileFollowing: (accountname) =>
+    `../profileFollow?accountname=${accountname}&page=following`,
+  profileModification: '../profileModification',
   profileSetting: '../profileSetting',
+  search: '../search',
 };
 
 export const EMAIL = {

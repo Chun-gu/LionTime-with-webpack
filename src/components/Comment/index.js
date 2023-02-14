@@ -2,6 +2,7 @@ import styles from './style.module.css';
 
 import defaultProfileImageSmall from '@images/default-profile-image-small.webp';
 
+import { PAGE } from '@constants';
 import { relativeDateTo, trimImageURL } from '@utils';
 
 export default function Comment(data) {
@@ -19,7 +20,7 @@ export default function Comment(data) {
 
   const profileLink = document.createElement('a');
   profileLink.classList.add(styles['profile']);
-  profileLink.href = `profile?userId=${accountname}`;
+  profileLink.href = PAGE.profile(accountname);
 
   const profileImage = document.createElement('img');
   profileImage.src = trimImageURL(image);
@@ -29,7 +30,7 @@ export default function Comment(data) {
 
   const authorLink = document.createElement('a');
   authorLink.classList.add(styles['author']);
-  authorLink.href = `profile?userId=${accountname}`;
+  authorLink.href = PAGE.profile(accountname);
 
   const author = document.createElement('span');
   author.textContent = username;

@@ -2,6 +2,7 @@ import styles from './style.module.css';
 
 import defaultProfileImageSmall from '@images/default-profile-image-small.webp';
 
+import { PAGE } from '@constants';
 import { trimImageURL } from '@utils';
 
 export default function UserProfileCard({ user, keyword, myId }) {
@@ -13,7 +14,7 @@ export default function UserProfileCard({ user, keyword, myId }) {
 
   const a = document.createElement('a');
   a.classList.add(styles['link']);
-  a.href = `profile?userId=${accountname}`;
+  a.href = PAGE.profile(accountname);
   userProfileCard.append(a);
 
   const img = document.createElement('img');

@@ -3,6 +3,7 @@ import styles from './style.module.css';
 import defaultPostProductImage from '@images/default-post-product-image.webp';
 import defaultProfileImageSmall from '@images/default-profile-image-small.webp';
 
+import { PAGE } from '@constants';
 import { trimImageURL } from '@utils';
 
 export function PostItem(post, page) {
@@ -26,8 +27,7 @@ export function PostItem(post, page) {
   postItem.append(leftDiv);
 
   const authorImage = document.createElement(page === 'profile' ? 'div' : 'a');
-  if (authorImage.tagName === 'A')
-    authorImage.href = `profile?userId=${accountname}`;
+  if (authorImage.tagName === 'A') authorImage.href = PAGE.profile(accountname);
   authorImage.classList.add(styles['post-author-image']);
   leftDiv.append(authorImage);
 
@@ -50,7 +50,7 @@ export function PostItem(post, page) {
   const author = document.createElement(page === 'profile' ? 'span' : 'a');
   author.classList.add(styles['post-author'], 'single-ellipsis');
   author.textContent = username;
-  if (author.tagName === 'A') author.href = `profile?userId=${accountname}`;
+  if (author.tagName === 'A') author.href = PAGE.profile(accountname);
   authorInfo.append(author);
 
   const authorId = document.createElement('small');
@@ -66,7 +66,7 @@ export function PostItem(post, page) {
 
   if (image) {
     const postImage = document.createElement(page === 'post' ? 'div' : 'a');
-    if (postImage.tagName === 'A') postImage.href = `post?postId=${postId}`;
+    if (postImage.tagName === 'A') postImage.href = PAGE.post(postId);
     postImage.classList.add(styles['post-image']);
     rightDiv.append(postImage);
 
@@ -106,7 +106,7 @@ export function PostItem(post, page) {
     commentButton.dataset.postId = postId;
     commentButton.disabled = page === 'post';
   } else if (commentButton.tagName === 'A') {
-    commentButton.href = `post?postId=${postId}`;
+    commentButton.href = PAGE.post(postId);
   }
   utils.append(commentButton);
 
@@ -146,7 +146,7 @@ export function PostAlbumItem(post) {
   albumItem.classList.add('post-album-item');
 
   const a = document.createElement('a');
-  a.setAttribute('href', `post?postId=${postId}`);
+  a.href = PAGE.post(postId);
   a.classList.add(styles['post-album-item']);
   a.dataset.postId = postId;
 
