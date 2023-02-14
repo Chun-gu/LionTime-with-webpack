@@ -117,21 +117,19 @@ productForm.addEventListener('submit', async (e) => {
 
   if (!canSubmit()) return;
 
-  let itemImage;
-
-  if (imageInput.files[0]) {
-    const { ok, fileName, error } = await getImageFileName(imageInput.files[0]);
-
-    if (ok) itemImage = fileName;
-    else return alert(error);
-  } else itemImage = prevImage;
-
   const product = {
     itemName: nameInput.value,
     price: Number(priceInput.value),
     link: linkInput.value,
-    itemImage,
+    itemImage: prevImage,
   };
+
+  if (imageInput.files[0]) {
+    const { ok, filename, error } = await getImageFileName(imageInput.files[0]);
+
+    if (ok) product.itemImage = filename;
+    else return alert(error);
+  }
 
   const result = isUpdating
     ? await updateProduct(productId, product)
