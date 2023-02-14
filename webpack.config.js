@@ -34,7 +34,7 @@ module.exports = {
   output: {
     path: dist,
     filename: ({ chunk: { name } }) =>
-      name === 'index' ? 'index.js' : 'pages/[name]/index.js',
+      name === 'index' ? 'index.js' : '[name]/index.js',
     clean: true,
   },
   module: {
@@ -73,7 +73,7 @@ module.exports = {
       IMAGE_URL: process.env.IMAGE_URL,
     }),
     new HtmlWebpackPlugin({
-      filename: 'pages/index.html',
+      filename: 'index.html',
       chunks: ['index'],
       template: 'src/index.html',
     }),
