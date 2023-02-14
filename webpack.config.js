@@ -20,7 +20,7 @@ const entries = pages.reduce(
 const HtmlWebpackPlugins = pages.map(
   (page) =>
     new HtmlWebpackPlugin({
-      filename: `pages/${page}/index.html`,
+      filename: `${page}/index.html`,
       chunks: [`${page}`],
       template: `src/pages/${page}/index.html`,
     }),
@@ -80,7 +80,7 @@ module.exports = {
     ...HtmlWebpackPlugins,
     new MiniCssExtractPlugin({
       filename: ({ chunk: { name } }) =>
-        name === 'index' ? 'style.css' : `pages/${name}/style.css`,
+        name === 'index' ? 'style.css' : `${name}/style.css`,
     }),
     new webpack.SourceMapDevToolPlugin({}),
   ],
