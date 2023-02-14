@@ -9,8 +9,8 @@ const isLoggedIn = !!sessionStorage.getItem('my-token');
 
 setTimeout(function () {
   if (isLoggedIn) {
-    navigate({ to: `pages/${PAGE.home}`, replace: true });
+    navigate({ to: PAGE.home, replace: true });
   } else {
-    navigate({ to: `pages/${PAGE.login}`, replace: true });
+    navigate({ to: PAGE.login, replace: true });
   }
 }, 1500);

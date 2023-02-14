@@ -1,13 +1,13 @@
 export const PAGE = {
-  home: 'home',
-  login: 'login',
-  loginEmail: 'loginEmail',
-  post: 'post',
-  postUpload: 'postUpload',
-  product: 'product',
-  productUpload: 'productUpload',
-  profile: 'profile',
-  profileSetting: 'profileSetting',
+  home: '../home',
+  login: '../login',
+  loginEmail: '../loginEmail',
+  post: '../post',
+  postUpload: '../postUpload',
+  product: '../product',
+  productUpload: '../productUpload',
+  profile: '../profile',
+  profileSetting: '../profileSetting',
 };
 
 export const EMAIL = {
