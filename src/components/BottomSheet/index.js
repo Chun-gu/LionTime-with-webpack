@@ -1,6 +1,6 @@
 import styles from './style.module.css';
 
-import ConfirmDialog from '../ConfirmDialog';
+// import ConfirmDialog from '../ConfirmDialog';
 
 import { ACTION, BUTTON, PAGE } from '@constants';
 import { navigate, useScrollFix } from '@utils';
@@ -61,7 +61,11 @@ export default class BottomSheet {
           if (postId) navigate({ to: `${PAGE.postUpload(postId)}` });
           if (productId) navigate({ to: `${PAGE.productUpload(productId)}` });
         } else
-          new ConfirmDialog({ action, postId, commentId, productId }).open();
+          import(
+            /* webpackChunkName: "ConfirmDialog" */ '../ConfirmDialog'
+          ).then(({ default: ConfirmDialog }) =>
+            new ConfirmDialog({ action, postId, commentId, productId }).open(),
+          );
       }
     });
   }
