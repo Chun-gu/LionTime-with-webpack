@@ -10,7 +10,6 @@ import {
   unheartPost,
 } from '@api';
 import {
-  BottomSheet,
   NoPost,
   NoProduct,
   ProductItem,
@@ -49,8 +48,12 @@ let productSkip = 0;
 const POST_LIMIT = 9;
 let postSkip = 0;
 
+let BottomSheet;
+
 StatusBar();
 initializePage();
+
+profileMenuButton.addEventListener('mouseover', importBottomSheet);
 
 profileMenuButton.addEventListener('click', () => {
   new BottomSheet({ type: 'header' }).open();
@@ -68,6 +71,8 @@ productList.addEventListener('wheel', (e) => scrollHorizontal(e, productList));
 postAlbum.addEventListener('intersect', printPosts);
 
 postList.addEventListener('intersect', printPosts);
+
+postList.addEventListener('mouseover', importBottomSheet);
 
 postList.addEventListener('click', async ({ target }) => {
   const targetClassList = target.classList;
@@ -229,4 +234,18 @@ function openBottomSheet(target) {
   const isMine = target.closest('.post-card').dataset.author === MY_ACCOUNTNAME;
 
   new BottomSheet({ type: 'post', postId, isMine }).open();
+}
+
+async function importBottomSheet(event) {
+  if (
+    event.target.parentElement.id === 'menuButton' ||
+    event.target.id === 'menuButton'
+  ) {
+    const module = await import(
+      /* webpackChunkName: "BottomSheet" */ '@components/BottomSheet'
+    );
+    BottomSheet = module.default;
+
+    event.currentTarget?.removeEventListener('mouseover', importBottomSheet);
+  }
 }

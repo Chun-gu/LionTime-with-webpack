@@ -130,6 +130,7 @@ export function PostItem(post, page) {
   rightDiv.append(date);
 
   const menuButton = document.createElement('button');
+  menuButton.id = 'menuButton';
   menuButton.classList.add('post-menu-button', styles['post-menu-button']);
   postItem.append(menuButton);
 

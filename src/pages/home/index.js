@@ -1,10 +1,12 @@
 import './style.css';
 
 import { getFeed, heartPost, unheartPost } from '@api';
-import { BottomSheet, PostItem, NoFeed, StatusBar } from '@components';
+import { PostItem, NoFeed, StatusBar } from '@components';
 import { intersectionObserver, saveCurrentPageURL } from '@utils';
 
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
+
+let BottomSheet;
 
 const LIMIT = 5;
 let skip = 0;
@@ -17,6 +19,8 @@ printFeed();
 saveCurrentPageURL();
 
 feedList.addEventListener('intersect', printFeed);
+
+feedList.addEventListener('mouseover', importBottomSheet);
 
 feedList.addEventListener('click', async ({ target }) => {
   const targetClassList = target.classList;
@@ -79,4 +83,15 @@ function appendPosts(posts) {
     li.append(PostItem(post, 'home'));
     feedList.append(li);
   });
+}
+
+async function importBottomSheet(event) {
+  if (event.target.id === 'menuButton') {
+    const module = await import(
+      /* webpackChunkName: "BottomSheet" */ '@components/BottomSheet'
+    );
+    BottomSheet = module.default;
+
+    feedList.removeEventListener('mouseover', importBottomSheet);
+  }
 }

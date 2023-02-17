@@ -8,7 +8,7 @@ import {
   postComment,
   unheartPost,
 } from '@api';
-import { BottomSheet, Comment, PostItem, StatusBar } from '@components';
+import { Comment, PostItem, StatusBar } from '@components';
 import {
   getFromQueryString,
   intersectionObserver,
@@ -31,11 +31,14 @@ const commentInput = document.querySelector('#comment-input');
 const submitButton = document.querySelector('#submit-button');
 
 const commentsListObserver = intersectionObserver(commentsList);
+let BottomSheet;
 
 StatusBar();
 initializePage();
 
 // 게시글 영역 이벤트
+postSection.addEventListener('mouseover', importBottomSheet);
+
 postSection.addEventListener('click', async ({ target }) => {
   const targetClassList = target.classList;
 
@@ -86,6 +89,8 @@ commentForm.addEventListener('submit', async (e) => {
 
 // 댓글 영역 이벤트
 commentsList.addEventListener('intersect', printComments);
+
+commentsList.addEventListener('mouseover', importBottomSheet);
 
 commentsList.addEventListener('click', ({ target }) => {
   if (target.classList.contains('comment-menu-button')) {
@@ -145,4 +150,15 @@ function appendComments(comments) {
 function validateCommentInput(value) {
   const isValid = /\S+/.test(value);
   submitButton.disabled = !isValid;
+}
+
+async function importBottomSheet(event) {
+  if (event.target.id === 'menuButton') {
+    const module = await import(
+      /* webpackChunkName: "BottomSheet" */ '@components/BottomSheet'
+    );
+    BottomSheet = module.default;
+
+    event.currentTarget?.removeEventListener('mouseover', importBottomSheet);
+  }
 }

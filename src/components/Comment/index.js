@@ -45,6 +45,7 @@ export default function Comment(data) {
   contentParagraph.textContent = content;
 
   const menuButton = document.createElement('button');
+  menuButton.id = 'menuButton';
   menuButton.classList.add(
     styles['comment-menu-button'],
     'comment-menu-button',

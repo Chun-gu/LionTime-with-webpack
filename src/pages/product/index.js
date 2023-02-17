@@ -3,7 +3,6 @@ import './style.css';
 import defaultProductImage from '@images/default-post-product-image.webp';
 
 import { getProduct } from '@api';
-import { BottomSheet } from '@components';
 import {
   getFromQueryString,
   navigate,
@@ -20,7 +19,11 @@ const productLink = document.querySelector('#product-link');
 const productId = getFromQueryString('productId');
 const myId = sessionStorage.getItem('my-id');
 
+let BottomSheet;
+
 initializePage();
+
+productMenuButton.addEventListener('mouseover', importBottomSheet);
 
 productMenuButton.addEventListener('click', () => {
   new BottomSheet({ type: 'product', productId }).open();
@@ -59,4 +62,13 @@ async function initializePage() {
     alert(error);
     navigate({ goBack: true, replace: true });
   }
+}
+
+async function importBottomSheet() {
+  const module = await import(
+    /* webpackChunkName: "BottomSheet" */ '@components/BottomSheet'
+  );
+  BottomSheet = module.default;
+
+  productMenuButton.removeEventListener('mouseover', importBottomSheet);
 }
