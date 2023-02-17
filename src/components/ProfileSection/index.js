@@ -25,6 +25,7 @@ export default function ProfileSection({ profile, isMyProfile, myId }) {
       <img 
         id="profile-image"
         src=${trimImageURL(image)} 
+        alt="${username}의 프로필 이미지"
         onerror="this.onerror=null; this.src='${defaultProfileImage}'"
         loading="lazy"
       >
