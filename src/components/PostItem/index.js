@@ -18,7 +18,7 @@ export function PostItem(post, page) {
     createdAt,
   } = post;
 
-  const postItem = document.createElement('div');
+  const postItem = document.createElement(page === 'post' ? 'div' : 'li');
   postItem.classList.add('post-card', styles['post-item']);
   postItem.dataset.postId = postId;
   postItem.dataset.author = accountname;
