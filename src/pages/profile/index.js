@@ -238,8 +238,8 @@ function openBottomSheet(target) {
 
 async function importBottomSheet(event) {
   if (
-    event.target.parentElement.id === 'menuButton' ||
-    event.target.id === 'menuButton'
+    event.target.parentElement.classList.contains('menu-button') ||
+    event.target.classList.contains('menu-button')
   ) {
     const module = await import(
       /* webpackChunkName: "BottomSheet" */ '@components/BottomSheet'

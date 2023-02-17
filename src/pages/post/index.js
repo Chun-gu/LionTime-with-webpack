@@ -153,7 +153,7 @@ function validateCommentInput(value) {
 }
 
 async function importBottomSheet(event) {
-  if (event.target.id === 'menuButton') {
+  if (event.target.classList.contains('menu-button')) {
     const module = await import(
       /* webpackChunkName: "BottomSheet" */ '@components/BottomSheet'
     );
