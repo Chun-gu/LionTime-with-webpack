@@ -26,6 +26,7 @@ export default function ProfileSection({ profile, isMyProfile, myId }) {
         id="profile-image"
         src=${trimImageURL(image)} 
         onerror="this.onerror=null; this.src='${defaultProfileImage}'"
+        loading="lazy"
       >
     </div>
     <div class=${styles['followers']}>

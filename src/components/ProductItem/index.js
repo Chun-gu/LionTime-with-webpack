@@ -17,6 +17,7 @@ export default function ProductItem(product) {
 
   const img = document.createElement('img');
   img.src = trimImageURL(itemImage);
+  img.setAttribute('loading', 'lazy');
   img.onerror = ({ target }) => {
     target.onerror = null;
     target.src = defaultPostProductImage;

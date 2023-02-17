@@ -25,6 +25,7 @@ export default function UserProfileCard({ user, keyword, myId }) {
     target.onerror = null;
     target.src = defaultProfileImageSmall;
   };
+  img.setAttribute('loading', 'lazy');
   a.append(img);
 
   const div = document.createElement('div');

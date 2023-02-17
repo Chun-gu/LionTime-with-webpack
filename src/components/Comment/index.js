@@ -25,6 +25,7 @@ export default function Comment(data) {
   const profileImage = document.createElement('img');
   profileImage.src = trimImageURL(image);
   profileImage.onerror = `this.src='${defaultProfileImageSmall}'`;
+  profileImage.setAttribute('loading', 'lazy');
 
   const div = document.createElement('div');
 

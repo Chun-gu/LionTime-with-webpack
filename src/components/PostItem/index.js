@@ -34,6 +34,7 @@ export function PostItem(post, page) {
   const img = document.createElement('img');
   img.src = trimImageURL(authorImg);
   img.alt = '작성자 프로필 이미지';
+  img.setAttribute('loading', 'lazy');
   img.onerror = ({ target }) => {
     target.onerror = null;
     target.src = defaultProfileImageSmall;
@@ -73,6 +74,7 @@ export function PostItem(post, page) {
     const img = document.createElement('img');
     img.src = trimImageURL(image.split(',')[0]);
     img.alt = '게시글 이미지';
+    img.setAttribute('loading', 'lazy');
     img.onerror = ({ target }) => {
       target.src = defaultPostProductImage;
     };
@@ -152,6 +154,7 @@ export function PostAlbumItem(post) {
 
   const albumImg = document.createElement('img');
   albumImg.setAttribute('src', trimImageURL(image));
+  albumImg.setAttribute('loading', 'lazy');
 
   const images = image.split(',');
   if (images.length) albumImg.src = trimImageURL(images[0]);
