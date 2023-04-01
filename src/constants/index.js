@@ -100,4 +100,5 @@ export const REGEX = {
   spaces: /^\s|\s{2,}|\s$/,
   url: /^[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/,
   image: /\d+\.(jpeg|jpg|png|gif)/,
+  base64: /base64/,
 };
