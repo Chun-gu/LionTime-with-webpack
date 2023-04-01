@@ -1,9 +1,10 @@
 import styles from './style.module.css';
 
-import { PAGE } from '@constants';
-import { trimImageURL } from '@utils';
-
 import defaultPostProductImage from '@images/default-post-product-image.webp';
+
+import { PAGE } from '@constants';
+
+import Image from '../Image';
 
 export default function ProductItem(product) {
   const { id: productId, itemImage, itemName, price } = product;
@@ -15,14 +16,12 @@ export default function ProductItem(product) {
   const a = document.createElement('a');
   a.href = PAGE.product(productId);
 
-  const img = document.createElement('img');
-  img.src = trimImageURL(itemImage);
-  img.alt = '상품 이미지';
-  img.setAttribute('loading', 'lazy');
-  img.onerror = ({ target }) => {
-    target.onerror = null;
-    target.src = defaultPostProductImage;
-  };
+  const img = Image({
+    src: itemImage,
+    alt: '상품 이미지',
+    shouldLazy: true,
+    fallback: defaultPostProductImage,
+  });
   img.classList.add(styles['product-img']);
 
   const p = document.createElement('p');

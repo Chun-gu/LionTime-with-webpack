@@ -3,7 +3,9 @@ import styles from './style.module.css';
 import defaultProfileImageSmall from '@images/default-profile-image-small.webp';
 
 import { PAGE } from '@constants';
-import { relativeDateTo, trimImageURL } from '@utils';
+import { relativeDateTo } from '@utils';
+
+import Image from '../Image';
 
 export default function Comment(data) {
   const {
@@ -22,10 +24,11 @@ export default function Comment(data) {
   profileLink.classList.add(styles['profile']);
   profileLink.href = PAGE.profile(accountname);
 
-  const profileImage = document.createElement('img');
-  profileImage.src = trimImageURL(image);
-  profileImage.onerror = `this.src='${defaultProfileImageSmall}'`;
-  profileImage.setAttribute('loading', 'lazy');
+  const profileImage = Image({
+    src: image,
+    alt: accountname,
+    fallback: defaultProfileImageSmall,
+  });
 
   const div = document.createElement('div');
 

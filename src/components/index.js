@@ -2,6 +2,7 @@ export { default as BottomSheet } from './BottomSheet';
 export { default as ChatMessage } from './ChatMessage';
 export { default as Comment } from './Comment';
 export * from './CustomError';
+export { default as Image } from './Image';
 export { default as ImageSlide } from './ImageSlide';
 export { default as NoFeed } from './NoFeed';
 export { default as NoPost } from './NoPost';

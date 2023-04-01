@@ -3,12 +3,8 @@ import './style.css';
 import defaultProductImage from '@images/default-post-product-image.webp';
 
 import { getProduct } from '@api';
-import {
-  getFromQueryString,
-  navigate,
-  saveCurrentPageURL,
-  trimImageURL,
-} from '@utils';
+import { Image } from '@components';
+import { getFromQueryString, navigate, saveCurrentPageURL } from '@utils';
 
 const productMenuButton = document.querySelector('.product-menu-button');
 const productImage = document.querySelector('#product-image');
@@ -41,13 +37,11 @@ async function initializePage() {
       author: { _id: authorId },
     } = product;
 
-    const img = document.createElement('img');
-    img.src = trimImageURL(itemImage);
-    img.alt = '상품 이미지';
-    img.onerror = ({ target }) => {
-      target.onerror = null;
-      target.src = defaultProductImage;
-    };
+    const img = Image({
+      src: itemImage,
+      alt: '상품 이미지',
+      fallback: defaultProductImage,
+    });
 
     productImage.append(img);
     productName.textContent = itemName;

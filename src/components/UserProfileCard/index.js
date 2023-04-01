@@ -3,7 +3,8 @@ import styles from './style.module.css';
 import defaultProfileImageSmall from '@images/default-profile-image-small.webp';
 
 import { PAGE } from '@constants';
-import { trimImageURL } from '@utils';
+
+import Image from '../Image';
 
 export default function UserProfileCard({ user, keyword, myId }) {
   let { _id: id, username, accountname, image, follower } = user;
@@ -17,15 +18,12 @@ export default function UserProfileCard({ user, keyword, myId }) {
   a.href = PAGE.profile(accountname);
   userProfileCard.append(a);
 
-  const img = document.createElement('img');
+  const img = Image({
+    src: image,
+    alt: `${username}의 프로필 사진`,
+    fallback: defaultProfileImageSmall,
+  });
   img.classList.add(styles['profile-image']);
-  img.src = trimImageURL(image);
-  img.alt = `${username}의 프로필 사진`;
-  img.onerror = ({ target }) => {
-    target.onerror = null;
-    target.src = defaultProfileImageSmall;
-  };
-  img.setAttribute('loading', 'lazy');
   a.append(img);
 
   const div = document.createElement('div');

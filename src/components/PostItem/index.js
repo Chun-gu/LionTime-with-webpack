@@ -4,7 +4,8 @@ import defaultPostProductImage from '@images/default-post-product-image.webp';
 import defaultProfileImageSmall from '@images/default-profile-image-small.webp';
 
 import { PAGE } from '@constants';
-import { trimImageURL } from '@utils';
+
+import Image from '../Image';
 
 export function PostItem(post, page) {
   const {
@@ -31,14 +32,12 @@ export function PostItem(post, page) {
   authorImage.classList.add(styles['post-author-image']);
   leftDiv.append(authorImage);
 
-  const img = document.createElement('img');
-  img.src = trimImageURL(authorImg);
-  img.alt = '작성자 프로필 이미지';
-  img.setAttribute('loading', 'lazy');
-  img.onerror = ({ target }) => {
-    target.onerror = null;
-    target.src = defaultProfileImageSmall;
-  };
+  const img = Image({
+    src: authorImg,
+    alt: accountname,
+    shouldLazy: true,
+    fallback: defaultProfileImageSmall,
+  });
   authorImage.append(img);
 
   const rightDiv = document.createElement('div');
@@ -71,13 +70,12 @@ export function PostItem(post, page) {
     postImage.classList.add(styles['post-image']);
     rightDiv.append(postImage);
 
-    const img = document.createElement('img');
-    img.src = trimImageURL(image.split(',')[0]);
-    img.alt = '게시글 이미지';
-    img.setAttribute('loading', 'lazy');
-    img.onerror = ({ target }) => {
-      target.src = defaultPostProductImage;
-    };
+    const img = Image({
+      src: image.split(',')[0],
+      alt: '게시글 이미지',
+      shouldLazy: true,
+      fallback: defaultPostProductImage,
+    });
     postImage.append(img);
   }
 
@@ -130,7 +128,11 @@ export function PostItem(post, page) {
   rightDiv.append(date);
 
   const menuButton = document.createElement('button');
-  menuButton.classList.add('menu-button','post-menu-button', styles['post-menu-button']);
+  menuButton.classList.add(
+    'menu-button',
+    'post-menu-button',
+    styles['post-menu-button'],
+  );
   postItem.append(menuButton);
 
   const menuDesc = document.createElement('span');
@@ -152,13 +154,13 @@ export function PostAlbumItem(post) {
   a.classList.add(styles['post-album-item']);
   a.dataset.postId = postId;
 
-  const albumImg = document.createElement('img');
-  albumImg.setAttribute('src', trimImageURL(image));
-  albumImg.setAttribute('loading', 'lazy');
-
   const images = image.split(',');
-  if (images.length) albumImg.src = trimImageURL(images[0]);
-  albumImg.onerror = `this.src='${defaultPostProductImage}'`;
+  const albumImg = Image({
+    src: images[0],
+    alt: '게시글 이미지',
+    shouldLazy: true,
+    fallback: defaultPostProductImage,
+  });
   albumImg.classList.add(styles['post-album-image']);
   a.append(albumImg);
 
