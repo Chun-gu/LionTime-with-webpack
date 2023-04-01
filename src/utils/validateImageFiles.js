@@ -5,7 +5,7 @@ export default function validateImageFiles(imageFiles) {
   let cause;
 
   [...imageFiles].forEach((imageFile) => {
-    if (imageFile.size > IMAGE.size3MB) {
+    if (imageFile.size > IMAGE.MB(3)) {
       isValid = false;
       cause = IMAGE_ERROR.size;
     }

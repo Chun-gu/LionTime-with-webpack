@@ -49,7 +49,7 @@ export const REGISTER = {
 };
 
 export const IMAGE = {
-  MB: (number) => 1024 * 1024 * number,
+  sizeInMB: (number) => 1024 * 1024 * number,
   allowedTypes: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
   externalUrl: process.env.EXTERNAL_IMAGE_URL,
   resizedUrl: process.env.RESIZED_IMAGE_URL,
