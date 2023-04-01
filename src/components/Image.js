@@ -1,12 +1,9 @@
-import { IMAGE, REGEX } from '@constants';
+import { attachImageURL } from '@utils';
 
 export default function Image({ src, alt, shouldLazy = false, fallback }) {
   const img = document.createElement('img');
-  const [filename, extension] = src.match(REGEX.image);
-  const url =
-    extension === IMAGE.format.gif ? IMAGE.externalUrl : IMAGE.resizedUrl;
 
-  img.src = url + filename;
+  img.src = attachImageURL(src);
   img.alt = alt;
   if (shouldLazy) img.setAttribute('loading', 'lazy');
   img.onerror = ({ target }) => {

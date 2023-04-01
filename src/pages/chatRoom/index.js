@@ -5,10 +5,10 @@ import defaultProfileImage from '@images/default-profile-image.webp';
 import { getProfile } from '@api';
 import { ChatMessage, StatusBar } from '@components';
 import {
+  attachImageURL,
   getFromQueryString,
   resizeTextarea,
   saveCurrentPageURL,
-  trimImageURL,
   validateImageFiles,
 } from '@utils';
 
@@ -90,7 +90,7 @@ async function printPartnerInfo(partnerId) {
     partnerName.textContent = profile.username;
 
     const partnerImage = document.querySelector('.partner-image');
-    partnerImage.src = trimImageURL(profile.image);
+    partnerImage.src = attachImageURL(profile.image);
     partnerImage.onerror = ({ target }) => {
       target.onerror = null;
       target.src = defaultProfileImage;

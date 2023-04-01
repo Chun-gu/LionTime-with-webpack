@@ -1,3 +1,4 @@
+export { default as attachImageURL } from './attachImageURL';
 export * from './debounce';
 export { default as getFromQueryString } from './getFromQueryString';
 export { default as getImageDataURL } from './getImageDataURL';
@@ -10,6 +11,5 @@ export { default as resizeTextarea } from './resizeTextarea';
 export { default as saveCurrentPageURL } from './saveCurrentPageURL';
 export { default as scrollHorizontal } from './scrollHorizontal';
 export { default as useScrollFix } from './useScrollFix';
-export { default as trimImageURL } from './trimImageURL';
 export { default as InputValidator } from './InputValidator';
 export { default as validateImageFiles } from './validateImageFiles';

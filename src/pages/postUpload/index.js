@@ -12,13 +12,13 @@ import {
 import { ImageSlide, StatusBar } from '@components';
 import { IMAGE_ERROR, PAGE } from '@constants';
 import {
+  attachImageURL,
   getFromQueryString,
   getImageDataURL,
   navigate,
   resizeTextarea,
   saveCurrentPageURL,
   scrollHorizontal,
-  trimImageURL,
   validateImageFiles,
 } from '@utils';
 
@@ -72,7 +72,7 @@ async function printAuthorImage() {
   const { ok, user } = await getMyInfo();
 
   if (ok) {
-    authorProfileImage.src = trimImageURL(user.image);
+    authorProfileImage.src = attachImageURL(user.image);
     authorProfileImage.alt = `${user.username}의 프로필 이미지`;
     authorProfileImage.onerror = ({ target }) => {
       target.onerror = null;

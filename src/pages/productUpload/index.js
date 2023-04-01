@@ -4,13 +4,13 @@ import { getImageFileName, getProduct, postProduct, updateProduct } from '@api';
 import { ProductPreview, StatusBar } from '@components';
 import { PAGE, PRODUCT_ERROR, REGEX } from '@constants';
 import {
+  attachImageURL,
   debounce,
   getFromQueryString,
   getImageDataURL,
   InputValidator,
   navigate,
   saveCurrentPageURL,
-  trimImageURL,
   validateImageFiles,
 } from '@utils';
 
@@ -157,7 +157,7 @@ async function printPrevProduct(productId) {
     isPriceValid = true;
     isLinkValid = true;
 
-    previewSection.append(ProductPreview(trimImageURL(prevImage)));
+    previewSection.append(ProductPreview(attachImageURL(prevImage)));
     nameInput.value = product.itemName;
     priceInput.value = product.price;
     linkInput.value = product.link;

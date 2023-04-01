@@ -9,13 +9,13 @@ import {
 import { StatusBar } from '@components';
 import { ACCOUNTNAME, PAGE, REGEX, REGISTER, USERNAME } from '@constants';
 import {
+  attachImageURL,
   debounce,
   getImageDataURL,
   InputValidator,
   navigate,
   promisedDebounce,
   saveCurrentPageURL,
-  trimImageURL,
   validateImageFiles,
 } from '@utils';
 
@@ -49,7 +49,7 @@ let isAccountnameValid = true;
   const { ok, user, error } = await getMyInfo();
 
   if (ok) {
-    prevImage = trimImageURL(user.image);
+    prevImage = attachImageURL(user.image);
     prevUsername = user.username;
     prevAccountname = user.accountname;
     prevIntro = user.intro;

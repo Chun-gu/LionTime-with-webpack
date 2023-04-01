@@ -14,7 +14,7 @@ import {
   intersectionObserver,
   navigate,
   saveCurrentPageURL,
-  trimImageURL,
+  attachImageURL,
 } from '@utils';
 
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
@@ -119,7 +119,7 @@ async function initializePage() {
   if (comments.ok) appendComments(comments.comments);
   else alert(comments.error);
 
-  if (myInfo.ok) myProfileImage.src = trimImageURL(myInfo.user.image);
+  if (myInfo.ok) myProfileImage.src = attachImageURL(myInfo.user.image);
   else alert(myInfo.error);
 
   saveCurrentPageURL();
