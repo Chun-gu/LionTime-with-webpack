@@ -49,8 +49,13 @@ export const REGISTER = {
 };
 
 export const IMAGE = {
-  size3MB: 1024 * 1024 * 3,
+  MB: (number) => 1024 * 1024 * number,
   allowedTypes: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
+  externalUrl: process.env.EXTERNAL_IMAGE_URL,
+  resizedUrl: process.env.RESIZED_IMAGE_URL,
+  format: {
+    gif: 'gif',
+  },
 };
 
 export const IMAGE_ERROR = {
@@ -94,4 +99,5 @@ export const REGEX = {
   accountname: /^[a-zA-Z0-9._]+$/,
   spaces: /^\s|\s{2,}|\s$/,
   url: /^[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/,
+  image: /\d+\.(jpeg|jpg|png|gif)/,
 };

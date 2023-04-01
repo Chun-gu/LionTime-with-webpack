@@ -70,7 +70,8 @@ module.exports = {
   plugins: [
     new webpack.EnvironmentPlugin({
       API_URL: process.env.API_URL,
-      IMAGE_URL: process.env.IMAGE_URL,
+      EXTERNAL_IMAGE_URL: process.env.EXTERNAL_IMAGE_URL,
+      RESIZED_IMAGE_URL: process.env.RESIZED_IMAGE_URL,
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
