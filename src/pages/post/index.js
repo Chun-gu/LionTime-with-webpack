@@ -110,7 +110,7 @@ async function initializePage() {
   ];
   const [post, comments, myInfo] = await Promise.all(requests);
 
-  if (post.ok) postSection.append(PostItem(post.post, 'post'));
+  if (post.ok) postSection.append(PostItem({ post: post.post, page: 'post' }));
   else {
     alert(post.error);
     return navigate({ goBack: true, replace: true });

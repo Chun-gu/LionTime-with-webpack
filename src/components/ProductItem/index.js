@@ -6,7 +6,7 @@ import { PAGE } from '@constants';
 
 import Image from '../Image';
 
-export default function ProductItem(product) {
+export default function ProductItem({ product, isAboveTheFold }) {
   const { id: productId, itemImage, itemName, price } = product;
 
   const li = document.createElement('li');
@@ -19,7 +19,7 @@ export default function ProductItem(product) {
   const img = Image({
     src: itemImage,
     alt: '상품 이미지',
-    shouldLazy: true,
+    shouldLazy: !isAboveTheFold,
     fallback: defaultPostProductImage,
   });
   img.classList.add(styles['product-img']);

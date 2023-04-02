@@ -79,7 +79,9 @@ function appendNoFeed() {
 
 function appendPosts(posts) {
   posts.forEach((post) => {
-    feedList.append(PostItem(post, 'home'));
+    feedList.append(
+      PostItem({ post, page: 'home', isAboveTheFold: skip <= LIMIT }),
+    );
   });
 }
 

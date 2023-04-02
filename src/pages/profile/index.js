@@ -140,12 +140,20 @@ function appendProducts(products) {
     productListObserver.disconnect();
     productList.removeEventListener('intersect', printProducts);
   } else if (products.length < PRODUCT_LIMIT) {
-    products.forEach((product) => productList.append(ProductItem(product)));
+    products.forEach((product) =>
+      productList.append(
+        ProductItem({ product, isAboveTheFold: productSkip <= PRODUCT_LIMIT }),
+      ),
+    );
     productListObserver.disconnect();
     productList.removeEventListener('intersect', printProducts);
   } else {
     productSkip += PRODUCT_LIMIT;
-    products.forEach((product) => productList.append(ProductItem(product)));
+    products.forEach((product) =>
+      productList.append(
+        ProductItem({ product, isAboveTheFold: productSkip <= PRODUCT_LIMIT }),
+      ),
+    );
     productListObserver.observe(productList.lastChild);
   }
 }
@@ -172,8 +180,17 @@ function appendPosts(posts) {
     postAlbum.removeEventListener('intersect', printPosts);
   } else if (posts.length < POST_LIMIT) {
     posts.forEach((post) => {
-      postList.append(PostItem(post, 'profile'));
-      if (post.image) postAlbum.append(PostAlbumItem(post));
+      postList.append(
+        PostItem({
+          post,
+          page: 'profile',
+          isAboveTheFold: postSkip <= POST_LIMIT,
+        }),
+      );
+      if (post.image)
+        postAlbum.append(
+          PostAlbumItem({ post, isAboveTheFold: postSkip <= POST_LIMIT }),
+        );
     });
     postListObserver.disconnect();
     postList.removeEventListener('intersect', printPosts);
@@ -181,8 +198,17 @@ function appendPosts(posts) {
   } else {
     postSkip += POST_LIMIT;
     posts.forEach((post) => {
-      postList.append(PostItem(post, 'profile'));
-      if (post.image) postAlbum.append(PostAlbumItem(post));
+      postList.append(
+        PostItem({
+          post,
+          page: 'profile',
+          isAboveTheFold: postSkip <= POST_LIMIT,
+        }),
+      );
+      if (post.image)
+        postAlbum.append(
+          PostAlbumItem({ post, isAboveTheFold: postSkip <= POST_LIMIT }),
+        );
     });
     postListObserver.observe(postList.lastChild);
     postListObserver.observe(postAlbum.lastChild);

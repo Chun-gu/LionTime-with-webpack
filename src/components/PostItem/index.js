@@ -7,7 +7,7 @@ import { PAGE } from '@constants';
 
 import Image from '../Image';
 
-export function PostItem(post, page) {
+export function PostItem({ post, page, isAboveTheFold = true }) {
   const {
     id: postId,
     author: { image: authorImg, username, accountname },
@@ -35,7 +35,7 @@ export function PostItem(post, page) {
   const img = Image({
     src: authorImg,
     alt: accountname,
-    shouldLazy: true,
+    shouldLazy: !isAboveTheFold,
     fallback: defaultProfileImageSmall,
   });
   authorImage.append(img);
@@ -73,7 +73,7 @@ export function PostItem(post, page) {
     const img = Image({
       src: image.split(',')[0],
       alt: '게시글 이미지',
-      shouldLazy: true,
+      shouldLazy: !isAboveTheFold,
       fallback: defaultPostProductImage,
     });
     postImage.append(img);
@@ -143,7 +143,7 @@ export function PostItem(post, page) {
   return postItem;
 }
 
-export function PostAlbumItem(post) {
+export function PostAlbumItem({ post, isAboveTheFold = true }) {
   const { id: postId, image } = post;
 
   const albumItem = document.createElement('li');
@@ -158,7 +158,7 @@ export function PostAlbumItem(post) {
   const albumImg = Image({
     src: images[0],
     alt: '게시글 이미지',
-    shouldLazy: true,
+    shouldLazy: !isAboveTheFold,
     fallback: defaultPostProductImage,
   });
   albumImg.classList.add(styles['post-album-image']);
