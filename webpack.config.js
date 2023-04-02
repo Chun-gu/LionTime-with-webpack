@@ -23,6 +23,16 @@ const HtmlWebpackPlugins = pages.map(
       filename: `${page}/index.html`,
       chunks: [`${page}`],
       template: `src/pages/${page}/index.html`,
+      meta: {
+        author: 'chun-gu',
+        description: '소식을 공유하고 물품을 판매할 수 있는 SNS입니다.',
+        keywords: '라이언타임, SNS, 개인판매',
+        'og:site_name': '라이언타임',
+        'og:title': '라이언타임',
+        'og:description': '소식을 공유하고 물품을 판매할 수 있는 SNS입니다.',
+        'og:type': 'website',
+        'og:url': 'https://lion-time.netlify.app',
+      },
     }),
 );
 
