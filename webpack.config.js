@@ -44,7 +44,7 @@ module.exports = {
   output: {
     path: dist,
     filename: ({ chunk: { name } }) =>
-      name === 'index' ? 'index.js' : '[name]/index.js',
+      name === 'index' ? 'index.[contenthash].js' : '[name]/index.[contenthash].js',
     clean: true,
   },
   module: {
@@ -91,7 +91,7 @@ module.exports = {
     ...HtmlWebpackPlugins,
     new MiniCssExtractPlugin({
       filename: ({ chunk: { name } }) =>
-        name === 'index' ? 'style.css' : `${name}/style.css`,
+        name === 'index' ? 'style.[contenthash].css' : `${name}/style.[contenthash].css`,
     }),
     new webpack.SourceMapDevToolPlugin({}),
   ],
