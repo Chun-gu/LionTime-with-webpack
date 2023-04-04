@@ -3,7 +3,7 @@ import styles from './style.module.css';
 import defaultPostProductImage from '@images/default-post-product-image.webp';
 import defaultProfileImageSmall from '@images/default-profile-image-small.webp';
 
-import { PAGE } from '@constants';
+import { IMAGE, PAGE } from '@constants';
 
 import Image from '../Image';
 
@@ -37,6 +37,7 @@ export function PostItem({ post, page, isAboveTheFold = true }) {
     alt: accountname,
     shouldLazy: !isAboveTheFold,
     fallback: defaultProfileImageSmall,
+    ...IMAGE.size.user.sm,
   });
   authorImage.append(img);
 
@@ -75,6 +76,7 @@ export function PostItem({ post, page, isAboveTheFold = true }) {
       alt: '게시글 이미지',
       shouldLazy: !isAboveTheFold,
       fallback: defaultPostProductImage,
+      ...IMAGE.size.post.lg,
     });
     postImage.append(img);
   }
@@ -160,6 +162,7 @@ export function PostAlbumItem({ post, isAboveTheFold = true }) {
     alt: '게시글 이미지',
     shouldLazy: !isAboveTheFold,
     fallback: defaultPostProductImage,
+    ...IMAGE.size.post.md,
   });
   albumImg.classList.add(styles['post-album-image']);
   a.append(albumImg);

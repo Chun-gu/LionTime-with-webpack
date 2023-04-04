@@ -2,7 +2,7 @@ import styles from './style.module.css';
 
 import defaultProfileImageSmall from '@images/default-profile-image-small.webp';
 
-import { PAGE } from '@constants';
+import { IMAGE, PAGE } from '@constants';
 import { relativeDateTo } from '@utils';
 
 import Image from '../Image';
@@ -28,6 +28,7 @@ export default function Comment(data) {
     src: image,
     alt: accountname,
     fallback: defaultProfileImageSmall,
+    ...IMAGE.size.user.xs,
   });
 
   const div = document.createElement('div');

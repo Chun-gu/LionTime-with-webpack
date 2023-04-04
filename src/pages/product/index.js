@@ -4,6 +4,7 @@ import defaultProductImage from '@images/default-post-product-image.webp';
 
 import { getProduct } from '@api';
 import { Image } from '@components';
+import { IMAGE } from '@constants';
 import { getFromQueryString, navigate, saveCurrentPageURL } from '@utils';
 
 const productMenuButton = document.querySelector('.product-menu-button');
@@ -41,6 +42,7 @@ async function initializePage() {
       src: itemImage,
       alt: '상품 이미지',
       fallback: defaultProductImage,
+      ...IMAGE.size.product.lg,
     });
 
     productImage.append(img);

@@ -2,7 +2,7 @@ import styles from './style.module.css';
 
 import defaultProfileImageSmall from '@images/default-profile-image-small.webp';
 
-import { PAGE } from '@constants';
+import { IMAGE, PAGE } from '@constants';
 
 import Image from '../Image';
 
@@ -22,6 +22,7 @@ export default function UserProfileCard({ user, keyword, myId }) {
     src: image,
     alt: `${username}의 프로필 사진`,
     fallback: defaultProfileImageSmall,
+    ...IMAGE.size.user.md,
   });
   img.classList.add(styles['profile-image']);
   a.append(img);

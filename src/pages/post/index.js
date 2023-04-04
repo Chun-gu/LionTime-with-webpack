@@ -9,12 +9,13 @@ import {
   unheartPost,
 } from '@api';
 import { Comment, PostItem, StatusBar } from '@components';
+import { IMAGE } from '@constants';
 import {
+  attachImageURL,
   getFromQueryString,
   intersectionObserver,
   navigate,
   saveCurrentPageURL,
-  attachImageURL,
 } from '@utils';
 
 const MY_ACCOUNTNAME = sessionStorage.getItem('my-accountname');
@@ -119,7 +120,11 @@ async function initializePage() {
   if (comments.ok) appendComments(comments.comments);
   else alert(comments.error);
 
-  if (myInfo.ok) myProfileImage.src = attachImageURL(myInfo.user.image);
+  if (myInfo.ok)
+    myProfileImage.src = attachImageURL({
+      src: myInfo.user.image,
+      ...IMAGE.size.user.sm,
+    });
   else alert(myInfo.error);
 
   saveCurrentPageURL();

@@ -2,7 +2,7 @@ import styles from './style.module.css';
 
 import defaultPostProductImage from '@images/default-post-product-image.webp';
 
-import { PAGE } from '@constants';
+import { IMAGE, PAGE } from '@constants';
 
 import Image from '../Image';
 
@@ -21,6 +21,7 @@ export default function ProductItem({ product, isAboveTheFold }) {
     alt: '상품 이미지',
     shouldLazy: !isAboveTheFold,
     fallback: defaultPostProductImage,
+    ...IMAGE.size.product.md,
   });
   img.classList.add(styles['product-img']);
 

@@ -10,7 +10,7 @@ import {
   updatePost,
 } from '@api';
 import { ImageSlide, StatusBar } from '@components';
-import { IMAGE_ERROR, PAGE } from '@constants';
+import { IMAGE, IMAGE_ERROR, PAGE } from '@constants';
 import {
   attachImageURL,
   getFromQueryString,
@@ -72,7 +72,10 @@ async function printAuthorImage() {
   const { ok, user } = await getMyInfo();
 
   if (ok) {
-    authorProfileImage.src = attachImageURL(user.image);
+    authorProfileImage.src = attachImageURL({
+      src: user.image,
+      ...IMAGE.size.user.sm,
+    });
     authorProfileImage.alt = `${user.username}의 프로필 이미지`;
     authorProfileImage.onerror = ({ target }) => {
       target.onerror = null;

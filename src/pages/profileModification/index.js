@@ -7,7 +7,14 @@ import {
   modifyProfile,
 } from '@api';
 import { StatusBar } from '@components';
-import { ACCOUNTNAME, PAGE, REGEX, REGISTER, USERNAME } from '@constants';
+import {
+  ACCOUNTNAME,
+  IMAGE,
+  PAGE,
+  REGEX,
+  REGISTER,
+  USERNAME,
+} from '@constants';
 import {
   attachImageURL,
   debounce,
@@ -49,7 +56,7 @@ let isAccountnameValid = true;
   const { ok, user, error } = await getMyInfo();
 
   if (ok) {
-    prevImage = attachImageURL(user.image);
+    prevImage = attachImageURL({ src: user.image, ...IMAGE.size.user.lg });
     prevUsername = user.username;
     prevAccountname = user.accountname;
     prevIntro = user.intro;

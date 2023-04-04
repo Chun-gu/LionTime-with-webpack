@@ -2,6 +2,8 @@ import styles from './style.module.css';
 
 import defaultPostProductImage from '@images/default-post-product-image.webp';
 
+import { IMAGE } from '@constants';
+
 import Image from '../Image';
 
 export default function ImageSlide(imgSrc) {
@@ -12,6 +14,7 @@ export default function ImageSlide(imgSrc) {
     src: imgSrc,
     alt: '업로드 이미지',
     fallback: defaultPostProductImage,
+    ...IMAGE.size.product.lg,
   });
 
   const deleteButton = document.createElement('button');

@@ -2,7 +2,7 @@ import styles from './style.module.css';
 
 import defaultProfileImage from '@images/default-profile-image.webp';
 
-import { PAGE } from '@constants';
+import { IMAGE, PAGE } from '@constants';
 import { attachImageURL } from '@utils';
 
 export default function ProfileSection({ profile, isMyProfile, myId }) {
@@ -24,7 +24,10 @@ export default function ProfileSection({ profile, isMyProfile, myId }) {
     <div class=${styles['profile-image-wrapper']}>
       <img 
         id="profile-image"
-        src=${attachImageURL(image)} 
+        src=${attachImageURL({
+          src: image,
+          ...IMAGE.size.user.lg,
+        })} 
         alt="${username}의 프로필 이미지"
         onerror="this.onerror=null; this.src='${defaultProfileImage}'"
         loading="lazy"

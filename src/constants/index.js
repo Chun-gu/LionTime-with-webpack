@@ -56,6 +56,22 @@ export const IMAGE = {
   format: {
     gif: 'gif',
   },
+  size: {
+    post: {
+      lg: { width: 302, height: 226 },
+      md: { width: 114, height: 114 },
+    },
+    product: {
+      lg: { width: 320, height: 240 },
+      md: { width: 140, height: 90 },
+    },
+    user: {
+      lg: { width: 108, height: 108 },
+      md: { width: 50, height: 50 },
+      sm: { width: 40, height: 40 },
+      xs: { width: 36, height: 36 },
+    },
+  },
 };
 
 export const IMAGE_ERROR = {
@@ -99,6 +115,6 @@ export const REGEX = {
   accountname: /^[a-zA-Z0-9._]+$/,
   spaces: /^\s|\s{2,}|\s$/,
   url: /^[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/,
-  image: /\d+\.(jpeg|jpg|png|gif)/,
+  image: /(\d+)\.(.+)/,
   base64: /base64/,
 };

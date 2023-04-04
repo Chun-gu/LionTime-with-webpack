@@ -1,11 +1,13 @@
 import { REGEX, IMAGE } from '@constants';
 
-export default function attachImageURL(src) {
+export default function attachImageURL({ src, width, height }) {
   if (REGEX.base64.test(src)) return src;
 
-  const [filename, extension] = src.match(REGEX.image);
+  const [fullName, filename, extension] = src.match(REGEX.image);
   const url =
-    extension === IMAGE.format.gif ? IMAGE.externalUrl : IMAGE.resizedUrl;
+    extension === IMAGE.format.gif
+      ? IMAGE.externalUrl + fullName
+      : `${IMAGE.resizedUrl}${fullName}?w=${width}&h=${height}`;
 
-  return url + filename;
+  return url;
 }

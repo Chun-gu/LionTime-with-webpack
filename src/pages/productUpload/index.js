@@ -2,7 +2,7 @@ import './style.css';
 
 import { getImageFileName, getProduct, postProduct, updateProduct } from '@api';
 import { ProductPreview, StatusBar } from '@components';
-import { PAGE, PRODUCT_ERROR, REGEX } from '@constants';
+import { IMAGE, PAGE, PRODUCT_ERROR, REGEX } from '@constants';
 import {
   attachImageURL,
   debounce,
@@ -157,7 +157,11 @@ async function printPrevProduct(productId) {
     isPriceValid = true;
     isLinkValid = true;
 
-    previewSection.append(ProductPreview(attachImageURL(prevImage)));
+    previewSection.append(
+      ProductPreview(
+        attachImageURL({ src: prevImage, ...IMAGE.size.product.lg }),
+      ),
+    );
     nameInput.value = product.itemName;
     priceInput.value = product.price;
     linkInput.value = product.link;
