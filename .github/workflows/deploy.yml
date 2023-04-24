@@ -28,7 +28,7 @@ jobs:
         run: |
           touch .env
           echo API_URL=${{ secrets.API_URL }} >> .env
-          echo EXTERNAL_IMAGE_URL={{ secrets.EXTERNAL_IMAGE_URL }} >> .env
+          echo EXTERNAL_IMAGE_URL=${{ secrets.EXTERNAL_IMAGE_URL }} >> .env
           echo RESIZED_IMAGE_URL=${{ secrets.RESIZED_IMAGE_URL }} >> .env
           cat .env
 
