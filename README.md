@@ -20,7 +20,7 @@ LionTime은 소식을 공유하고 물품을 판매할 수 있는 SNS 서비스�
 
 ## 배포 링크
 
-[https://liontime.shop](https://liontime.shop)
+<a href='https://liontime.shop' target='_black'>https://liontime.shop</a>
 
 **테스트 계정 정보**
 
