@@ -20,12 +20,12 @@ LionTime은 소식을 공유하고 물품을 판매할 수 있는 SNS 서비스�
 
 ## 배포 링크
 
-<a href='https://liontime.shop' target='_blank'>https://liontime.shop</a>
+<a href='https://liontime.shop' target='_blank'>liontime 바로가기</a>
 
-**테스트 계정 정보**
+### 테스트 계정 정보
 
-- 아이디: lady@gaga.com
-- 비밀번호 : ladygaga
+- 아이디: `lady@gaga.com`
+- 비밀번호 : `ladygaga`
 
 ❗ 로그인 화면에서 `이메일로 로그인` 방식으로 로그인하시기 바랍니다.
 
