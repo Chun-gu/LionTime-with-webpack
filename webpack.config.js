@@ -31,7 +31,7 @@ const HtmlWebpackPlugins = pages.map(
         'og:title': '라이언타임',
         'og:description': '소식을 공유하고 물품을 판매할 수 있는 SNS입니다.',
         'og:type': 'website',
-        'og:url': 'https://lion-time.netlify.app',
+        'og:url': 'https://liontime.shop',
       },
     }),
 );
