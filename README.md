@@ -20,7 +20,8 @@ LionTime은 소식을 공유하고 물품을 판매할 수 있는 SNS 서비스�
 
 ## 배포 링크
 
-<a href='https://liontime.shop' target='_blank'>liontime 바로가기</a>
+⛔ AWS 프리티어 기간 만료로 인해 배포를 중단합니다.  
+~~[liontime 바로가기]()~~
 
 ### 테스트 계정 정보
 
